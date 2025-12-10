@@ -1,5 +1,80 @@
+# Build results
 bin/
 obj/
-*.user
-*.suo
+[Bb]uild/
+[Ll]og/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+*.exe
+*.dll
+*.pdb
+
+# Visual Studio files
 .vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Backup & autosave
+*_i.c
+*_p.c
+*_h.h
+*.bak
+*.tmp
+*.log
+
+# NuGet
+*.nupkg
+packages/
+*.snupkg
+
+# Others
+*.dbmdl
+*.mdf
+*.ldf
+*.sqlite
+*.cache
+*.swp
+*.zip
+*.tar.gz
+
+# Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Publish
+publish/
+*.pubxml
+*.publishproj
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Rider
+.idea/
+
+# TFS
+$tf/
+
+# VS Code
+.vscode/
+
+# Windows image cache
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# JetBrains Rider
+.idea/
+
+# Others
+*.docstates
