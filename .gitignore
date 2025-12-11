@@ -49,6 +49,19 @@ TestResults/
 *.coverage
 *.coveragexml
 
+# Configuration files with secrets
+Presentation/App.config
+
+# User secrets and local settings
+secrets.config
+appsettings.local.json
+*.local.config
+
+# Environment-specific configs
+app.Development.config
+app.Staging.config
+app.Production.config
+
 # Publish
 publish/
 *.pubxml
