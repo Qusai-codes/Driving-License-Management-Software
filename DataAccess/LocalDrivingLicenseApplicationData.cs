@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    internal class LocalDrivingLicenseApplicationData
+    public class LocalDrivingLicenseApplicationData
     {
     }
 }

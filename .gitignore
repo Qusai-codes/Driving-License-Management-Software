@@ -50,7 +50,7 @@ TestResults/
 *.coveragexml
 
 # Configuration files with secrets
-Presentation/App.config
+App.config
 
 # User secrets and local settings
 secrets.config

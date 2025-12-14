@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    internal class TestAppointmentData
+    public class TestAppointmentData
     {
     }
 }
