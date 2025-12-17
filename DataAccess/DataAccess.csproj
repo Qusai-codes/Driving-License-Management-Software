@@ -44,20 +44,23 @@
   <ItemGroup>
     <Compile Include="ApplicationData.cs" />
     <Compile Include="ApplicationTypeData.cs" />
+    <Compile Include="Common\DbConnectionFactory.cs" />
     <Compile Include="CountryData.cs" />
-    <Compile Include="DataAccessSettings.cs" />
+    <Compile Include="DTOs\PersonDto.cs" />
+    <Compile Include="Settings\DataAccessSettings.cs" />
     <Compile Include="DetainedLicenseData.cs" />
     <Compile Include="DriverData.cs" />
     <Compile Include="InternationalLicenseData.cs" />
     <Compile Include="LicenseClassData.cs" />
     <Compile Include="LicenseData.cs" />
     <Compile Include="LocalDrivingLicenseApplicationData.cs" />
-    <Compile Include="PeopleData.cs" />
+    <Compile Include="People\PersonData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestAppointmentData.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="TestTypeData.cs" />
     <Compile Include="UserData.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
