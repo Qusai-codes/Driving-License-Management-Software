@@ -2,7 +2,7 @@
 
 using System;
 
-namespace DataAccess.DTOs
+namespace Contracts.DTOs
 {
     public class PersonDto
     {
