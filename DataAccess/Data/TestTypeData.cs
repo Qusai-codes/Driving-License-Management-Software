@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business
+namespace DataAccess.Data
 {
-    internal class Driver
+    public class TestTypeData
     {
     }
 }

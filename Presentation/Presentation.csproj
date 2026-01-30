@@ -46,14 +46,68 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="logInForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="logInForm.Designer.cs">
+      <DependentUpon>logInForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ManagePeopleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManagePeopleForm.Designer.cs">
+      <DependentUpon>ManagePeopleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PersonDetailsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PersonDetailsControl.Designer.cs">
+      <DependentUpon>PersonDetailsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PersonDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PersonDetailsForm.Designer.cs">
+      <DependentUpon>PersonDetailsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PersonDetailsWithFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PersonDetailsWithFilterControl.Designer.cs">
+      <DependentUpon>PersonDetailsWithFilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PersonProfileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PersonProfileForm.Designer.cs">
+      <DependentUpon>PersonProfileForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="logInForm.resx">
+      <DependentUpon>logInForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManagePeopleForm.resx">
+      <DependentUpon>ManagePeopleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PersonDetailsControl.resx">
+      <DependentUpon>PersonDetailsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PersonDetailsForm.resx">
+      <DependentUpon>PersonDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PersonProfileForm.resx">
+      <DependentUpon>PersonProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,6 +116,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.config.template" />
     <None Include="Properties\Settings.settings">
@@ -76,6 +131,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Business.csproj">
+      <Project>{1ce1f273-ce1a-42b5-a689-c166a6503c71}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
+      <Project>{b8859aba-ddab-424d-a327-e94fde1e8236}</Project>
+      <Name>Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

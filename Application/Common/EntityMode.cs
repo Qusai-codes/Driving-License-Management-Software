@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business
+namespace Business.Common
 {
-    internal class Driver
+    public enum EntityMode
     {
+        AddNew = 0,
+        Update = 1
     }
 }

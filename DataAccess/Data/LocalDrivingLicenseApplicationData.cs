@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business
+namespace DataAccess
 {
-    internal class Driver
+    public class LocalDrivingLicenseApplicationData
     {
     }
 }
