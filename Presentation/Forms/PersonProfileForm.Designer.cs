@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PersonProfileForm));
             this.label1 = new System.Windows.Forms.Label();
             this.lblPersonId = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.personDetailsControl = new Presentation.PersonDetailsControl();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -75,8 +78,13 @@
             this.personDetailsControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.personDetailsControl.MinimumAge = 18;
             this.personDetailsControl.Name = "personDetailsControl";
+            this.personDetailsControl.RemovePersonImageLinkVisible = true;
             this.personDetailsControl.Size = new System.Drawing.Size(933, 382);
             this.personDetailsControl.TabIndex = 0;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // PersonProfileForm
             // 
@@ -90,6 +98,7 @@
             this.Name = "PersonProfileForm";
             this.Text = "Add / Edit Person Info.";
             this.Load += new System.EventHandler(this.PersonProfileForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,5 +110,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblPersonId;
         private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

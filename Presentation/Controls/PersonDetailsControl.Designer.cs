@@ -47,7 +47,7 @@
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.txtThirdName = new System.Windows.Forms.TextBox();
             this.txtSecondName = new System.Windows.Forms.TextBox();
-            this.LastName = new System.Windows.Forms.TextBox();
+            this.txtLastName = new System.Windows.Forms.TextBox();
             this.txtNationalNo = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtAddress = new System.Windows.Forms.TextBox();
@@ -236,6 +236,7 @@
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(165, 22);
             this.txtFirstName.TabIndex = 14;
+            this.txtFirstName.Validated += new System.EventHandler(this.txtFirstName_Validated);
             // 
             // txtThirdName
             // 
@@ -252,14 +253,16 @@
             this.txtSecondName.Name = "txtSecondName";
             this.txtSecondName.Size = new System.Drawing.Size(165, 22);
             this.txtSecondName.TabIndex = 16;
+            this.txtSecondName.Validated += new System.EventHandler(this.txtSecondName_Validated);
             // 
-            // LastName
+            // txtLastName
             // 
-            this.LastName.Location = new System.Drawing.Point(737, 48);
-            this.LastName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.LastName.Name = "LastName";
-            this.LastName.Size = new System.Drawing.Size(165, 22);
-            this.LastName.TabIndex = 17;
+            this.txtLastName.Location = new System.Drawing.Point(737, 48);
+            this.txtLastName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtLastName.Name = "txtLastName";
+            this.txtLastName.Size = new System.Drawing.Size(165, 22);
+            this.txtLastName.TabIndex = 17;
+            this.txtLastName.Validated += new System.EventHandler(this.txtLastName_Validated);
             // 
             // txtNationalNo
             // 
@@ -277,6 +280,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(165, 22);
             this.txtEmail.TabIndex = 19;
+            this.txtEmail.Validated += new System.EventHandler(this.txtEmail_Validated);
             // 
             // txtAddress
             // 
@@ -286,6 +290,7 @@
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(511, 88);
             this.txtAddress.TabIndex = 20;
+            this.txtAddress.Validated += new System.EventHandler(this.txtAddress_Validated);
             // 
             // rdoMale
             // 
@@ -359,6 +364,7 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(165, 22);
             this.txtPhone.TabIndex = 27;
+            this.txtPhone.Validated += new System.EventHandler(this.txtPhone_Validated);
             // 
             // cmbCountry
             // 
@@ -513,7 +519,7 @@
             this.Controls.Add(this.txtAddress);
             this.Controls.Add(this.txtEmail);
             this.Controls.Add(this.txtNationalNo);
-            this.Controls.Add(this.LastName);
+            this.Controls.Add(this.txtLastName);
             this.Controls.Add(this.txtSecondName);
             this.Controls.Add(this.txtThirdName);
             this.Controls.Add(this.txtFirstName);
@@ -569,7 +575,7 @@
         private System.Windows.Forms.TextBox txtFirstName;
         private System.Windows.Forms.TextBox txtThirdName;
         private System.Windows.Forms.TextBox txtSecondName;
-        private System.Windows.Forms.TextBox LastName;
+        private System.Windows.Forms.TextBox txtLastName;
         private System.Windows.Forms.TextBox txtNationalNo;
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.TextBox txtAddress;

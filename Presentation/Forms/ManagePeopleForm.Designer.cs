@@ -39,17 +39,18 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnCloseForm = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnAddPerson = new System.Windows.Forms.Button();
+            this.dgvPeople = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btnAddPerson = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPeople)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(426, 21);
+            this.pictureBox1.Location = new System.Drawing.Point(427, 21);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(169, 145);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -82,6 +83,7 @@
             this.cmbFilter.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.cmbFilter.FormattingEnabled = true;
             this.cmbFilter.Location = new System.Drawing.Point(101, 246);
+            this.cmbFilter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cmbFilter.Name = "cmbFilter";
             this.cmbFilter.Size = new System.Drawing.Size(184, 24);
             this.cmbFilter.TabIndex = 3;
@@ -90,7 +92,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(20, 563);
+            this.label3.Location = new System.Drawing.Point(20, 562);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(91, 18);
             this.label3.TabIndex = 4;
@@ -100,7 +102,7 @@
             // 
             this.lblNumberOfRecords.AutoSize = true;
             this.lblNumberOfRecords.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNumberOfRecords.Location = new System.Drawing.Point(117, 563);
+            this.lblNumberOfRecords.Location = new System.Drawing.Point(117, 562);
             this.lblNumberOfRecords.Name = "lblNumberOfRecords";
             this.lblNumberOfRecords.Size = new System.Drawing.Size(17, 18);
             this.lblNumberOfRecords.TabIndex = 5;
@@ -112,12 +114,14 @@
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.ImageIndex = 2;
             this.btnClose.ImageList = this.imageList1;
-            this.btnClose.Location = new System.Drawing.Point(932, 552);
+            this.btnClose.Location = new System.Drawing.Point(996, 551);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(130, 40);
+            this.btnClose.Size = new System.Drawing.Size(131, 39);
             this.btnClose.TabIndex = 6;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // imageList1
             // 
@@ -133,34 +137,24 @@
             this.btnCloseForm.ImageIndex = 1;
             this.btnCloseForm.ImageList = this.imageList1;
             this.btnCloseForm.Location = new System.Drawing.Point(1049, 12);
+            this.btnCloseForm.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCloseForm.Name = "btnCloseForm";
             this.btnCloseForm.Size = new System.Drawing.Size(35, 36);
             this.btnCloseForm.TabIndex = 7;
             this.btnCloseForm.UseVisualStyleBackColor = true;
             this.btnCloseForm.Click += new System.EventHandler(this.btnCloseForm_Click);
             // 
-            // dataGridView1
+            // dgvPeople
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
-            this.dataGridView1.Location = new System.Drawing.Point(23, 276);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1039, 270);
-            this.dataGridView1.TabIndex = 8;
-            // 
-            // btnAddPerson
-            // 
-            this.btnAddPerson.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnAddPerson.ImageIndex = 0;
-            this.btnAddPerson.ImageList = this.imageList1;
-            this.btnAddPerson.Location = new System.Drawing.Point(996, 224);
-            this.btnAddPerson.Name = "btnAddPerson";
-            this.btnAddPerson.Size = new System.Drawing.Size(66, 46);
-            this.btnAddPerson.TabIndex = 9;
-            this.btnAddPerson.UseVisualStyleBackColor = true;
-            this.btnAddPerson.Click += new System.EventHandler(this.btnAddPerson_Click);
+            this.dgvPeople.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPeople.ContextMenuStrip = this.contextMenuStrip1;
+            this.dgvPeople.Location = new System.Drawing.Point(23, 276);
+            this.dgvPeople.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dgvPeople.Name = "dgvPeople";
+            this.dgvPeople.RowHeadersWidth = 51;
+            this.dgvPeople.RowTemplate.Height = 24;
+            this.dgvPeople.Size = new System.Drawing.Size(1104, 270);
+            this.dgvPeople.TabIndex = 8;
             // 
             // contextMenuStrip1
             // 
@@ -168,14 +162,27 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // btnAddPerson
+            // 
+            this.btnAddPerson.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAddPerson.ImageIndex = 0;
+            this.btnAddPerson.ImageList = this.imageList1;
+            this.btnAddPerson.Location = new System.Drawing.Point(1060, 226);
+            this.btnAddPerson.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnAddPerson.Name = "btnAddPerson";
+            this.btnAddPerson.Size = new System.Drawing.Size(67, 46);
+            this.btnAddPerson.TabIndex = 9;
+            this.btnAddPerson.UseVisualStyleBackColor = true;
+            this.btnAddPerson.Click += new System.EventHandler(this.btnAddPerson_Click);
+            // 
             // ManagePeopleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1096, 617);
+            this.ClientSize = new System.Drawing.Size(1152, 623);
             this.ControlBox = false;
             this.Controls.Add(this.btnAddPerson);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvPeople);
             this.Controls.Add(this.btnCloseForm);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.lblNumberOfRecords);
@@ -184,10 +191,12 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ManagePeopleForm";
             this.Text = "Manage People";
+            this.Load += new System.EventHandler(this.ManagePeopleForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPeople)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -203,7 +212,7 @@
         private System.Windows.Forms.Label lblNumberOfRecords;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnCloseForm;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvPeople;
         private System.Windows.Forms.Button btnAddPerson;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

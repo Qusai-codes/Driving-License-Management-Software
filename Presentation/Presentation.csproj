@@ -46,66 +46,78 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="logInForm.cs">
+    <Compile Include="Controls\PersonDetailsViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PersonDetailsViewControl.Designer.cs">
+      <DependentUpon>PersonDetailsViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\logInForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="logInForm.Designer.cs">
+    <Compile Include="Forms\logInForm.Designer.cs">
       <DependentUpon>logInForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ManagePeopleForm.cs">
+    <Compile Include="Forms\ManagePeopleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ManagePeopleForm.Designer.cs">
+    <Compile Include="Forms\ManagePeopleForm.Designer.cs">
       <DependentUpon>ManagePeopleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PersonDetailsControl.cs">
+    <Compile Include="Controls\PersonDetailsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PersonDetailsControl.Designer.cs">
+    <Compile Include="Controls\PersonDetailsControl.Designer.cs">
       <DependentUpon>PersonDetailsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="PersonDetailsForm.cs">
+    <Compile Include="Forms\PersonDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PersonDetailsForm.Designer.cs">
+    <Compile Include="Forms\PersonDetailsForm.Designer.cs">
       <DependentUpon>PersonDetailsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PersonDetailsWithFilterControl.cs">
+    <Compile Include="Controls\PersonDetailsWithFilterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PersonDetailsWithFilterControl.Designer.cs">
+    <Compile Include="Controls\PersonDetailsWithFilterControl.Designer.cs">
       <DependentUpon>PersonDetailsWithFilterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="PersonProfileForm.cs">
+    <Compile Include="Events\ImageSelectedEventArgs.cs" />
+    <Compile Include="Events\PersonEventArgs.cs" />
+    <Compile Include="Forms\PersonProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PersonProfileForm.Designer.cs">
+    <Compile Include="Forms\PersonProfileForm.Designer.cs">
       <DependentUpon>PersonProfileForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="logInForm.resx">
+    <Compile Include="SortableBindingList.cs" />
+    <EmbeddedResource Include="Controls\PersonDetailsViewControl.resx">
+      <DependentUpon>PersonDetailsViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\logInForm.resx">
       <DependentUpon>logInForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ManagePeopleForm.resx">
+    <EmbeddedResource Include="Forms\ManagePeopleForm.resx">
       <DependentUpon>ManagePeopleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PersonDetailsControl.resx">
+    <EmbeddedResource Include="Controls\PersonDetailsControl.resx">
       <DependentUpon>PersonDetailsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PersonDetailsForm.resx">
+    <EmbeddedResource Include="Forms\PersonDetailsForm.resx">
       <DependentUpon>PersonDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PersonProfileForm.resx">
+    <EmbeddedResource Include="Forms\PersonProfileForm.resx">
       <DependentUpon>PersonProfileForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

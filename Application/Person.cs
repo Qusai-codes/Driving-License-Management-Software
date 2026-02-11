@@ -118,6 +118,11 @@ namespace Business
             return false;
         }
 
+        public static List<PersonDto> GetAllPersons()
+        {
+            return PersonData.GetAllPersons();
+        }
+
         public static Person Find(int personId)
         {
             PersonDto dto = PersonData.GetPersonInfoById(personId);
