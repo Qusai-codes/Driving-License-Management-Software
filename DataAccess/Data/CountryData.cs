@@ -46,5 +46,28 @@ namespace DataAccess.Data
             }
             return countries;
         }
+
+        public static string GetCountryNameById(int countryId)
+        {
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            {
+                string query = "SELECT CountryName FROM Countries WHERE CountryID = @CountryID;";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@CountryID", SqlDbType.Int).Value = countryId;
+
+                    try
+                    {
+                        connection.Open();
+                        object result = command.ExecuteScalar();
+                        return result?.ToString();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
     }
 }

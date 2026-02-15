@@ -32,6 +32,7 @@ namespace Presentation
 
             DefaultMaleImage = Properties.Resources.person_default_image_male;
             DefaultFemaleImage = Properties.Resources.person_default_image_female;
+            picPersonImage.Image = DefaultMaleImage;
             UpdateDateLimits();
         }
 
@@ -57,6 +58,16 @@ namespace Presentation
         public TextBox NationalNumberTextBox
         {
             get { return txtNationalNo; }
+        }
+
+        public PictureBox PersonImage
+        {
+            get { return picPersonImage; }
+        }
+
+        public ErrorProvider ErrorProvider
+        {
+            get { return errorProvider1; }
         }
 
         public string FirstName
@@ -168,19 +179,21 @@ namespace Presentation
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            // TODO: Implement close functionality
+            ClosebuttonClicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            // TODO: Implement save functionality
+            SaveButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void llbSetPersonImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // TODO: Implement set person image functionality
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
+                dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                dlg.Title = "Select a Person Image";
+
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     ImageSelected?.Invoke(
@@ -188,18 +201,33 @@ namespace Presentation
                         new ImageSelectedEventArgs(dlg.FileName));
                 }
             }
+
         }
 
         private void llbRemovePersonImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            // TODO: Implement remove person image functionality
+            RemoveImageClicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void txtNationalNo_Validated(object sender, EventArgs e)
         {
-            // TODO: continue the logic.
+            if (string.IsNullOrWhiteSpace(txtNationalNo.Text))
+            {
+                errorProvider1.SetError(txtNationalNo, "National Number is required.");
+            }
+            else
+            {
+                errorProvider1.SetError(txtNationalNo, "");
+            }
+
+            // Raise event for parent form to do duplicate check
             NationalNumberValidated?.Invoke(this, EventArgs.Empty);
 
+        }
+
+        private void txtNationalNo_Validating(object sender, CancelEventArgs e)
+        {
+            errorProvider1.SetError(txtNationalNo, "");
         }
 
         private void Gender_CheckedChanged(object sender, EventArgs e)

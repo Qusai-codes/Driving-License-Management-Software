@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
+	<appSettings>
+		<!-- Change this to your preferred location -->
+		<add key="PersonImagesDirectory" value="C:\DVLD-People-Images" />
+
+		<!-- Minimum age for obtaining driving license -->
+		<add key="MinimumDrivingAge" value="18" />
+
+		<!-- Default Country -->
+		<add key="DefaultCountryName" value="Iraq" />
+	</appSettings>
+	
 	<connectionStrings>
 		<add name="MyDatabaseConnection"
              connectionString="Server=YOUR_SERVER;Database=YOUR_DATABASE;User Id=YOUR_USERNAME;Password=YOUR_PASSWORD;"

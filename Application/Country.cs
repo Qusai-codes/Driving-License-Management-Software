@@ -17,6 +17,10 @@ namespace Business
             return CountryData.GetAllCountries();
         }
 
+        public static string GetCountryNameById(int countryId)
+        {
+            return CountryData.GetCountryNameById(countryId);
+        }
 
     }
 }
