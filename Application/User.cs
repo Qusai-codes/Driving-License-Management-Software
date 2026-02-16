@@ -12,7 +12,7 @@ namespace Business
 
         public static bool Exists(int personId)
         {
-            return UserData.IsUserExists(personId);
+            return UserData.IsUserExistsByPersonId(personId);
         }
     }
 }
