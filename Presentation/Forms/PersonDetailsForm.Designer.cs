@@ -60,7 +60,7 @@
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.ImageIndex = 0;
             this.btnClose.ImageList = this.imageList1;
-            this.btnClose.Location = new System.Drawing.Point(525, 329);
+            this.btnClose.Location = new System.Drawing.Point(567, 329);
             this.btnClose.Margin = new System.Windows.Forms.Padding(2);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(109, 39);
@@ -83,14 +83,14 @@
             this.personDetailsViewControl1.NationalNo = "[?????]";
             this.personDetailsViewControl1.PersonId = -1;
             this.personDetailsViewControl1.Phone = "[?????]";
-            this.personDetailsViewControl1.Size = new System.Drawing.Size(618, 257);
+            this.personDetailsViewControl1.Size = new System.Drawing.Size(660, 257);
             this.personDetailsViewControl1.TabIndex = 3;
             // 
             // PersonDetailsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(656, 378);
+            this.ClientSize = new System.Drawing.Size(687, 378);
             this.Controls.Add(this.personDetailsViewControl1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label1);
