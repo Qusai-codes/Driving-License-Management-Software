@@ -20,8 +20,10 @@ namespace Contracts.DTOs
         public int NationalityCountryId { get; set; }
         public string ImagePath { get; set; }
 
-        // Schema only
-        public static DataTable GetDataTable()
+        /// <summary>
+        /// Creates an empty DataTable with the correct schema.
+        /// </summary>
+        private static DataTable GetDataTable()
         {
             DataTable dt = new DataTable("Person");
 
@@ -42,7 +44,12 @@ namespace Contracts.DTOs
             return dt;
         }
 
-        // List<DTO> → DataTable
+        /// <summary>
+        /// Converts a collection of PersonDto objects to a DataTable.
+        /// Required for data binding to UI controls (DataGridView, reports, etc.)
+        /// that work with DataTable instead of generic collections.
+        /// Maintains compatibility with legacy .NET Framework data-binding patterns.
+        /// </summary>
         public static DataTable ToDataTable(IEnumerable<PersonDto> people)
         {
             DataTable dt = GetDataTable();

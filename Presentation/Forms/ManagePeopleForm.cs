@@ -216,7 +216,7 @@ namespace Presentation
 
             int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
             // TODO: create a method to check if delete person is acceptable
-            if (User.Exists(personId))
+            if (User.IsUserExistByPersonId(personId))
             {
                 MessageBox.Show("Person was not deleted because it has data linked to it.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
