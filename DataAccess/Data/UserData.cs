@@ -40,10 +40,42 @@ namespace DataAccess.Data
             return userId;
         }
 
+        public static UserDto GetUserByUserName(string userName)
+        {
+            const string query = @"
+                SELECT UserID, PersonID, UserName, IsActive, PasswordHash, PasswordSalt
+                FROM dbo.Users
+                WHERE UserName = @UserName;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = userName;
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (!reader.Read())
+                        return null;
+
+                    return new UserDto
+                    {
+                        UserId = (int)reader["UserID"],
+                        PersonId = (int)reader["PersonID"],
+                        UserName = (string)reader["UserName"],
+                        IsActive = (bool)reader["IsActive"],
+                        PasswordHash = (string)reader["PasswordHash"],
+                        PasswordSalt = (string)reader["PasswordSalt"]
+                    };
+                }
+            }
+        }
+
         public static UserDto GetUserByUserId(int userId)
         {
             const string query = @"
-                SELECT UserID, PersonID, UserName, IsActive
+                SELECT UserID, PersonID, UserName, IsActive, PasswordHash, PasswordSalt
                 FROM dbo.Users
                 WHERE UserID = @UserID;
             ";
@@ -64,7 +96,9 @@ namespace DataAccess.Data
                         UserId = (int)reader["UserID"],
                         PersonId = (int)reader["PersonID"],
                         UserName = (string)reader["UserName"],
-                        IsActive = (bool)reader["IsActive"]
+                        IsActive = (bool)reader["IsActive"],
+                        PasswordHash = (string)reader["PasswordHash"],
+                        PasswordSalt = (string)reader["PasswordSalt"]
                     };
                 }
             }
@@ -132,37 +166,6 @@ namespace DataAccess.Data
                 }
             }
         }
-
-        public static UserDto GetUserByUserName(string userName)
-        {
-            const string query = @"
-                SELECT UserID, PersonID, UserName, IsActive
-                FROM dbo.Users
-                WHERE UserName = @UserName;
-            ";
-
-            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
-            using (SqlCommand command = new SqlCommand(query, connection))
-            {
-                command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = userName;
-
-                connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (!reader.Read())
-                        return null;
-
-                    return new UserDto
-                    {
-                        UserId = (int)reader["UserID"],
-                        PersonId = (int)reader["PersonID"],
-                        UserName = (string)reader["UserName"],
-                        IsActive = (bool)reader["IsActive"]
-                    };
-                }
-            }
-        }
-
         public static bool UpdateUser(UserDto user)
         {
             int rowsAffected = 0;
@@ -265,6 +268,63 @@ namespace DataAccess.Data
                 isFound =  command.ExecuteScalar() != null;
             }
             return isFound;
+        }
+
+        public static bool IsUserActive(string userName)
+        {
+            bool isActive = false;
+            const string query = @"
+                SELECT 1
+                FROM dbo.Users
+                WHERE UserName = @UserName AND IsActive = 1;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = userName;
+
+                connection.Open();
+                isActive = command.ExecuteScalar() != null;
+            }
+            return isActive;
+        }
+
+        public static bool IsUserExistByUserName(string userName)
+        {
+            bool isFound = false;
+            const string query = @"
+                SELECT 1
+                FROM dbo.Users
+                WHERE UserName = @UserName;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = userName;
+
+                connection.Open();
+                isFound = command.ExecuteScalar() != null;
+            }
+            return isFound;
+        }
+
+        public static bool HasUsers()
+        {
+            bool hasUsers = false;
+            const string query = @"
+                SELECT TOP 1 1
+                FROM dbo.Users;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                connection.Open();
+                hasUsers = command.ExecuteScalar() != null;
+            }
+            return hasUsers;
         }
     }
 }

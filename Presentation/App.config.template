@@ -9,6 +9,9 @@
 
 		<!-- Default Country -->
 		<add key="DefaultCountryName" value="Iraq" />
+
+		<!-- Login Credentials File Location -->
+		<add key="LoginCredentialsFilePath" value="C:\DVLD-User-Data\loginCredentials.txt"/>
 	</appSettings>
 	
 	<connectionStrings>

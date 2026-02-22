@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Business;
+
 namespace Presentation
 {
     internal static class Program
@@ -14,9 +16,25 @@ namespace Presentation
         [STAThread]
         static void Main()
         {
-            System.Windows.Forms.Application.EnableVisualStyles();
-            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-            System.Windows.Forms.Application.Run(new MainForm());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            if (User.HasUsers())
+            {
+                LogInForm logInForm = new LogInForm();
+
+                if (logInForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Login successful, show main form with authenticated user
+                    Application.Run(new MainForm(logInForm.AuthenticatedUser));
+                }
+
+            }
+            else
+            {
+                Application.Run(new MainForm());
+            }
+            
         }
     }
 }

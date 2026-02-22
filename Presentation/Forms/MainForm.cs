@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Business;
+using Presentation.Forms;
+using Presentation.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +15,11 @@ namespace Presentation
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        private User _currentUser;
+        public MainForm(User authenticatedUser = null)
         {
             InitializeComponent();
+            _currentUser = authenticatedUser;
         }
 
         private void peopleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -25,6 +30,56 @@ namespace Presentation
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+        }
+
+        private void accountSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void currentUserInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to sign out?",
+                "Confirm Sign Out",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // Hide the main form
+                this.Hide();
+
+                // Show login form
+                LogInForm loginForm = new LogInForm();
+
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                {
+                    _currentUser = loginForm.AuthenticatedUser;
+                    this.Show();
+                }
+                else
+                {
+                    // Login cancelled or failed - close the application
+                    this.Close();
+                }
+            }
+        }
+
+        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageUsersForm form = new ManageUsersForm();
+            form.ShowDialog();
         }
     }
 }

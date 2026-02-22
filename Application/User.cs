@@ -66,14 +66,14 @@ namespace Business
             PasswordSalt = salt; 
         }
 
-        public bool VerifyPassword(string password)
+        public static bool VerifyPassword(string password, string passwordHash, string passwordSalt)
         {
-            return PasswordHasher.VerifyPassword(password, PasswordHash, PasswordSalt);
+            return PasswordHasher.VerifyPassword(password, passwordHash, passwordSalt);
         }
 
         public bool ChangePassword(string newPassword, string oldPassword)
         {
-            if (Mode == EntityMode.AddNew || !VerifyPassword(oldPassword))
+            if (Mode == EntityMode.AddNew || !VerifyPassword(oldPassword, PasswordHash, PasswordSalt))
             {
                 return false;
             }
@@ -108,6 +108,11 @@ namespace Business
                 return true;
             }
             return false;
+        }
+
+        public static bool IsUserActive(string userName)
+        {
+            return UserData.IsUserActive(userName);
         }
 
         public bool Save()
@@ -151,6 +156,17 @@ namespace Business
             return dto == null ? null : new User(dto);
         }
 
+        public static User Find(string userName)
+        {
+            UserDto dto = UserData.GetUserByUserName(userName);
+            return dto == null ? null : new User(dto);
+        }
+
+        public static bool HasUsers()
+        {
+            return UserData.HasUsers();
+        }
+
         public static List<UserDto> GetAllUsers()
         {
             return UserData.GetAllUsers();
@@ -159,6 +175,11 @@ namespace Business
         public static bool IsUserExistByPersonId(int personId)
         {
             return UserData.IsUserExistsByPersonId(personId);
+        }
+
+        public static bool IsUserExistByUserName(string userName)
+        {
+            return UserData.IsUserExistByUserName(userName);
         }
     }
 }
