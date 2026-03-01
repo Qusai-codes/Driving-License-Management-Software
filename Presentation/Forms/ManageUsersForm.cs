@@ -16,6 +16,7 @@ namespace Presentation.Forms
     {
 
         private DataTable _allUsersData;
+
         public ManageUsersForm()
         {
             InitializeComponent();
@@ -23,12 +24,70 @@ namespace Presentation.Forms
 
         private void ManageUsersForm_Load(object sender, EventArgs e)
         {
-            PopulateFilterComboBox();
+            SetupFilterComboBox();
+            SetupIsActiveFilterCombo();
             RefreshUsersList();
+        }
+
+        private void SetupIsActiveFilterCombo()
+        {
+            cmbIsActiveFilter.Items.Clear();
+            cmbIsActiveFilter.Items.AddRange(new object[] { "All", "Yes", "No" });
+            cmbIsActiveFilter.SelectedIndex = 0;
+            cmbIsActiveFilter.Visible = false;
+        }
+
+        private void SetupFilterComboBox()
+        {
+            cmbFilterUsers.Items.Clear();
+            string[] personFilterOptions = new string[] {
+                "None", "User ID", "Person ID", "Full Name",
+                "UserName", "Is Active"
+            };
+            cmbFilterUsers.Items.AddRange(personFilterOptions);
+            cmbFilterUsers.SelectedIndex = 0;
+        }
+
+        private void cmbIsActiveFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // TODO: complete the logic implementation
+            string selected = cmbIsActiveFilter.SelectedItem as string;
+            if (string.IsNullOrEmpty(selected) || selected == "All")
+            {
+
+            }
+            else if (selected == "Yes")
+            {
+
+            }
+            else if (selected == "No")
+            {
+
+            }
         }
 
         private void cmbFilterUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string selected = cmbFilterUsers.SelectedItem as string;
+            if (string.IsNullOrEmpty(selected) || selected == "None")
+            {
+                txtFilterValue.Visible = false;
+                cmbIsActiveFilter.Visible = false;
+                txtFilterValue.Clear();
+            }
+            else if (selected == "Is Active")
+            {
+                txtFilterValue.Visible = false;
+                txtFilterValue.Clear();
+                cmbIsActiveFilter.Visible = true;
+            }
+            else
+            {
+                cmbIsActiveFilter.Visible = false;
+                txtFilterValue.Visible = true;
+                txtFilterValue.Clear();
+            }
+
             ApplyFilter();
         }
 
@@ -57,8 +116,8 @@ namespace Presentation.Forms
                 }
 
                 // Build a lookup for PersonId -> FullName
-                var persons = Person.GetAllPersons();
-                var personLookup = persons.ToDictionary(
+                List<PersonDto> persons = Person.GetAllPersons();
+                Dictionary<int, string> personLookup = persons.ToDictionary(
                     p => p.PersonId,
                     p => BuildFullName(p.FirstName, p.SecondName, p.ThirdName, p.LastName));
 
@@ -104,19 +163,6 @@ namespace Presentation.Forms
             // subscribe to form events here
             form.ShowDialog();
             RefreshUsersList();
-        }
-
-        private void PopulateFilterComboBox()
-        {
-            cmbFilterUsers.Items.Clear();
-            cmbFilterUsers.Items.Add("None");
-            cmbFilterUsers.Items.Add("User ID");
-            cmbFilterUsers.Items.Add("Person ID");
-            cmbFilterUsers.Items.Add("Full Name");
-            cmbFilterUsers.Items.Add("UserName");
-            cmbFilterUsers.Items.Add("Is Active");
-
-            cmbFilterUsers.SelectedIndex = 0;
         }
 
         private void FormatDataGridView()
@@ -176,14 +222,6 @@ namespace Presentation.Forms
             }
         }
 
-        private void HideColumn(string columnName)
-        {
-            if (dgvUsers.Columns[columnName] != null)
-            {
-                dgvUsers.Columns[columnName].Visible = false;
-            }
-        }
-
         private void SetColumnHeader(string columnName, string headerText)
         {
             if (dgvUsers.Columns[columnName] != null)
@@ -202,48 +240,72 @@ namespace Presentation.Forms
             if (_allUsersData == null)
                 return;
 
-            var selected = cmbFilterUsers.SelectedItem as string;
-            var filterText = txtFilterValue.Text.Trim();
+            DataView dv = _allUsersData.DefaultView;
 
-            if (string.IsNullOrEmpty(filterText) || string.IsNullOrEmpty(selected) || selected == "None")
+            string selected = cmbFilterUsers.SelectedItem as string;
+            string filterText = txtFilterValue.Text.Trim();
+
+            // Reset filter if "None"
+            if (string.IsNullOrEmpty(selected) || selected == "None")
             {
-                dgvUsers.DataSource = _allUsersData;
-                lblNumberOfRecords.Text = dgvUsers.Rows.Count.ToString();
+                dv.RowFilter = "";
+                lblNumberOfRecords.Text = dv.Count.ToString();
+                return;
+            }
+
+            // Special case: IsActive (uses combo box)
+            if (selected == "Is Active")
+            {
+                string choice = cmbIsActiveFilter.SelectedItem as string;
+
+                if (string.IsNullOrEmpty(choice) || choice == "All")
+                {
+                    dv.RowFilter = "";
+                }
+                else
+                {
+                    bool isActive = choice == "Yes";
+                    dv.RowFilter = $"IsActive = {isActive.ToString().ToLower()}";
+                }
+
+                lblNumberOfRecords.Text = dv.Count.ToString();
+                return;
+            }
+
+            // Other filters use textbox
+            if (string.IsNullOrEmpty(filterText))
+            {
+                dv.RowFilter = "";
+                lblNumberOfRecords.Text = dv.Count.ToString();
                 return;
             }
 
             string column = GetColumnNameFromDisplayName(selected);
+
             if (string.IsNullOrEmpty(column) || !_allUsersData.Columns.Contains(column))
             {
-                dgvUsers.DataSource = _allUsersData;
-                lblNumberOfRecords.Text = dgvUsers.Rows.Count.ToString();
+                dv.RowFilter = "";
+                lblNumberOfRecords.Text = dv.Count.ToString();
                 return;
             }
 
-            DataView view = new DataView(_allUsersData);
-            if (_allUsersData.Columns[column].DataType == typeof(string))
+            // Build filter based on column type
+            Type colType = _allUsersData.Columns[column].DataType;
+
+            if (colType == typeof(string))
             {
-                view.RowFilter = string.Format("{0} LIKE '%{1}%'", column.Replace("'", "''"), filterText.Replace("'", "''"));
+                // safe, correct SQL‑style filter expression
+                dv.RowFilter = $"{column} LIKE '%{filterText.Replace("'", "''")}%'";
             }
-            else if (_allUsersData.Columns[column].DataType == typeof(int))
+            else if (colType == typeof(int))
             {
-                int num;
-                if (int.TryParse(filterText, out num))
-                {
-                    view.RowFilter = string.Format("{0} = {1}", column, num);
-                }
-            }
-            else if (_allUsersData.Columns[column].DataType == typeof(bool))
-            {
-                bool val;
-                if (bool.TryParse(filterText, out val))
-                {
-                    view.RowFilter = string.Format("{0} = {1}", column, val ? "true" : "false");
-                }
+                if (int.TryParse(filterText, out int num))
+                    dv.RowFilter = $"{column} = {num}";
+                else
+                    dv.RowFilter = "1=0";
             }
 
-            dgvUsers.DataSource = view;
-            lblNumberOfRecords.Text = dgvUsers.Rows.Count.ToString();
+            lblNumberOfRecords.Text = dv.Count.ToString();
         }
 
         private string GetColumnNameFromDisplayName(string displayName)

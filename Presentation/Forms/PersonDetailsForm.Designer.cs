@@ -41,10 +41,9 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.DarkRed;
-            this.label1.Location = new System.Drawing.Point(251, 32);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(362, 39);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(154, 26);
+            this.label1.Size = new System.Drawing.Size(199, 32);
             this.label1.TabIndex = 0;
             this.label1.Text = "Person Details";
             // 
@@ -60,10 +59,10 @@
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.ImageIndex = 0;
             this.btnClose.ImageList = this.imageList1;
-            this.btnClose.Location = new System.Drawing.Point(567, 329);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(2);
+            this.btnClose.Location = new System.Drawing.Point(752, 422);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(109, 39);
+            this.btnClose.Size = new System.Drawing.Size(145, 48);
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -77,24 +76,24 @@
             this.personDetailsViewControl1.Email = "[?????]";
             this.personDetailsViewControl1.FullName = "[?????]";
             this.personDetailsViewControl1.Gender = "[?????]";
-            this.personDetailsViewControl1.Location = new System.Drawing.Point(16, 68);
-            this.personDetailsViewControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.personDetailsViewControl1.Location = new System.Drawing.Point(26, 89);
+            this.personDetailsViewControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.personDetailsViewControl1.Name = "personDetailsViewControl1";
             this.personDetailsViewControl1.NationalNo = "[?????]";
             this.personDetailsViewControl1.PersonId = -1;
             this.personDetailsViewControl1.Phone = "[?????]";
-            this.personDetailsViewControl1.Size = new System.Drawing.Size(660, 257);
+            this.personDetailsViewControl1.Size = new System.Drawing.Size(871, 329);
             this.personDetailsViewControl1.TabIndex = 3;
             // 
             // PersonDetailsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 378);
+            this.ClientSize = new System.Drawing.Size(934, 498);
             this.Controls.Add(this.personDetailsViewControl1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "PersonDetailsForm";
             this.Text = "Person Details";
             this.Load += new System.EventHandler(this.PersonDetailsForm_Load);

@@ -41,6 +41,12 @@ namespace Presentation.Forms
         private void btnFindPerson_Click(object sender, EventArgs e)
         {
             //Person person = Person.Find(_personId);
+            // get the current selected filter option
+
+
+            // get the value of the text box 
+
+            // call the person class methods to check the person existance
         }
 
         private void btnAddPerson_Click(object sender, EventArgs e)
