@@ -17,7 +17,7 @@ namespace Business
         public EntityMode Mode { get; private set; }
 
         public int UserId { get; private set; }
-        public int PersonId { get; private set; }
+        public int PersonId { get; set; }
         public string UserName { get; set; }
         public bool IsActive { get; set; } 
         public string PasswordHash { get; private set; }
@@ -71,7 +71,23 @@ namespace Business
             return PasswordHasher.VerifyPassword(password, passwordHash, passwordSalt);
         }
 
-        public bool ChangePassword(string newPassword, string oldPassword)
+        public static bool CheckPassword(string userName, string password)
+        {
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrEmpty(password))
+                return false;
+
+            var passwordData = GetPasswordData(userName);
+
+            if (string.IsNullOrWhiteSpace(passwordData.Hash) ||
+                string.IsNullOrWhiteSpace(passwordData.Salt))
+            {
+                return false;
+            }
+
+            return VerifyPassword(password, passwordData.Hash, passwordData.Salt);
+        }
+
+        public  bool ChangePassword(string newPassword, string oldPassword)
         {
             if (Mode == EntityMode.AddNew || !VerifyPassword(oldPassword, PasswordHash, PasswordSalt))
             {
@@ -110,6 +126,13 @@ namespace Business
             return false;
         }
 
+        public static (string Hash, string Salt) GetPasswordData(string userName)
+        {
+            return UserData.GetPasswordData(userName);
+        }
+
+        
+
         public static bool IsUserActive(string userName)
         {
             return UserData.IsUserActive(userName);
@@ -143,6 +166,13 @@ namespace Business
         private bool Update()
         {
             return UserData.UpdateUser(ToDto());
+        }
+
+        public static bool CanDeleteUser(int userId)
+        {
+            // business logic of deleting user
+            // TODO: Complete the function.
+            return Delete(userId);
         }
 
         public static bool Delete(int userId)
@@ -180,6 +210,11 @@ namespace Business
         public static bool IsUserExistByUserName(string userName)
         {
             return UserData.IsUserExistByUserName(userName);
+        }
+
+        public static int GetPersonId(int userId)
+        {
+            return UserData.GetPersonId(userId);
         }
     }
 }

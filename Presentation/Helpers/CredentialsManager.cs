@@ -100,6 +100,21 @@ namespace Presentation.Helpers
             }
         }
 
+        public static bool SavePasswordOnly(string password)
+        {
+            try
+            {
+                LoginCredentials current = Load();
+
+                // Keep current username + rememberMe, change only password
+                return Save(current.UserName, password ?? string.Empty, current.RememberMe);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static void Clear()
         {
             try

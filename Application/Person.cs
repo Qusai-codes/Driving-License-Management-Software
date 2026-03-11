@@ -129,6 +129,12 @@ namespace Business
             return dto == null ? null : new Person(dto);
         }
 
+        public static Person Find(string nationalNo)
+        {
+            PersonDto dto = PersonData.GetPersonInfoByNationalNo(nationalNo);
+            return dto == null ? null : new Person(dto);
+        }
+
         public static bool Delete(int personId)
         {
             return PersonData.DeletePerson(personId);

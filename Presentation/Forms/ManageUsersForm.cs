@@ -50,20 +50,7 @@ namespace Presentation.Forms
 
         private void cmbIsActiveFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // TODO: complete the logic implementation
-            string selected = cmbIsActiveFilter.SelectedItem as string;
-            if (string.IsNullOrEmpty(selected) || selected == "All")
-            {
-
-            }
-            else if (selected == "Yes")
-            {
-
-            }
-            else if (selected == "No")
-            {
-
-            }
+            ApplyFilter();
         }
 
         private void cmbFilterUsers_SelectedIndexChanged(object sender, EventArgs e)
@@ -159,8 +146,7 @@ namespace Presentation.Forms
 
         private void btnAddUser_Click(object sender, EventArgs e)
         {
-            AddUserForm form = new AddUserForm();
-            // subscribe to form events here
+            AddEditUserForm form = new AddEditUserForm(FormMode.Add);
             form.ShowDialog();
             RefreshUsersList();
         }
@@ -228,6 +214,20 @@ namespace Presentation.Forms
             {
                 dgvUsers.Columns[columnName].HeaderText = headerText;
             }
+        }
+
+        private void txtFilterValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            string selected = cmbFilterUsers.SelectedItem as string;
+            bool numeric = selected == "User ID" || selected == "Person ID";
+
+            if (!numeric)
+                return;
+
+            bool isControl = char.IsControl(e.KeyChar);
+            bool isDigit = char.IsDigit(e.KeyChar);
+
+            e.Handled = !(isControl || isDigit);
         }
 
         private void txtFilterValue_TextChanged(object sender, EventArgs e)
@@ -325,6 +325,121 @@ namespace Presentation.Forms
                 default:
                     return null;
             }
+        }
+
+        private void showDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Check if a row is selected
+            if (dgvUsers.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a user to edit.", "No Selection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int userId = (int)dgvUsers.CurrentRow.Cells["UserId"].Value;
+
+            UserDetailsForm form = new UserDetailsForm(userId);
+            form.ShowDialog();
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Check if a row is selected
+            if (dgvUsers.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a user to edit.", "No Selection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int userId = (int)dgvUsers.CurrentRow.Cells["UserId"].Value;
+
+            AddEditUserForm form = new AddEditUserForm(FormMode.Edit, userId);
+            form.ShowDialog();
+            RefreshUsersList();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int userId = -1;
+            if (dgvUsers.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a user to delete.", "No Selection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            userId = (int)dgvUsers.CurrentRow.Cells["UserId"].Value;
+
+            // TODO: Add logic to check for data integrity before deleting the user.
+            //if (!User.CanDeleteUser(userId))
+            //{
+            //    MessageBox.Show("User is not deleted due to data connected to it.",
+            //        "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+
+            string message = string.Format("Are you sure you want to delete User [{0}]",
+                userId);
+
+            DialogResult result = MessageBox.Show(message, "Confirm Delete", MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.OK)
+            {
+                if (User.Delete(userId))
+                {
+                    MessageBox.Show("User Deleted Successfully.", "Successful",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to Delete User.", "Fail",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
+            RefreshUsersList();
+        }
+
+        private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int currentUserId = GetUserIdFromDataGridView();
+            ChangePasswordForm form = new ChangePasswordForm(currentUserId);
+            form.ShowDialog();
+            RefreshUsersList();
+        }
+
+        private void sendEmailToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This Feature is Not Implemented Yet!",
+                "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+        }
+
+        private void phoneCallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This Feature is Not Implemented Yet!",
+                "Not Ready!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private int GetUserIdFromDataGridView()
+        {
+            if (dgvUsers.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a user to delete.", "No Selection",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return -1;
+            }
+
+            int userId = (int)dgvUsers.CurrentRow.Cells["UserId"].Value;
+            return userId;
         }
     }
 }

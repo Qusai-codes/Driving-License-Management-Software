@@ -230,6 +230,34 @@ namespace DataAccess.Data
             return rowsAffected > 0;
         }
 
+        public static int GetPersonId(int userId)
+        {
+            int personId = -1;
+
+            const string query = @"
+                SELECT PersonID
+                FROM dbo.Users
+                WHERE UserID = @UserID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
+                connection.Open();
+
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    personId = Convert.ToInt32(result);
+                }
+
+            } 
+
+            return personId;
+        }
+
         public static bool IsUserExistsByPersonId(int personId)
         {
             bool isFound = false;

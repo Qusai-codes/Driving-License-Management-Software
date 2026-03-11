@@ -16,10 +16,13 @@ namespace Presentation.Controls
         public event EventHandler EditPersonInfoClicked;
 
         private DateTime _dateOfBirth;
+        private readonly string _defaultTextPlaceholder = "[?????]";
+        private Image _defaultPersonImage;
 
         public PersonDetailsViewControl()
         {
             InitializeComponent();
+            _defaultPersonImage = picPersonImage.Image;
         }
 
         public int PersonId
@@ -95,6 +98,31 @@ namespace Presentation.Controls
         public PictureBox PersonImage
         {
             get { return picPersonImage; }
+        }
+
+        public bool EnableEditingOfPersonInfo
+        {
+            set { llbEditPersonInfo.Enabled = value; }
+        }
+
+        public void ResetView()
+        {
+            lblPersonId.Text = _defaultTextPlaceholder;
+            lblFullName.Text = _defaultTextPlaceholder;
+            lblNationalNo.Text = _defaultTextPlaceholder;
+            lblGender.Text = _defaultTextPlaceholder;
+            lblEmail.Text = _defaultTextPlaceholder;
+            lblAddress.Text = _defaultTextPlaceholder;
+            lblDateOfBirth.Text = _defaultTextPlaceholder;
+            lblPhone.Text = _defaultTextPlaceholder;
+            lblCountry.Text = _defaultTextPlaceholder;
+
+            _dateOfBirth = DateTime.MinValue;
+
+            picGender.Image = null;
+            picPersonImage.Image = _defaultPersonImage;
+
+            llbEditPersonInfo.LinkVisited = false;
         }
 
         private void llbEditPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

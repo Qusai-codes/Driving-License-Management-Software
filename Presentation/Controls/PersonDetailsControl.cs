@@ -142,10 +142,30 @@ namespace Presentation
             get { return txtEmail.Text; }
             set { txtEmail.Text = value; }
         }
+        [Browsable(false)]
+        [Bindable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int SelectedCountryId
         {
-            get { return (int)cmbCountry.SelectedValue; }
-            set { cmbCountry.SelectedValue = value; }
+            get
+            {
+                if (cmbCountry == null ||
+                    cmbCountry.SelectedValue == null ||
+                    cmbCountry.SelectedValue == DBNull.Value)
+                {
+                    return -1;
+                }
+
+                int id;
+                return int.TryParse(cmbCountry.SelectedValue.ToString(), out id) ? id : -1;
+            }
+            set
+            {
+                if (cmbCountry != null && cmbCountry.DataSource != null)
+                {
+                    cmbCountry.SelectedValue = value;
+                }
+            }
         }
         public string SelectedCountryName
         {

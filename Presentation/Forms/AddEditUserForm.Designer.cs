@@ -1,6 +1,6 @@
 ﻿namespace Presentation.Forms
 {
-    partial class AddUserForm
+    partial class AddEditUserForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,21 +29,22 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddUserForm));
-            this.label1 = new System.Windows.Forms.Label();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddEditUserForm));
+            this.lblTitle = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpPersonInfo = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpFilterPerson = new System.Windows.Forms.GroupBox();
             this.btnFindPerson = new System.Windows.Forms.Button();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.btnAddPerson = new System.Windows.Forms.Button();
             this.txtFilterValue = new System.Windows.Forms.TextBox();
             this.cmbFilter = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.personDetailsViewControl1 = new Presentation.Controls.PersonDetailsViewControl();
             this.btnNext = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tpLoginInfo = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkIsActive = new System.Windows.Forms.CheckBox();
             this.txtConfirmPassword = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtUserName = new System.Windows.Forms.TextBox();
@@ -59,10 +60,9 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.personDetailsViewControl1 = new Presentation.Controls.PersonDetailsViewControl();
             this.tabControl1.SuspendLayout();
             this.tpPersonInfo.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.grpFilterPerson.SuspendLayout();
             this.tpLoginInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -71,16 +71,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // lblTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Maroon;
-            this.label1.Location = new System.Drawing.Point(267, 42);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(189, 31);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Add New User";
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.ForeColor = System.Drawing.Color.Maroon;
+            this.lblTitle.Location = new System.Drawing.Point(267, 42);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(189, 31);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Add New User";
             // 
             // tabControl1
             // 
@@ -94,7 +94,7 @@
             // 
             // tpPersonInfo
             // 
-            this.tpPersonInfo.Controls.Add(this.groupBox1);
+            this.tpPersonInfo.Controls.Add(this.grpFilterPerson);
             this.tpPersonInfo.Controls.Add(this.personDetailsViewControl1);
             this.tpPersonInfo.Controls.Add(this.btnNext);
             this.tpPersonInfo.Location = new System.Drawing.Point(4, 22);
@@ -105,19 +105,19 @@
             this.tpPersonInfo.Text = "Personal Info";
             this.tpPersonInfo.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // grpFilterPerson
             // 
-            this.groupBox1.Controls.Add(this.btnFindPerson);
-            this.groupBox1.Controls.Add(this.btnAddPerson);
-            this.groupBox1.Controls.Add(this.txtFilterValue);
-            this.groupBox1.Controls.Add(this.cmbFilter);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(17, 19);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(653, 62);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Filter";
+            this.grpFilterPerson.Controls.Add(this.btnFindPerson);
+            this.grpFilterPerson.Controls.Add(this.btnAddPerson);
+            this.grpFilterPerson.Controls.Add(this.txtFilterValue);
+            this.grpFilterPerson.Controls.Add(this.cmbFilter);
+            this.grpFilterPerson.Controls.Add(this.label2);
+            this.grpFilterPerson.Location = new System.Drawing.Point(17, 19);
+            this.grpFilterPerson.Name = "grpFilterPerson";
+            this.grpFilterPerson.Size = new System.Drawing.Size(653, 62);
+            this.grpFilterPerson.TabIndex = 2;
+            this.grpFilterPerson.TabStop = false;
+            this.grpFilterPerson.Text = "Filter";
             // 
             // btnFindPerson
             // 
@@ -156,17 +156,16 @@
             this.txtFilterValue.Name = "txtFilterValue";
             this.txtFilterValue.Size = new System.Drawing.Size(162, 20);
             this.txtFilterValue.TabIndex = 2;
-            this.txtFilterValue.TextChanged += new System.EventHandler(this.txtFilterValue_TextChanged);
             // 
             // cmbFilter
             // 
             this.cmbFilter.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.cmbFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFilter.FormattingEnabled = true;
             this.cmbFilter.Location = new System.Drawing.Point(80, 23);
             this.cmbFilter.Name = "cmbFilter";
             this.cmbFilter.Size = new System.Drawing.Size(162, 21);
             this.cmbFilter.TabIndex = 1;
-            this.cmbFilter.SelectedIndexChanged += new System.EventHandler(this.cmbFilter_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -177,6 +176,23 @@
             this.label2.Size = new System.Drawing.Size(58, 15);
             this.label2.TabIndex = 0;
             this.label2.Text = "Find By:";
+            // 
+            // personDetailsViewControl1
+            // 
+            this.personDetailsViewControl1.Address = "[?????]";
+            this.personDetailsViewControl1.Country = "[?????]";
+            this.personDetailsViewControl1.DateOfBirth = new System.DateTime(((long)(0)));
+            this.personDetailsViewControl1.Email = "[?????]";
+            this.personDetailsViewControl1.FullName = "[?????]";
+            this.personDetailsViewControl1.Gender = "[?????]";
+            this.personDetailsViewControl1.Location = new System.Drawing.Point(17, 95);
+            this.personDetailsViewControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.personDetailsViewControl1.Name = "personDetailsViewControl1";
+            this.personDetailsViewControl1.NationalNo = "[?????]";
+            this.personDetailsViewControl1.PersonId = -1;
+            this.personDetailsViewControl1.Phone = "[?????]";
+            this.personDetailsViewControl1.Size = new System.Drawing.Size(653, 267);
+            this.personDetailsViewControl1.TabIndex = 1;
             // 
             // btnNext
             // 
@@ -201,7 +217,7 @@
             // 
             // tpLoginInfo
             // 
-            this.tpLoginInfo.Controls.Add(this.checkBox1);
+            this.tpLoginInfo.Controls.Add(this.chkIsActive);
             this.tpLoginInfo.Controls.Add(this.txtConfirmPassword);
             this.tpLoginInfo.Controls.Add(this.txtPassword);
             this.tpLoginInfo.Controls.Add(this.txtUserName);
@@ -222,17 +238,17 @@
             this.tpLoginInfo.Text = "Login Info";
             this.tpLoginInfo.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // chkIsActive
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(175, 199);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(67, 17);
-            this.checkBox1.TabIndex = 12;
-            this.checkBox1.Text = "Is Active";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkIsActive.AutoSize = true;
+            this.chkIsActive.Checked = true;
+            this.chkIsActive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsActive.Location = new System.Drawing.Point(175, 199);
+            this.chkIsActive.Name = "chkIsActive";
+            this.chkIsActive.Size = new System.Drawing.Size(67, 17);
+            this.chkIsActive.TabIndex = 12;
+            this.chkIsActive.Text = "Is Active";
+            this.chkIsActive.UseVisualStyleBackColor = true;
             // 
             // txtConfirmPassword
             // 
@@ -241,6 +257,7 @@
             this.txtConfirmPassword.PasswordChar = '*';
             this.txtConfirmPassword.Size = new System.Drawing.Size(123, 20);
             this.txtConfirmPassword.TabIndex = 11;
+            this.txtConfirmPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtConfirmPassword_Validating);
             // 
             // txtPassword
             // 
@@ -249,6 +266,7 @@
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(123, 20);
             this.txtPassword.TabIndex = 10;
+            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
             // txtUserName
             // 
@@ -256,6 +274,7 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(123, 20);
             this.txtUserName.TabIndex = 9;
+            this.txtUserName.Validating += new System.ComponentModel.CancelEventHandler(this.txtUserName_Validating);
             // 
             // lblUserId
             // 
@@ -377,24 +396,7 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // personDetailsViewControl1
-            // 
-            this.personDetailsViewControl1.Address = "[?????]";
-            this.personDetailsViewControl1.Country = "[?????]";
-            this.personDetailsViewControl1.DateOfBirth = new System.DateTime(((long)(0)));
-            this.personDetailsViewControl1.Email = "[?????]";
-            this.personDetailsViewControl1.FullName = "[?????]";
-            this.personDetailsViewControl1.Gender = "[?????]";
-            this.personDetailsViewControl1.Location = new System.Drawing.Point(17, 95);
-            this.personDetailsViewControl1.Margin = new System.Windows.Forms.Padding(2);
-            this.personDetailsViewControl1.Name = "personDetailsViewControl1";
-            this.personDetailsViewControl1.NationalNo = "[?????]";
-            this.personDetailsViewControl1.PersonId = -1;
-            this.personDetailsViewControl1.Phone = "[?????]";
-            this.personDetailsViewControl1.Size = new System.Drawing.Size(653, 267);
-            this.personDetailsViewControl1.TabIndex = 1;
-            // 
-            // AddUserForm
+            // AddEditUserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -402,17 +404,17 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTitle);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "AddUserForm";
+            this.Name = "AddEditUserForm";
             this.ShowIcon = false;
             this.Text = "Add New User";
             this.Load += new System.EventHandler(this.AddUserForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tpPersonInfo.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grpFilterPerson.ResumeLayout(false);
+            this.grpFilterPerson.PerformLayout();
             this.tpLoginInfo.ResumeLayout(false);
             this.tpLoginInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -427,7 +429,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tpPersonInfo;
         private System.Windows.Forms.TabPage tpLoginInfo;
@@ -435,14 +437,14 @@
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpFilterPerson;
         private System.Windows.Forms.Button btnFindPerson;
         private System.Windows.Forms.Button btnAddPerson;
         private System.Windows.Forms.TextBox txtFilterValue;
         private System.Windows.Forms.ComboBox cmbFilter;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkIsActive;
         private System.Windows.Forms.TextBox txtConfirmPassword;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TextBox txtUserName;

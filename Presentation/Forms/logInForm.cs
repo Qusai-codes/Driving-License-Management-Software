@@ -49,6 +49,7 @@ namespace Presentation
             if (user != null)
             {
                 AuthenticatedUser = user;
+                AppSession.SetCurrentUser(user);
                 SaveCredentialsIfNeeded();
                 this.DialogResult = DialogResult.OK;
                 this.Close();

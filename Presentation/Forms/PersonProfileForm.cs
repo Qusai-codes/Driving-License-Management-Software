@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Presentation.Events;
+
 namespace Presentation
 {
     public enum FormMode
@@ -30,6 +32,8 @@ namespace Presentation
         private bool _imageChanged = false;
         private string _originalImagePath = null;
         private string _sourceImagePath = null;
+
+        public event EventHandler<PersonSavedEventArgs> PersonSaved;
 
         public int AddedPersonId { get; private set; } = -1;
 
@@ -226,6 +230,7 @@ namespace Presentation
                 if (_mode == FormMode.Add)
                 {
                     AddedPersonId = person.PersonId;
+                    PersonSaved?.Invoke(this, new PersonSavedEventArgs(person.PersonId));
                     SwitchToMode(FormMode.Edit);
                 }
 
@@ -495,6 +500,11 @@ namespace Presentation
                         "File Deletion Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+        }
+
+        private void personDetailsControl_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

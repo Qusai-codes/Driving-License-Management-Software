@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Presentation.Events;
 
 using Contracts.DTOs;
 
@@ -37,8 +38,14 @@ namespace Presentation
 
             using (PersonProfileForm personProfileForm = new PersonProfileForm(FormMode.Add))
             {
+                EventHandler<PersonSavedEventArgs> onPersonSaved = (s, args) =>
+                {
+                    addedPersonId = args.PersonId;
+                };
+
+                personProfileForm.PersonSaved += onPersonSaved;
                 personProfileForm.ShowDialog();
-                addedPersonId = personProfileForm.AddedPersonId;
+                personProfileForm.PersonSaved -= onPersonSaved;
             }
 
             RefreshPeopleList();
@@ -425,5 +432,6 @@ namespace Presentation
 
             cmbFilter.SelectedIndex = 0; // Default to "None"
         }
+
     }
 }

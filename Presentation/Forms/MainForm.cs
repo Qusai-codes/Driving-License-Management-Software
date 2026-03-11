@@ -32,19 +32,17 @@ namespace Presentation
         {
         }
 
-        private void accountSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void currentUserInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            int loggedInUserId = AppSession.CurrentUserId;
+            UserDetailsForm form = new UserDetailsForm(loggedInUserId);
+            form.ShowDialog();
         }
 
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ChangePasswordForm form = new ChangePasswordForm(_currentUser.UserId);
+            form.ShowDialog();
         }
 
         private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -57,6 +55,7 @@ namespace Presentation
 
             if (result == DialogResult.Yes)
             {
+                AppSession.Clear();
                 // Hide the main form
                 this.Hide();
 

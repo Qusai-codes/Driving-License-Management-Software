@@ -112,7 +112,6 @@
             this.accountSettingsToolStripMenuItem.Name = "accountSettingsToolStripMenuItem";
             this.accountSettingsToolStripMenuItem.Size = new System.Drawing.Size(199, 52);
             this.accountSettingsToolStripMenuItem.Text = "Account Settings";
-            this.accountSettingsToolStripMenuItem.Click += new System.EventHandler(this.accountSettingsToolStripMenuItem_Click);
             // 
             // currentUserInfoToolStripMenuItem
             // 
