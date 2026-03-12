@@ -241,7 +241,7 @@
             this.btnCloseLogInForm.BackColor = System.Drawing.Color.Transparent;
             this.btnCloseLogInForm.ImageIndex = 0;
             this.btnCloseLogInForm.ImageList = this.imageList1;
-            this.btnCloseLogInForm.Location = new System.Drawing.Point(328, 9);
+            this.btnCloseLogInForm.Location = new System.Drawing.Point(329, 9);
             this.btnCloseLogInForm.Margin = new System.Windows.Forms.Padding(2);
             this.btnCloseLogInForm.Name = "btnCloseLogInForm";
             this.btnCloseLogInForm.Size = new System.Drawing.Size(31, 31);

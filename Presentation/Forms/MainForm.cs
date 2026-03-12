@@ -80,5 +80,11 @@ namespace Presentation
             ManageUsersForm form = new ManageUsersForm();
             form.ShowDialog();
         }
+
+        private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageApplicationTypesForm form = new ManageApplicationTypesForm();
+            form.ShowDialog();
+        }
     }
 }
