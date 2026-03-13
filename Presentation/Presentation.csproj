@@ -122,11 +122,23 @@
     <Compile Include="Forms\PersonProfileForm.Designer.cs">
       <DependentUpon>PersonProfileForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TestTypesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TestTypesForm.Designer.cs">
+      <DependentUpon>TestTypesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UpdateApplicationTypeForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\UpdateApplicationTypeForm.Designer.cs">
       <DependentUpon>UpdateApplicationTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UpdateTestTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateTestTypeForm.Designer.cs">
+      <DependentUpon>UpdateTestTypeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\UserDetailsForm.cs">
       <SubType>Form</SubType>
@@ -176,8 +188,14 @@
     <EmbeddedResource Include="Forms\PersonProfileForm.resx">
       <DependentUpon>PersonProfileForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TestTypesForm.resx">
+      <DependentUpon>TestTypesForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UpdateApplicationTypeForm.resx">
       <DependentUpon>UpdateApplicationTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateTestTypeForm.resx">
+      <DependentUpon>UpdateTestTypeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserDetailsForm.resx">
       <DependentUpon>UserDetailsForm.cs</DependentUpon>

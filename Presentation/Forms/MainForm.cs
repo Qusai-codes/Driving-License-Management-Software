@@ -86,5 +86,11 @@ namespace Presentation
             ManageApplicationTypesForm form = new ManageApplicationTypesForm();
             form.ShowDialog();
         }
+
+        private void manageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TestTypesForm form = new TestTypesForm();
+            form.ShowDialog();
+        }
     }
 }
