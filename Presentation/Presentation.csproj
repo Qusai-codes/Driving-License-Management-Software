@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\PersonDetailsWithFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PersonDetailsWithFilterControl.Designer.cs">
+      <DependentUpon>PersonDetailsWithFilterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Events\PersonSavedEventArgs.cs" />
     <Compile Include="Forms\ChangePasswordForm.cs">
       <SubType>Form</SubType>
@@ -152,6 +158,9 @@
     <Compile Include="Helpers\FilterHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\PersonDetailsWithFilterControl.resx">
+      <DependentUpon>PersonDetailsWithFilterControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangePasswordForm.resx">
       <DependentUpon>ChangePasswordForm.cs</DependentUpon>
     </EmbeddedResource>

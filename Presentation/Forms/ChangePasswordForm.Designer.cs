@@ -52,13 +52,10 @@
             // 
             // userDetailsControl1
             // 
-            this.userDetailsControl1.IsActive = "????";
             this.userDetailsControl1.Location = new System.Drawing.Point(12, 21);
             this.userDetailsControl1.Name = "userDetailsControl1";
             this.userDetailsControl1.Size = new System.Drawing.Size(660, 377);
             this.userDetailsControl1.TabIndex = 0;
-            this.userDetailsControl1.UserId = "????";
-            this.userDetailsControl1.UserName = "????";
             // 
             // label1
             // 

@@ -16,80 +16,22 @@ namespace Presentation
     public partial class ChangePasswordForm : Form
     {
         private int _userId;
+        private int _personId;
         private string _userName;
         public ChangePasswordForm(int userId)
         {
             InitializeComponent();
-            userDetailsControl1.PersonDetailsControl.EditPersonInfoClicked += PersonDetailsViewControl_EditPersonInfoClicked;
             _userId = userId;
+            LoadUserData();
         }
 
-        private void PersonDetailsViewControl_EditPersonInfoClicked(object sender, EventArgs e)
+        private void LoadUserData()
         {
-            int personId = User.GetPersonId(_userId);
-            PersonProfileForm personProfile = new PersonProfileForm(FormMode.Edit, personId);
-            personProfile.ShowDialog();
-
-            // Reload person data after edit
-            LoadPersonData();
+            userDetailsControl1.UserId = _userId;
         }
 
         private void ChangePasswordForm_Load(object sender, EventArgs e)
         {
-            LoadPersonData();
-            LoadUserDate();
-        }
-
-        private void LoadUserDate()
-        {
-            var user = User.Find(_userId);
-            if (user != null)
-            {
-                _userName = user.UserName;
-                userDetailsControl1.UserId = user.UserId.ToString();
-                userDetailsControl1.UserName = user.UserName;
-                userDetailsControl1.IsActive = user.IsActive ? "Yes" : "No";
-            }
-        }
-
-        private void LoadPersonData()
-        {
-            var personDetailsViewControl = userDetailsControl1.PersonDetailsControl;
-            int personId = User.GetPersonId(_userId);
-            Person person = Person.Find(personId);
-            if (person == null)
-            {
-                MessageBox.Show("Person not found.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-                return;
-            }
-
-            personDetailsViewControl.PersonId = person.PersonId;
-            string fullName = string.Format("{0} {1} {2}{3}",
-                person.FirstName, person.SecondName,
-                string.IsNullOrEmpty(person.ThirdName) ? "" : person.ThirdName + " ",
-                person.LastName);
-            personDetailsViewControl.FullName = fullName;
-            personDetailsViewControl.NationalNo = person.NationalNo;
-            personDetailsViewControl.Gender = person.Gender == 0 ? "Male" : "Female";
-            personDetailsViewControl.Email = string.IsNullOrEmpty(person.Email) ?
-                                                    "" : person.Email;
-            personDetailsViewControl.Address = person.Address;
-            personDetailsViewControl.DateOfBirth = person.DateOfBirth;
-            personDetailsViewControl.Phone = person.Phone;
-            personDetailsViewControl.Country = Country.GetCountryNameById(person.NationalityCountryID);
-
-            // Get person image
-            try
-            {
-                using (var img = Image.FromFile(person.ImagePath))
-                {
-                    personDetailsViewControl.PersonImage.Image = new Bitmap(img);
-                }
-
-            }
-            catch (Exception ex) { }
         }
 
         private void btnClose_Click(object sender, EventArgs e)

@@ -1,4 +1,7 @@
-﻿using Presentation.Properties;
+﻿using Business;
+using Business;
+using Presentation.Events;
+using Presentation.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +18,7 @@ namespace Presentation.Controls
     {
         public event EventHandler EditPersonInfoClicked;
 
+        private int _personId = -1;
         private DateTime _dateOfBirth;
         private readonly string _defaultTextPlaceholder = "[?????]";
         private Image _defaultPersonImage;
@@ -23,12 +27,24 @@ namespace Presentation.Controls
         {
             InitializeComponent();
             _defaultPersonImage = picPersonImage.Image;
+            ResetView();
         }
 
         public int PersonId
         {
-            get { return int.TryParse(lblPersonId.Text, out int id) ? id : -1; }
-            set { lblPersonId.Text = value.ToString(); }
+            get { return _personId; }
+            set
+            {
+                _personId = value;
+
+                if (_personId <= 0)
+                {
+                    ResetView();
+                    return;
+                }
+
+                LoadPersonData(_personId);
+            }
         }
 
         public string FullName
@@ -105,6 +121,19 @@ namespace Presentation.Controls
             set { llbEditPersonInfo.Enabled = value; }
         }
 
+        public LinkLabel EditPersonInfoLinkLabel
+        {
+            get { return llbEditPersonInfo; }
+        }
+
+        public void ReloadCurrentPerson()
+        {
+            if (_personId > 0)
+                LoadPersonData(_personId);
+            else
+                ResetView();
+        }
+
         public void ResetView()
         {
             lblPersonId.Text = _defaultTextPlaceholder;
@@ -127,7 +156,53 @@ namespace Presentation.Controls
 
         private void llbEditPersonInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            EditPersonInfoClicked?.Invoke(this, EventArgs.Empty);
+            if (_personId != -1)
+            {
+                PersonProfileForm personProfile = new PersonProfileForm(FormMode.Edit, _personId);
+                personProfile.ShowDialog();
+
+                // Reload person data after edit
+                LoadPersonData(_personId);
+            }
+        }
+
+        private void LoadPersonData(int personId)
+        {
+            Person person = Person.Find(personId);
+            if (person == null)
+            {
+                MessageBox.Show("Person not found.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ResetView();
+                return;
+            }
+
+            EnableEditingOfPersonInfo = true;
+            lblPersonId.Text = person.PersonId.ToString();
+            string fullName = string.Format("{0} {1} {2}{3}",
+                person.FirstName, person.SecondName,
+                string.IsNullOrEmpty(person.ThirdName) ? "" : person.ThirdName + " ",
+                person.LastName);
+            FullName = fullName;
+            NationalNo = person.NationalNo;
+            Gender = person.Gender == 0 ? "Male" : "Female";
+            Email = string.IsNullOrEmpty(person.Email) ?
+                                                    "" : person.Email;
+            Address = person.Address;
+            DateOfBirth = person.DateOfBirth;
+            Phone = person.Phone;
+            Country = Business.Country.GetCountryNameById(person.NationalityCountryID);
+
+            // Get person image
+            try
+            {
+                using (var img = Image.FromFile(person.ImagePath))
+                {
+                    PersonImage.Image = new Bitmap(img);
+                }
+
+            }
+            catch (Exception ex) { }
         }
     }
 }

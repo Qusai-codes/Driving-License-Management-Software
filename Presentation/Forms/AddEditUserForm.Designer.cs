@@ -33,14 +33,7 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpPersonInfo = new System.Windows.Forms.TabPage();
-            this.grpFilterPerson = new System.Windows.Forms.GroupBox();
-            this.btnFindPerson = new System.Windows.Forms.Button();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
-            this.btnAddPerson = new System.Windows.Forms.Button();
-            this.txtFilterValue = new System.Windows.Forms.TextBox();
-            this.cmbFilter = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.personDetailsViewControl1 = new Presentation.Controls.PersonDetailsViewControl();
             this.btnNext = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tpLoginInfo = new System.Windows.Forms.TabPage();
@@ -60,9 +53,9 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.personDetailsWithFilterControl1 = new Presentation.Controls.PersonDetailsWithFilterControl();
             this.tabControl1.SuspendLayout();
             this.tpPersonInfo.SuspendLayout();
-            this.grpFilterPerson.SuspendLayout();
             this.tpLoginInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -94,8 +87,7 @@
             // 
             // tpPersonInfo
             // 
-            this.tpPersonInfo.Controls.Add(this.grpFilterPerson);
-            this.tpPersonInfo.Controls.Add(this.personDetailsViewControl1);
+            this.tpPersonInfo.Controls.Add(this.personDetailsWithFilterControl1);
             this.tpPersonInfo.Controls.Add(this.btnNext);
             this.tpPersonInfo.Location = new System.Drawing.Point(4, 22);
             this.tpPersonInfo.Name = "tpPersonInfo";
@@ -105,94 +97,12 @@
             this.tpPersonInfo.Text = "Personal Info";
             this.tpPersonInfo.UseVisualStyleBackColor = true;
             // 
-            // grpFilterPerson
-            // 
-            this.grpFilterPerson.Controls.Add(this.btnFindPerson);
-            this.grpFilterPerson.Controls.Add(this.btnAddPerson);
-            this.grpFilterPerson.Controls.Add(this.txtFilterValue);
-            this.grpFilterPerson.Controls.Add(this.cmbFilter);
-            this.grpFilterPerson.Controls.Add(this.label2);
-            this.grpFilterPerson.Location = new System.Drawing.Point(17, 19);
-            this.grpFilterPerson.Name = "grpFilterPerson";
-            this.grpFilterPerson.Size = new System.Drawing.Size(653, 62);
-            this.grpFilterPerson.TabIndex = 2;
-            this.grpFilterPerson.TabStop = false;
-            this.grpFilterPerson.Text = "Filter";
-            // 
-            // btnFindPerson
-            // 
-            this.btnFindPerson.AutoSize = true;
-            this.btnFindPerson.ImageIndex = 0;
-            this.btnFindPerson.ImageList = this.imageList2;
-            this.btnFindPerson.Location = new System.Drawing.Point(432, 13);
-            this.btnFindPerson.Name = "btnFindPerson";
-            this.btnFindPerson.Size = new System.Drawing.Size(40, 38);
-            this.btnFindPerson.TabIndex = 4;
-            this.btnFindPerson.UseVisualStyleBackColor = true;
-            this.btnFindPerson.Click += new System.EventHandler(this.btnFindPerson_Click);
-            // 
             // imageList2
             // 
             this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
             this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList2.Images.SetKeyName(0, "administrator(7).png");
             this.imageList2.Images.SetKeyName(1, "administrator(6).png");
-            // 
-            // btnAddPerson
-            // 
-            this.btnAddPerson.AutoSize = true;
-            this.btnAddPerson.ImageIndex = 1;
-            this.btnAddPerson.ImageList = this.imageList2;
-            this.btnAddPerson.Location = new System.Drawing.Point(478, 13);
-            this.btnAddPerson.Name = "btnAddPerson";
-            this.btnAddPerson.Size = new System.Drawing.Size(40, 38);
-            this.btnAddPerson.TabIndex = 3;
-            this.btnAddPerson.UseVisualStyleBackColor = true;
-            this.btnAddPerson.Click += new System.EventHandler(this.btnAddPerson_Click);
-            // 
-            // txtFilterValue
-            // 
-            this.txtFilterValue.Location = new System.Drawing.Point(251, 23);
-            this.txtFilterValue.Name = "txtFilterValue";
-            this.txtFilterValue.Size = new System.Drawing.Size(162, 20);
-            this.txtFilterValue.TabIndex = 2;
-            // 
-            // cmbFilter
-            // 
-            this.cmbFilter.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.cmbFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilter.FormattingEnabled = true;
-            this.cmbFilter.Location = new System.Drawing.Point(80, 23);
-            this.cmbFilter.Name = "cmbFilter";
-            this.cmbFilter.Size = new System.Drawing.Size(162, 21);
-            this.cmbFilter.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(16, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 15);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Find By:";
-            // 
-            // personDetailsViewControl1
-            // 
-            this.personDetailsViewControl1.Address = "[?????]";
-            this.personDetailsViewControl1.Country = "[?????]";
-            this.personDetailsViewControl1.DateOfBirth = new System.DateTime(((long)(0)));
-            this.personDetailsViewControl1.Email = "[?????]";
-            this.personDetailsViewControl1.FullName = "[?????]";
-            this.personDetailsViewControl1.Gender = "[?????]";
-            this.personDetailsViewControl1.Location = new System.Drawing.Point(17, 95);
-            this.personDetailsViewControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.personDetailsViewControl1.Name = "personDetailsViewControl1";
-            this.personDetailsViewControl1.NationalNo = "[?????]";
-            this.personDetailsViewControl1.PersonId = -1;
-            this.personDetailsViewControl1.Phone = "[?????]";
-            this.personDetailsViewControl1.Size = new System.Drawing.Size(653, 267);
-            this.personDetailsViewControl1.TabIndex = 1;
             // 
             // btnNext
             // 
@@ -396,6 +306,17 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // personDetailsWithFilterControl1
+            // 
+            this.personDetailsWithFilterControl1.AutoSize = true;
+            this.personDetailsWithFilterControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.personDetailsWithFilterControl1.Location = new System.Drawing.Point(11, 21);
+            this.personDetailsWithFilterControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.personDetailsWithFilterControl1.Name = "personDetailsWithFilterControl1";
+            this.personDetailsWithFilterControl1.PersonId = -1;
+            this.personDetailsWithFilterControl1.Size = new System.Drawing.Size(659, 339);
+            this.personDetailsWithFilterControl1.TabIndex = 1;
+            // 
             // AddEditUserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -413,8 +334,7 @@
             this.Load += new System.EventHandler(this.AddUserForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tpPersonInfo.ResumeLayout(false);
-            this.grpFilterPerson.ResumeLayout(false);
-            this.grpFilterPerson.PerformLayout();
+            this.tpPersonInfo.PerformLayout();
             this.tpLoginInfo.ResumeLayout(false);
             this.tpLoginInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -433,16 +353,9 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tpPersonInfo;
         private System.Windows.Forms.TabPage tpLoginInfo;
-        private Controls.PersonDetailsViewControl personDetailsViewControl1;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.GroupBox grpFilterPerson;
-        private System.Windows.Forms.Button btnFindPerson;
-        private System.Windows.Forms.Button btnAddPerson;
-        private System.Windows.Forms.TextBox txtFilterValue;
-        private System.Windows.Forms.ComboBox cmbFilter;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.CheckBox chkIsActive;
         private System.Windows.Forms.TextBox txtConfirmPassword;
@@ -459,5 +372,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ImageList imageList2;
+        private Controls.PersonDetailsWithFilterControl personDetailsWithFilterControl1;
     }
 }

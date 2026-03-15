@@ -92,5 +92,10 @@ namespace Presentation
             TestTypesForm form = new TestTypesForm();
             form.ShowDialog();
         }
+
+        private void localLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

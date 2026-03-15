@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Business;
+using Presentation.Events;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,27 +19,26 @@ namespace Presentation.Controls
             InitializeComponent();
         }
 
-        public string UserId
+        public int UserId
         {
-            get { return lblUserId.Text; }
-            set { lblUserId.Text = value; }
+            set 
+            {
+                LoadUserDate(value);
+            }
         }
 
-        public string UserName
+        private void LoadUserDate(int userId)
         {
-            get { return lblUsername.Text; }
-            set { lblUsername.Text = value; }
-        }
+            var user = User.Find(userId);
+            if (user != null)
+            {
+                lblUserId.Text = user.UserId.ToString();
+                lblUsername.Text = user.UserName;
+                lblIsActive.Text = user.IsActive ? "Yes" : "No";
 
-        public string IsActive
-        {
-            get { return lblIsActive.Text; }
-            set { lblIsActive.Text = value; }
-        }
-
-        public PersonDetailsViewControl PersonDetailsControl
-        {
-            get { return personDetailsViewControl1; }
+                // To load person data.
+                personDetailsViewControl1.PersonId = user.PersonId;
+            }
         }
 
     }

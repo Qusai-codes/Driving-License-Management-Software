@@ -1,5 +1,6 @@
 ﻿using Business;
 using Business.Security;
+using Presentation.Controls;
 using Presentation.Events;
 using System;
 using System.Collections.Generic;
@@ -22,25 +23,14 @@ namespace Presentation.Forms
         public AddEditUserForm(FormMode mode, int userId = -1)
         {
             InitializeComponent();
-            personDetailsViewControl1.EditPersonInfoClicked += PersonDetailsViewControl_EditPersonInfoClicked;
+            personDetailsWithFilterControl1.PersonSelected += PersonDetailsWithFilterControl1_PersonSelected;
             _mode = mode;
             if (_mode == FormMode.Edit)
             {
                 _userId = userId;
                 _personId = User.GetPersonId(_userId);
-                LoadPersonData(_personId);
-            }
-        }
 
-        private void PersonDetailsViewControl_EditPersonInfoClicked(object sender, EventArgs e)
-        { 
-            if (_personId != -1)
-            {
-                PersonProfileForm personProfile = new PersonProfileForm(FormMode.Edit, _personId);
-                personProfile.ShowDialog();
-
-                // Reload person data after edit
-                LoadPersonData(_personId);
+                personDetailsWithFilterControl1.PersonId = _personId;
             }
         }
 
@@ -50,17 +40,13 @@ namespace Presentation.Forms
             SwitchToMode(_mode);
             if (_mode == FormMode.Edit)
             {
-                LoadPersonData(_personId);
                 LoadUserDate();
             }
-            SetUpPersonFilterCombo();
         }
 
-        private void SetUpPersonFilterCombo()
+        private void PersonDetailsWithFilterControl1_PersonSelected(object sender, PersonSavedEventArgs e)
         {
-            cmbFilter.Items.Clear();
-            cmbFilter.Items.AddRange(new object[] { "National No.", "Person ID" });
-            cmbFilter.SelectedIndex = 0;
+            _personId = (e != null && e.PersonId > 0) ? e.PersonId : -1;
         }
 
         private void LoadUserDate()
@@ -78,44 +64,6 @@ namespace Presentation.Forms
             }
         }
 
-        private void LoadPersonData(int personId)
-        {
-            Person person = Person.Find(personId);
-            if (person == null)
-            {
-                MessageBox.Show("Person not found.", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            personDetailsViewControl1.EnableEditingOfPersonInfo = true;
-            personDetailsViewControl1.PersonId = person.PersonId;
-            string fullName = string.Format("{0} {1} {2}{3}",
-                person.FirstName, person.SecondName,
-                string.IsNullOrEmpty(person.ThirdName) ? "" : person.ThirdName + " ",
-                person.LastName);
-            personDetailsViewControl1.FullName = fullName;
-            personDetailsViewControl1.NationalNo = person.NationalNo;
-            personDetailsViewControl1.Gender = person.Gender == 0 ? "Male" : "Female";
-            personDetailsViewControl1.Email = string.IsNullOrEmpty(person.Email) ?
-                                                    "" : person.Email;
-            personDetailsViewControl1.Address = person.Address;
-            personDetailsViewControl1.DateOfBirth = person.DateOfBirth;
-            personDetailsViewControl1.Phone = person.Phone;
-            personDetailsViewControl1.Country = Country.GetCountryNameById(person.NationalityCountryID);
-
-            // Get person image
-            try
-            {
-                using (var img = Image.FromFile(person.ImagePath))
-                {
-                    personDetailsViewControl1.PersonImage.Image = new Bitmap(img);
-                }
-
-            }
-            catch (Exception ex) { }
-        }
-
         private void SwitchToMode(FormMode mode)
         {
             _mode = mode;
@@ -125,13 +73,13 @@ namespace Presentation.Forms
             {
                 this.Text = "Add New User";
                 lblTitle.Text = "Add New User";
-                personDetailsViewControl1.EnableEditingOfPersonInfo = false;
+                personDetailsWithFilterControl1.EnableEditingOfPersonInfo = false;
             }
             else if (_mode == FormMode.Edit)
             {
                 this.Text = "Update User";
                 lblTitle.Text = "Update User";
-                grpFilterPerson.Enabled = false;
+                personDetailsWithFilterControl1.PersonFilter.Enabled = false;
                 txtPassword.Enabled = false;
                 txtConfirmPassword.Enabled = false;
             }
@@ -261,77 +209,6 @@ namespace Presentation.Forms
             }
 
             tabControl1.SelectedTab = tpLoginInfo;
-        }
-
-        private void btnFindPerson_Click(object sender, EventArgs e)
-        {
-            string selectedFilter = cmbFilter.SelectedItem?.ToString();
-            string filterValue = txtFilterValue.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(filterValue))
-            {
-                MessageBox.Show("Please enter a value to search.", "Validation",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            Person person = null;
-
-            if (selectedFilter == "National No.")
-            {
-                person = Person.Find(filterValue);
-                
-                if (person == null)
-                {
-                    MessageBox.Show($"No Person with National No. = {filterValue}",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else if (selectedFilter == "Person ID")
-            {
-                int personId;
-                if (!int.TryParse(filterValue, out personId))
-                {
-                    MessageBox.Show("Person ID must be numeric.", "Validation",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                person = Person.Find(personId);
-                if (person == null)
-                {
-                    MessageBox.Show($"No Person with Person ID = {filterValue}",
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-
-            if (person == null)
-            {
-                personDetailsViewControl1.ResetView();
-                return;
-            }
-            _personId = person.PersonId;
-            LoadPersonData(_personId);
-        }
-
-        private void btnAddPerson_Click(object sender, EventArgs e)
-        {
-            using (PersonProfileForm personProfileForm = new PersonProfileForm(FormMode.Add))
-            {
-                EventHandler<PersonSavedEventArgs> onPersonSaved = (s, args) =>
-                {
-                    _personId = args.PersonId;
-                };
-
-                personProfileForm.PersonSaved += onPersonSaved;
-                personProfileForm.ShowDialog();
-                personProfileForm.PersonSaved -= onPersonSaved;
-            }
-
-            if (_personId != -1)
-            {
-                LoadPersonData(_personId);
-            }
         }
 
         private void txtUserName_Validating(object sender, CancelEventArgs e)
