@@ -178,31 +178,34 @@ namespace Presentation.Controls
             }
 
             EnableEditingOfPersonInfo = true;
+
+            // IMPORTANT: do not call PersonId property here (it re-enters setter).
             lblPersonId.Text = person.PersonId.ToString();
+
             string fullName = string.Format("{0} {1} {2}{3}",
                 person.FirstName, person.SecondName,
                 string.IsNullOrEmpty(person.ThirdName) ? "" : person.ThirdName + " ",
                 person.LastName);
+
             FullName = fullName;
             NationalNo = person.NationalNo;
             Gender = person.Gender == 0 ? "Male" : "Female";
-            Email = string.IsNullOrEmpty(person.Email) ?
-                                                    "" : person.Email;
+            Email = string.IsNullOrEmpty(person.Email) ? "" : person.Email;
             Address = person.Address;
             DateOfBirth = person.DateOfBirth;
             Phone = person.Phone;
             Country = Business.Country.GetCountryNameById(person.NationalityCountryID);
 
-            // Get person image
             try
             {
                 using (var img = Image.FromFile(person.ImagePath))
                 {
                     PersonImage.Image = new Bitmap(img);
                 }
-
             }
-            catch (Exception ex) { }
+            catch
+            {
+            }
         }
     }
 }

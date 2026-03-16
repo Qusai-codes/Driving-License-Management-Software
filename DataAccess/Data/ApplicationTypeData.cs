@@ -100,5 +100,33 @@ namespace DataAccess.Data
 
             return rowsAffected > 0;
         }
+
+        public static decimal GetApplicationTypeFees(string applicationTypeTitle)
+        {
+            decimal fees = 0;
+
+            const string query = @"
+                SELECT ApplicationFees 
+                FROM ApplicationTypes
+                WHERE ApplicationTypeTitle = @ApplicationTypeTitle;
+                ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@ApplicationTypeTitle", SqlDbType.NVarChar, 150).Value = applicationTypeTitle;
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        fees = (decimal)reader["ApplicationFees"];
+                    }
+                }
+            }
+
+            return fees;
+        }
     }
 }

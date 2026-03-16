@@ -12,6 +12,17 @@ namespace Business
 {
     public class ApplicationType
     {
+        public enum ApplicationTypeTitle
+        {
+            NewLocalDrivingLicense,
+            RenewDrivingLicense,
+            ReplaceLostDrivingLicense,
+            ReplaceDamagedDrivingLicense,
+            ReleaseDetainedLicense,
+            NewInternationalDrivingLicense,
+            RetakeTest
+        }
+
         public EntityMode Mode { get; private set; }
 
         public int Id { get; private set; }
@@ -76,6 +87,40 @@ namespace Business
             {
                 return null;
             }
+        }
+
+        public static decimal GetApplicationTypeFees(ApplicationTypeTitle applicationType)
+        {
+            decimal fees = -1;
+
+            switch (applicationType)
+            {
+                case ApplicationTypeTitle.NewLocalDrivingLicense:
+                    fees = ApplicationTypeData.GetApplicationTypeFees("New Local Driving License Service");
+                    break;
+                case ApplicationTypeTitle.RenewDrivingLicense:
+                    fees = ApplicationTypeData.GetApplicationTypeFees("Renew Driving License Service");
+                    break;
+                case ApplicationTypeTitle.ReplaceLostDrivingLicense:
+                    fees = ApplicationTypeData.GetApplicationTypeFees("Replacement for a Lost Driving License");
+                    break;
+                case ApplicationTypeTitle.ReplaceDamagedDrivingLicense:
+                    fees = ApplicationTypeData.GetApplicationTypeFees("Replacement for a Damaged Driving License");
+                    break;
+                case ApplicationTypeTitle.ReleaseDetainedLicense:
+                    fees = ApplicationTypeData.GetApplicationTypeFees("Release Detained Driving Licsense");
+                    break;
+                case ApplicationTypeTitle.NewInternationalDrivingLicense:
+                    fees = ApplicationTypeData.GetApplicationTypeFees("New International License");
+                    break;
+                case ApplicationTypeTitle.RetakeTest:
+                    fees = ApplicationTypeData.GetApplicationTypeFees("Retake Test");
+                    break;
+                default:
+                    break;
+            }
+
+            return fees;
         }
     }
 }

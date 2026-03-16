@@ -95,7 +95,9 @@ namespace Presentation
 
         private void localLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            LocalDrivingLicenseForm form = new LocalDrivingLicenseForm(
+                FormMode.Add, _currentUser.UserId);
+            form.ShowDialog();
         }
     }
 }
