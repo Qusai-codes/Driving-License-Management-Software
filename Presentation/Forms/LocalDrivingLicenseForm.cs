@@ -44,6 +44,7 @@ namespace Presentation.Forms
         {
             tabControl1.SelectedTab = tpPersonalInfo;
             LoadDrivingLicenseClasses();
+            LoadApplicationTypes();
             lblApplicationDate.Text = DateTime.Now.ToString("d");
             lblApplicationFees.Text = ApplicationType.GetApplicationTypeFees(
                 ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense).ToString();
@@ -60,6 +61,16 @@ namespace Presentation.Forms
                 cmbDrivingLicenseClass.Items.AddRange(licenseclassNames);
                 cmbDrivingLicenseClass.SelectedIndex = ordinaryDrivingLicenseIndex;
             }
+        }
+
+        private void LoadApplicationTypes()
+        {
+            DataTable dt = ApplicationType.GetAllApplicationTypes();
+
+            cmbApplicationType.DataSource = dt;
+            cmbApplicationType.DisplayMember = "ApplicationTypeTitle";
+            cmbApplicationType.ValueMember = "ApplicationTypeID";
+            cmbApplicationType.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void SwitchToMode(FormMode mode)

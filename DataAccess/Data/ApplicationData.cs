@@ -11,6 +11,48 @@ namespace DataAccess.Data
 {
     public class ApplicationData
     {
+
+        public static bool GetApplicationInfoById(int id, ref int personId, ref DateTime applicationDate,
+            ref int applicationTypeId, ref byte applicationStatus, ref DateTime lastStatusDate,
+            ref decimal paidFees, ref int userId)
+        {
+            bool isFound = false;
+            const string query = @"
+            SELECT 
+	            ApplicationID, ApplicantPersonID, ApplicationDate, 
+	            ApplicationTypeID, ApplicationStatus, LastStatusDate,
+	            PaidFees, CreatedByUserID
+            FROM Applications 
+            WHERE ApplicationID = @ApplicationID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@ApplicationID", SqlDbType.Int).Value = id;
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        isFound = true;
+
+                        personId = (int)reader["ApplicantPersonID"];
+                        applicationDate = (DateTime)reader["ApplicationDate"];
+                        applicationTypeId = (int)reader["ApplicationTypeID"];
+                        applicationStatus = (byte)reader["ApplicationStatus"];
+                        lastStatusDate = (DateTime)reader["LastStatusDate"];
+                        paidFees = (decimal)reader["PaidFees"];
+                        userId = (int)reader["CreatedByUserID"];
+
+                    }
+                }
+            }
+
+            return isFound;
+        }
+
         public static int AddNewApplication(int personId, DateTime applicationDate, 
             int applicationTypeId, byte applicationStatus, DateTime lastStatusDate, 
             decimal paidFees, int userId)
@@ -49,6 +91,81 @@ namespace DataAccess.Data
             return applicationId;
         }
 
+        public static bool UpdateApplication(int applicationId, byte applicationStatus, 
+            DateTime lastStatusDate, decimal paidFees)
+        {
+            int rowsAffected = 0;
 
+            const string query = @"
+            UPDATE Applications 
+            SET 
+	            ApplicationStatus = @ApplicationStatus,
+	            LastStatusDate = @LastStatusDate,
+	            PaidFees = @PaidFees
+            WHERE ApplicationID = @ApplicationID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@ApplicationID", SqlDbType.Int).Value = applicationId;
+                command.Parameters.Add("@ApplicationStatus", SqlDbType.TinyInt).Value = applicationStatus;
+                command.Parameters.Add("@LastStatusDate", SqlDbType.DateTime).Value = lastStatusDate;
+                command.Parameters.Add("@PaidFees", SqlDbType.SmallMoney).Value = paidFees;
+
+                connection.Open();
+                rowsAffected = command.ExecuteNonQuery();
+            }
+
+            return rowsAffected > 0;
+        }
+
+        public static DataTable GetAllDrivingLicenseApplications()
+        {
+            DataTable dt = new DataTable();
+
+            const string query = @"
+            SELECT 
+	            ApplicationID, ApplicantPersonID, ApplicationDate, 
+	            ApplicationTypeID, ApplicationStatus, LastStatusDate, 
+	            PaidFees, CreatedByUserID
+            FROM Applications;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        dt.Load(reader);
+                    }
+                }
+            }
+
+            return dt;
+        }
+
+        public static bool DeleteApplication(int applicationId)
+        {
+            int rowsAffected = 0;
+
+            const string query = @"
+            DELETE FROM Applications 
+            WHERE ApplicationID = @ApplicationID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@ApplicationID", SqlDbType.Int).Value = applicationId;
+
+                connection.Open();
+                rowsAffected = command.ExecuteNonQuery();
+            }
+            return rowsAffected > 0;
+        }
     }
 }

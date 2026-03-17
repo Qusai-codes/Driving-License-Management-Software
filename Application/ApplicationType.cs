@@ -122,5 +122,12 @@ namespace Business
 
             return fees;
         }
+
+        public static int GetApplicationTypeIdFromTitle()
+        {
+            int id = -1;
+
+            return id;
+        }
     }
 }
