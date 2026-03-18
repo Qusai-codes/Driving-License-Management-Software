@@ -91,43 +91,44 @@ namespace Business
 
         public static decimal GetApplicationTypeFees(ApplicationTypeTitle applicationType)
         {
-            decimal fees = -1;
+            int applicationTypeId;
+            if (!TryGetApplicationTypeId(applicationType, out applicationTypeId))
+            {
+                return -1m;
+            }
 
+            return ApplicationTypeData.GetApplicationTypeFees(applicationTypeId);
+        }
+
+        private static bool TryGetApplicationTypeId(ApplicationTypeTitle applicationType, out int id)
+        {
             switch (applicationType)
             {
                 case ApplicationTypeTitle.NewLocalDrivingLicense:
-                    fees = ApplicationTypeData.GetApplicationTypeFees("New Local Driving License Service");
-                    break;
+                    id = 1;
+                    return true;
                 case ApplicationTypeTitle.RenewDrivingLicense:
-                    fees = ApplicationTypeData.GetApplicationTypeFees("Renew Driving License Service");
-                    break;
+                    id = 2;
+                    return true;
                 case ApplicationTypeTitle.ReplaceLostDrivingLicense:
-                    fees = ApplicationTypeData.GetApplicationTypeFees("Replacement for a Lost Driving License");
-                    break;
+                    id = 3;
+                    return true;
                 case ApplicationTypeTitle.ReplaceDamagedDrivingLicense:
-                    fees = ApplicationTypeData.GetApplicationTypeFees("Replacement for a Damaged Driving License");
-                    break;
+                    id = 4;
+                    return true;
                 case ApplicationTypeTitle.ReleaseDetainedLicense:
-                    fees = ApplicationTypeData.GetApplicationTypeFees("Release Detained Driving Licsense");
-                    break;
+                    id = 5;
+                    return true;
                 case ApplicationTypeTitle.NewInternationalDrivingLicense:
-                    fees = ApplicationTypeData.GetApplicationTypeFees("New International License");
-                    break;
+                    id = 6;
+                    return true;
                 case ApplicationTypeTitle.RetakeTest:
-                    fees = ApplicationTypeData.GetApplicationTypeFees("Retake Test");
-                    break;
+                    id = 8;
+                    return true;
                 default:
-                    break;
+                    id = -1;
+                    return false;
             }
-
-            return fees;
-        }
-
-        public static int GetApplicationTypeIdFromTitle()
-        {
-            int id = -1;
-
-            return id;
         }
     }
 }

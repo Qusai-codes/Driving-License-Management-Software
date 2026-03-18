@@ -81,6 +81,12 @@
     <Compile Include="Forms\AddEditUserForm.Designer.cs">
       <DependentUpon>AddEditUserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LocalDrivingLicenseApplicationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LocalDrivingLicenseApplicationsForm.Designer.cs">
+      <DependentUpon>LocalDrivingLicenseApplicationsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LocalDrivingLicenseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -180,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddEditUserForm.resx">
       <DependentUpon>AddEditUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LocalDrivingLicenseApplicationsForm.resx">
+      <DependentUpon>LocalDrivingLicenseApplicationsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LocalDrivingLicenseForm.resx">
       <DependentUpon>LocalDrivingLicenseForm.cs</DependentUpon>

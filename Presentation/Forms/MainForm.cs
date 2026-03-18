@@ -16,6 +16,7 @@ namespace Presentation
     public partial class MainForm : Form
     {
         private User _currentUser;
+
         public MainForm(User authenticatedUser = null)
         {
             InitializeComponent();
@@ -97,6 +98,13 @@ namespace Presentation
         {
             LocalDrivingLicenseForm form = new LocalDrivingLicenseForm(
                 FormMode.Add, _currentUser.UserId);
+            form.ShowDialog();
+        }
+
+        private void localDrivingLicenseApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LocalDrivingLicenseApplicationsForm form =
+                new LocalDrivingLicenseApplicationsForm(_currentUser.UserId);
             form.ShowDialog();
         }
     }

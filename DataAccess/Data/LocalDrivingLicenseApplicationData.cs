@@ -104,10 +104,38 @@ namespace DataAccess
 
             const string query = @"
             SELECT 
-                LocalDrivingLicenseApplicationID, 
-                ApplicationID, 
-                LicenseClassID 
-            FROM LocalDrivingLicenseApplications;
+                l.LocalDrivingLicenseApplicationID,
+                lc.ClassName,
+                p.NationalNo,
+
+                p.FirstName
+                    + ' ' + p.SecondName
+                    + CASE 
+                        WHEN p.ThirdName IS NULL OR p.ThirdName = '' 
+                            THEN '' 
+                        ELSE ' ' + p.ThirdName 
+                      END
+                    + ' ' + p.LastName AS FullName,
+
+                ap.ApplicationDate,
+
+                (
+                    SELECT COUNT(*)
+                    FROM Tests t
+                    INNER JOIN TestAppointments ta 
+                        ON t.TestAppointmentID = ta.TestAppointmentID
+                    WHERE ta.LocalDrivingLicenseApplicationID = l.LocalDrivingLicenseApplicationID
+                      AND t.TestResult = 1
+                ) AS PassedTests,
+                ap.ApplicationStatus
+
+            FROM LocalDrivingLicenseApplications l
+            INNER JOIN LicenseClasses lc 
+                ON l.LicenseClassID = lc.LicenseClassID
+            INNER JOIN Applications ap 
+                ON l.ApplicationID = ap.ApplicationID
+            INNER JOIN People p 
+                ON p.PersonID = ap.ApplicantPersonID;
             ";
 
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())
@@ -124,6 +152,39 @@ namespace DataAccess
             }
 
             return dt;
+        }
+
+        public static int GetApplicationId(int personId,
+            int licenseClassId, byte applicationStatus)
+        {
+            int applicationId = -1;
+
+            const string query = @"
+            SELECT ap.ApplicationID 
+            FROM LocalDrivingLicenseApplications loc 
+            INNER JOIN Applications ap ON loc.ApplicationID = ap.ApplicationID 
+            WHERE ap.ApplicantPersonID = @ApplicantPersonID 
+	            AND loc.LicenseClassID = @LicenseClassID 
+	            AND ap.ApplicationStatus = @ApplicationStatus;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@ApplicantPersonID", SqlDbType.Int).Value = personId;
+                command.Parameters.Add("@LicenseClassID", SqlDbType.Int).Value = licenseClassId;
+                command.Parameters.Add("@ApplicationStatus", SqlDbType.TinyInt).Value = applicationStatus;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    applicationId = Convert.ToInt32(result);
+                }
+            }
+
+            return applicationId;
         }
     }
 }

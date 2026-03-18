@@ -38,6 +38,7 @@ namespace Business
 
         private bool AddNewApplication()
         {
+            // Check if there is application with the same license class the person
             LocalDrivingLicenseApplicationId = LocalDrivingLicenseApplicationData.AddNewApplication(
                 ApplicationId, LicenseClassId);
             return LocalDrivingLicenseApplicationId != -1;
@@ -83,6 +84,70 @@ namespace Business
             }
 
             return null;
+        }
+
+        public static int GetApplicationId(int personId,
+            int licenseClassId)
+        {
+            return LocalDrivingLicenseApplicationData.GetApplicationId(personId, 
+                licenseClassId, (byte)Application.Status.New);
+        }
+
+        public static bool TryCreateNew(int personId, int licenseClassId, int userId,
+            out int localDrivingLicenseApplicationId, out int blockingApplicationId, out string errorMessage)
+        {
+            localDrivingLicenseApplicationId = -1;
+            blockingApplicationId = -1;
+            errorMessage = string.Empty;
+
+            // Business rule: block if same person + class has status New or Completed
+            int newStatusAppId = LocalDrivingLicenseApplicationData.GetApplicationId(
+                personId, licenseClassId, (byte)Application.Status.New);
+
+            int completedStatusAppId = LocalDrivingLicenseApplicationData.GetApplicationId(
+                personId, licenseClassId, (byte)Application.Status.Completed);
+
+            if (newStatusAppId != -1 || completedStatusAppId != -1)
+            {
+                blockingApplicationId = newStatusAppId != -1 ? newStatusAppId : completedStatusAppId;
+                errorMessage = string.Format(
+                    "Choose another License Class, the selected person already has an active application for the selected class with id = {0}",
+                    blockingApplicationId);
+                return false;
+            }
+
+            Application baseApplication = new Application
+            {
+                PersonId = personId,
+                ApplicationDate = DateTime.Now,
+                ApplicationTypeId = (int)ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense + 1,
+                ApplicationStatus = Application.Status.New,
+                LastStatusDate = DateTime.Now,
+                PaidFees = ApplicationType.GetApplicationTypeFees(ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense),
+                UserId = userId
+            };
+
+            if (!baseApplication.Save())
+            {
+                errorMessage = "Unable to save new application.";
+                return false;
+            }
+
+            LocalDrivingLicenseApplication localApp = new LocalDrivingLicenseApplication
+            {
+                ApplicationId = baseApplication.ApplicationId,
+                LicenseClassId = licenseClassId
+            };
+
+            if (!localApp.Save())
+            {
+                Application.DeleteApplication(baseApplication.ApplicationId); // rollback parent
+                errorMessage = "Unable to save local driving license application.";
+                return false;
+            }
+
+            localDrivingLicenseApplicationId = localApp.LocalDrivingLicenseApplicationId;
+            return true;
         }
     }
 }

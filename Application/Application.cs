@@ -12,13 +12,21 @@ namespace Business
 {
     public class Application
     {
+        public enum Status
+        {
+            New = 1,
+            Canceled = 2,
+            Completed = 3
+        }
+
         public EntityMode Mode { get; private set; }
 
         public int ApplicationId { get; set; }
         public int PersonId { get; set; }
         public DateTime ApplicationDate { get; set; }
         public int ApplicationTypeId { get; set; }
-        public byte ApplicationStatus { get; set; }
+        //public byte ApplicationStatus { get; set; }
+        public Status ApplicationStatus { get; set; }
         public DateTime LastStatusDate { get; set; }
         public decimal PaidFees { get; set; }
         public int UserId { get; set; }
@@ -29,7 +37,7 @@ namespace Business
             PersonId = -1;
             ApplicationDate = DateTime.Now;
             ApplicationTypeId = -1;
-            ApplicationStatus = 0;
+            ApplicationStatus = Status.New;
             LastStatusDate = DateTime.Now;
             PaidFees = 0;
             UserId = -1;
@@ -38,7 +46,7 @@ namespace Business
         }
 
         private Application(int applicationId, int personId, DateTime applicationDate, 
-            int applicationTypeId, byte applicationStatus, DateTime lastStatusDate,
+            int applicationTypeId, Status applicationStatus, DateTime lastStatusDate,
             decimal paidFees, int userId)
         {
             ApplicationId = applicationId;
@@ -56,14 +64,14 @@ namespace Business
         private bool AddNewApplication()
         {
             ApplicationId = ApplicationData.AddNewApplication(PersonId, ApplicationDate, 
-                ApplicationTypeId, ApplicationStatus, LastStatusDate, PaidFees, UserId);
+                ApplicationTypeId, (byte)ApplicationStatus, LastStatusDate, PaidFees, UserId);
             return ApplicationId != -1;
         }
         
         private bool UpdateApplication()
         {
-            return ApplicationData.UpdateApplication(ApplicationId, ApplicationStatus, 
-                LastStatusDate, PaidFees);
+            return ApplicationData.UpdateApplication(ApplicationId, (byte)ApplicationStatus, 
+                LastStatusDate);
         }
 
         public bool Save()
@@ -71,10 +79,6 @@ namespace Business
             switch (Mode)
             {
                 case EntityMode.AddNew:
-                    if (CheckSameApplicationExists())
-                    {
-                        return false;
-                    }
                     if (AddNewApplication())
                     {
                         Mode = EntityMode.Update;
@@ -109,26 +113,37 @@ namespace Business
         public static Application FindByApplicationId(int applicationId)
         {
             int personId = -1, applicationTypeId = -1, userId = -1;
-            byte applicationStatus = 0;
+            byte applicationStatusByte = 0;
             DateTime applicationDate = DateTime.Now, lastStatusDate = DateTime.Now;
             decimal paidFees = 0;
 
-            if (ApplicationData.GetApplicationInfoById(applicationId, ref personId, 
-                ref applicationDate, ref applicationTypeId, ref applicationStatus, 
+            if (ApplicationData.GetApplicationInfoById(applicationId, ref personId,
+                ref applicationDate, ref applicationTypeId, ref applicationStatusByte,
                 ref lastStatusDate, ref paidFees, ref userId))
             {
-                return new Application(applicationId, personId, applicationDate, applicationTypeId, 
+                Status applicationStatus = Enum.IsDefined(typeof(Status), (int)applicationStatusByte)
+                    ? (Status)applicationStatusByte
+                    : Status.New;
+
+                return new Application(applicationId, personId, applicationDate, applicationTypeId,
                     applicationStatus, lastStatusDate, paidFees, userId);
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public static bool DeleteApplication(int applicationId)
         {
             return ApplicationData.DeleteApplication(applicationId);
+        }
+
+        public static Status GetApplicationStatus(int applicationId)
+        {
+            byte status = ApplicationData.GetApplicationStatus(applicationId);
+
+            return Enum.IsDefined(typeof(Status), (int)status)
+                ? (Status)status
+                : Status.New;
         }
     }
 }

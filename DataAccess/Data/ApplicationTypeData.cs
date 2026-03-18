@@ -128,5 +128,33 @@ namespace DataAccess.Data
 
             return fees;
         }
+
+        public static decimal GetApplicationTypeFees(int applicationTypeId)
+        {
+            decimal fees = 0;
+
+            const string query = @"
+                SELECT ApplicationFees 
+                FROM ApplicationTypes
+                WHERE ApplicationTypeID = @ApplicationTypeID;
+                ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@ApplicationTypeID", SqlDbType.Int).Value = applicationTypeId;
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        fees = (decimal)reader["ApplicationFees"];
+                    }
+                }
+            }
+
+            return fees;
+        }
     }
 }

@@ -92,7 +92,7 @@ namespace DataAccess.Data
         }
 
         public static bool UpdateApplication(int applicationId, byte applicationStatus, 
-            DateTime lastStatusDate, decimal paidFees)
+            DateTime lastStatusDate)
         {
             int rowsAffected = 0;
 
@@ -101,7 +101,6 @@ namespace DataAccess.Data
             SET 
 	            ApplicationStatus = @ApplicationStatus,
 	            LastStatusDate = @LastStatusDate,
-	            PaidFees = @PaidFees
             WHERE ApplicationID = @ApplicationID;
             ";
 
@@ -111,7 +110,6 @@ namespace DataAccess.Data
                 command.Parameters.Add("@ApplicationID", SqlDbType.Int).Value = applicationId;
                 command.Parameters.Add("@ApplicationStatus", SqlDbType.TinyInt).Value = applicationStatus;
                 command.Parameters.Add("@LastStatusDate", SqlDbType.DateTime).Value = lastStatusDate;
-                command.Parameters.Add("@PaidFees", SqlDbType.SmallMoney).Value = paidFees;
 
                 connection.Open();
                 rowsAffected = command.ExecuteNonQuery();
@@ -166,6 +164,11 @@ namespace DataAccess.Data
                 rowsAffected = command.ExecuteNonQuery();
             }
             return rowsAffected > 0;
+        }
+
+        public static byte GetApplicationStatus(int applicationId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

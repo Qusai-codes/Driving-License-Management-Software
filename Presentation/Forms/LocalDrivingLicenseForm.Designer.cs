@@ -189,7 +189,7 @@
             this.tpApplicationInfo.TabIndex = 1;
             this.tpApplicationInfo.Text = "Application Info";
             this.tpApplicationInfo.UseVisualStyleBackColor = true;
-            this.tpApplicationInfo.Click += new System.EventHandler(this.tpApplicationInfo_Click);
+            this.tpApplicationInfo.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // pictureBox5
             // 
