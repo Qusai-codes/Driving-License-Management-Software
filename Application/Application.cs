@@ -93,18 +93,6 @@ namespace Business
             return false;
         }
 
-        /// <summary>
-        /// Checks if there is an application with the user id
-        /// and same application type in the database, if there is
-        /// then return true.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        private bool CheckSameApplicationExists()
-        {
-            throw new NotImplementedException();
-        }
-
         public static DataTable GetAllDrivingLicenseApplications()
         {
             return ApplicationData.GetAllDrivingLicenseApplications();

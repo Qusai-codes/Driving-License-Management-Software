@@ -186,5 +186,32 @@ namespace DataAccess
 
             return applicationId;
         }
+
+        public static int GetApplicationId(int localApplicationId)
+        {
+            int applicationId = -1;
+
+            const string query = @"
+            SELECT ApplicationID 
+            FROM LocalDrivingLicenseApplications 
+            WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@LocalDrivingLicenseApplicationID", SqlDbType.Int).Value = localApplicationId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    applicationId = Convert.ToInt32(result);
+                }
+            }
+
+            return applicationId;
+        }
     }
 }

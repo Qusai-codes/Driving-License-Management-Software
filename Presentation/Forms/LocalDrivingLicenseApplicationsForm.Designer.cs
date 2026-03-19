@@ -141,11 +141,16 @@
             // 
             // dgvApplications
             // 
+            this.dgvApplications.AllowUserToAddRows = false;
+            this.dgvApplications.AllowUserToDeleteRows = false;
+            this.dgvApplications.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvApplications.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dgvApplications.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvApplications.ContextMenuStrip = this.contextMenuStrip1;
             this.dgvApplications.Location = new System.Drawing.Point(16, 297);
             this.dgvApplications.Margin = new System.Windows.Forms.Padding(4);
             this.dgvApplications.Name = "dgvApplications";
+            this.dgvApplications.ReadOnly = true;
             this.dgvApplications.RowHeadersWidth = 51;
             this.dgvApplications.Size = new System.Drawing.Size(1125, 331);
             this.dgvApplications.TabIndex = 7;
@@ -190,7 +195,7 @@
             this.toolStripMenuItem6,
             this.showPersonLicenseHistoryToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(297, 276);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(297, 248);
             // 
             // showApplicationDetailsToolStripMenuItem
             // 

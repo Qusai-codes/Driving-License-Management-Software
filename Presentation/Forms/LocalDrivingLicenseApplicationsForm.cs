@@ -63,6 +63,7 @@ namespace Presentation.Forms
             SetColumnHeader("NationalNo", "National No.");
             SetColumnHeader("FullName", "Full Name");
             SetColumnHeader("ApplicationDate", "Application Date");
+            SetColumnHeader("PassedTests", "Passed Tests");
             SetColumnHeader("ApplicationStatus", "Status");
 
             // Transform ApplicationStatus display from number to enum name
@@ -202,6 +203,8 @@ namespace Presentation.Forms
                     return "FullName";
                 case "Application Date":
                     return "ApplicationDate";
+                case "Passed Tests":
+                    return "PassedTests";
                 case "Status":
                     return "ApplicationStatus";
                 default:
@@ -244,11 +247,26 @@ namespace Presentation.Forms
 
         private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dialogResult = MessageBox.Show("Are you sure you want to cancel this application?",
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to cancel this application?",
                 "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
             {
                 // Cancel the application
+
+                // Get application id 
+                if (dgvApplications.CurrentRow == null)
+                {
+                    MessageBox.Show("Please select an application");
+                    return;
+                }
+                int localApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+                bool cancelled = LocalDrivingLicenseApplication.CancelApplication(localApplicationId);
+                if (!cancelled)
+                {
+                    MessageBox.Show("Unable to cancel the application", "Fail",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 MessageBox.Show("Application Cancelled Successfully.",
                     "Cancelled", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 RefreshApplicationsList();

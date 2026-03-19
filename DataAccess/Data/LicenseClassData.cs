@@ -18,7 +18,7 @@ namespace DataAccess.Data
             const string query = @"
             SELECT 
                 LicenseClassID,
-                ClassName,
+                ClassName
             FROM LicenseClasses
             ORDER BY LicenseClassID;";
 

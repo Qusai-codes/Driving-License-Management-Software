@@ -51,6 +51,7 @@ namespace Presentation.Forms
             lblApplicationDate.Text = DateTime.Now.ToString("d");
             lblApplicationFees.Text = ApplicationType.GetApplicationTypeFees(
                 ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense).ToString();
+            lblUserName.Text = User.Find(_userId).UserName;
             SwitchToMode(_mode);
         }
 
@@ -147,67 +148,6 @@ namespace Presentation.Forms
             }
 
             return true;
-        }
-
-        private bool HasActiveApplicationForSelectedClass(int licenseClassId, out int existingApplicationId)
-        {
-            existingApplicationId = LocalDrivingLicenseApplication.GetApplicationId(_personId, licenseClassId);
-            return existingApplicationId != -1;
-        }
-
-        private void ShowDuplicateApplicationMessage(int existingApplicationId)
-        {
-            string msg = string.Format(
-                "Choose another License Class, the selected person already has an active application for the selected class with id = {0}",
-                existingApplicationId);
-
-            MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private bool TryCreateBaseApplication(out Business.Application newApplication)
-        {
-            newApplication = new Business.Application();
-            newApplication.PersonId = _personId;
-            newApplication.ApplicationDate = DateTime.Now;
-            newApplication.ApplicationTypeId = (int)ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense + 1; // DB id is 1-based
-            newApplication.ApplicationStatus = Business.Application.Status.New;
-            newApplication.LastStatusDate = DateTime.Now;
-            newApplication.PaidFees = ApplicationType.GetApplicationTypeFees(
-                ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense);
-            newApplication.UserId = _userId;
-
-            if (!newApplication.Save())
-            {
-                MessageBox.Show("Unable to save new application.", "Failed to Save",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool TryCreateLocalApplication(int applicationId, int licenseClassId, out LocalDrivingLicenseApplication localApp)
-        {
-            localApp = new LocalDrivingLicenseApplication
-            {
-                ApplicationId = applicationId,
-                LicenseClassId = licenseClassId
-            };
-
-            return localApp.Save();
-        }
-
-        private void HandleSaveSuccess(LocalDrivingLicenseApplication localApp)
-        {
-            MessageBox.Show(
-                string.Format("Data Saved Successfully. Local Driving License Application ID = {0}",
-                    localApp.LocalDrivingLicenseApplicationId),
-                "Saved",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-
-            lblApplicationId.Text = localApp.LocalDrivingLicenseApplicationId.ToString();
-            SwitchToMode(FormMode.Edit);
         }
     }
 }

@@ -149,5 +149,31 @@ namespace Business
             localDrivingLicenseApplicationId = localApp.LocalDrivingLicenseApplicationId;
             return true;
         }
+
+        public static bool CancelApplication(int localApplicationId)
+        {
+            int applicationId = LocalDrivingLicenseApplicationData.GetApplicationId(localApplicationId);
+            if (applicationId == -1)
+            {
+                return false;
+            }
+
+            Application application = Application.FindByApplicationId(applicationId);
+            if (application == null)
+            {
+                return false;
+            }
+
+            if (application.ApplicationStatus == Application.Status.Canceled ||
+                application.ApplicationStatus == Application.Status.Completed)
+            {
+                return false;
+            }
+
+            application.ApplicationStatus = Application.Status.Canceled;
+            application.LastStatusDate = DateTime.Now;
+
+            return application.Save();
+        }
     }
 }

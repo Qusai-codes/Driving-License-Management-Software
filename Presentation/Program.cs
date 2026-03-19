@@ -16,8 +16,8 @@ namespace Presentation
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
             if (User.HasUsers())
             {
@@ -26,13 +26,13 @@ namespace Presentation
                 if (logInForm.ShowDialog() == DialogResult.OK)
                 {
                     // Login successful, show main form with authenticated user
-                    Application.Run(new MainForm(logInForm.AuthenticatedUser));
+                    System.Windows.Forms.Application.Run(new MainForm(logInForm.AuthenticatedUser));
                 }
 
             }
             else
             {
-                Application.Run(new MainForm());
+                System.Windows.Forms.Application.Run(new MainForm());
             }
             
         }

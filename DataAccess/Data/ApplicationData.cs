@@ -100,7 +100,7 @@ namespace DataAccess.Data
             UPDATE Applications 
             SET 
 	            ApplicationStatus = @ApplicationStatus,
-	            LastStatusDate = @LastStatusDate,
+	            LastStatusDate = @LastStatusDate
             WHERE ApplicationID = @ApplicationID;
             ";
 
@@ -168,7 +168,29 @@ namespace DataAccess.Data
 
         public static byte GetApplicationStatus(int applicationId)
         {
-            throw new NotImplementedException();
+            byte status = 0;
+
+            const string query = @"
+            SELECT ApplicationStatus
+            FROM Applications
+            WHERE ApplicationID = @ApplicationID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@ApplicationID", SqlDbType.Int).Value = applicationId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    status = Convert.ToByte(result);
+                }
+            }
+
+            return status;
         }
     }
 }
