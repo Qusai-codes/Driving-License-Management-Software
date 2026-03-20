@@ -130,5 +130,10 @@ namespace Business
                     return false;
             }
         }
+
+        public static string GetApplicationTypeTitle(int applicationTypeId)
+        {
+            return ApplicationTypeData.GetApplicationTypeTitle(applicationTypeId);
+        }
     }
 }

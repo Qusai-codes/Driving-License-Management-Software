@@ -78,5 +78,10 @@ namespace Business
                 return null;
             }
         }
+
+        public static int GetTestTypeCount()
+        {
+            return TestTypeData.GetTestTypeCount();
+        }
     }
 }

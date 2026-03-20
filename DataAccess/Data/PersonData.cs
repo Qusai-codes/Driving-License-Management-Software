@@ -465,5 +465,38 @@ namespace DataAccess.Data
             }
                 return isFound;
         }
+
+        public static string GetFullName(int personId)
+        {
+            string fullName = string.Empty;
+
+            const string query = @"
+            SELECT 
+                FirstName + ' ' + SecondName
+                + CASE 
+                    WHEN ThirdName IS NULL OR ThirdName = '' THEN ''
+                    ELSE ' ' + ThirdName
+                  END
+                + ' ' + LastName AS FullName
+            FROM People
+            WHERE PersonID = @PersonID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@PersonID", SqlDbType.Int).Value = personId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    fullName = result.ToString();
+                }
+            }
+
+            return fullName;
+        }
     }
 }

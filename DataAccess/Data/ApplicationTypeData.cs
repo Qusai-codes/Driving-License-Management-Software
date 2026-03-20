@@ -156,5 +156,32 @@ namespace DataAccess.Data
 
             return fees;
         }
+
+        public static string GetApplicationTypeTitle(int applicationTypeId)
+        {
+            string title = string.Empty;
+
+            const string query = @"
+            SELECT ApplicationTypeTitle
+            FROM ApplicationTypes
+            WHERE ApplicationTypeID = @ApplicationTypeID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@ApplicationTypeID", SqlDbType.Int).Value = applicationTypeId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    title = result.ToString();
+                }
+            }
+
+            return title;
+        }
     }
 }

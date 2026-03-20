@@ -213,5 +213,41 @@ namespace DataAccess
 
             return applicationId;
         }
+
+        public static DataTable GetTestsTaken(int localDrivingLicenseApplicationId)
+        {
+            DataTable dt = new DataTable();
+
+            const string query = @"
+            SELECT 
+                t.TestID,
+                t.TestAppointmentID,
+                t.TestResult,
+                t.Notes
+            FROM Tests t
+            INNER JOIN TestAppointments ta
+                ON t.TestAppointmentID = ta.TestAppointmentID
+            WHERE ta.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@LocalDrivingLicenseApplicationID", SqlDbType.Int)
+                    .Value = localDrivingLicenseApplicationId;
+
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        dt.Load(reader);
+                    }
+                }
+            }
+
+            return dt;
+        }
     }
 }

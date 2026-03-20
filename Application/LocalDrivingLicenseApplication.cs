@@ -86,11 +86,9 @@ namespace Business
             return null;
         }
 
-        public static int GetApplicationId(int personId,
-            int licenseClassId)
+        public static int GetApplicationId(int localApplicationId)
         {
-            return LocalDrivingLicenseApplicationData.GetApplicationId(personId, 
-                licenseClassId, (byte)Application.Status.New);
+            return LocalDrivingLicenseApplicationData.GetApplicationId(localApplicationId);
         }
 
         public static bool TryCreateNew(int personId, int licenseClassId, int userId,
@@ -174,6 +172,17 @@ namespace Business
             application.LastStatusDate = DateTime.Now;
 
             return application.Save();
+        }
+
+        public static int GetNumberOfPassedTests(int localDrivingLicenseApplicationId)
+        {
+            DataTable tests = LocalDrivingLicenseApplicationData.GetTestsTaken(localDrivingLicenseApplicationId);
+
+            if (tests == null || tests.Rows.Count == 0 || !tests.Columns.Contains("TestResult"))
+                return 0;
+
+            return tests.AsEnumerable()
+                        .Count(r => r.Field<bool>("TestResult"));
         }
     }
 }

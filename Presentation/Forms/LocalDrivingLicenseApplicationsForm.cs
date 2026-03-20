@@ -288,5 +288,28 @@ namespace Presentation.Forms
         {
 
         }
+
+        private void scheduleVisionTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvApplications.CurrentRow == null)
+            {
+                return;
+            }
+            int drivingLicenseApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+            VisionTestAppointmentForm form = new VisionTestAppointmentForm(drivingLicenseApplicationId);
+            form.ShowDialog();
+
+        }
+
+        private void scheduleWrittenTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: Complete the implementation.
+
+        }
+
+        private void scheduleStreetTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: Complete the implementation.
+        }
     }
 }

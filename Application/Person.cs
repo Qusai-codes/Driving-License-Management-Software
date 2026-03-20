@@ -149,5 +149,10 @@ namespace Business
         {
             return PersonData.IsNationalNoExist(nationalNo);
         }
+
+        public static string GetFullName(int personId)
+        {
+            return PersonData.GetFullName(personId);
+        }
     }
 }

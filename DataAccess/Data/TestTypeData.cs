@@ -108,5 +108,29 @@ namespace DataAccess.Data
 
             return dt;
         }
+
+        public static int GetTestTypeCount()
+        {
+            int count = 0;
+
+            const string query = @"
+            SELECT COUNT(*)
+            FROM TestTypes;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    count = Convert.ToInt32(result);
+                }
+            }
+
+            return count;
+        }
     }
 }
