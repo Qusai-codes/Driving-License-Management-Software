@@ -11,6 +11,14 @@ namespace Business
 {
     public class TestType
     {
+
+        public enum TestTypeId
+        {
+            Vision = 1,
+            Written = 2,
+            Street = 3
+        }
+
         public EntityMode Mode { get; private set; }
 
         public int Id { get; private set; }

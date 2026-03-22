@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,22 +34,51 @@ namespace Presentation.Forms
 
         private void btnAddAppointment_Click(object sender, EventArgs e)
         {
-            // TODO: Complete the logic.
+            ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId);
+            form.ShowDialog();
+            RefreshAppointmentsList();
         }
 
-        private void RefreshApplicationsList()
+        private DataTable GetAllVisionTestAppointments()
         {
-            // TODO: Complete the logic.
+            return TestAppointment.GetAllTestAppointments(_localDrivingLicenseApplicationId, 
+                TestType.TestTypeId.Vision);
+        }
+
+        private void RefreshAppointmentsList()
+        {
+            try
+            {
+                DataTable visionTestAppointments = GetAllVisionTestAppointments();
+
+                dgvVisionTestAppointments.AutoGenerateColumns = true;
+                dgvVisionTestAppointments.DataSource = visionTestAppointments;
+
+                FormatDataGridView();
+                lblNumberOfRecords.Text = dgvVisionTestAppointments.Rows.Count.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading vision test appointments: " + ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void FormatDataGridView()
         {
-            // TODO: Complete the logic.
+            // Setting column headers of data grid view
+            SetColumnHeader("TestAppointmentID", "Appointment ID");
+            SetColumnHeader("AppointmentDate", "Appointment Date");
+            SetColumnHeader("PaidFees", "Paid Fees");
+            SetColumnHeader("IsLocked", "Is Locked");
         }
 
         private void SetColumnHeader(string columnName, string headerText)
         {
-            // TODO: Complete the logic.
+            if (dgvVisionTestAppointments.Columns[columnName] != null)
+            {
+                dgvVisionTestAppointments.Columns[columnName].HeaderText = headerText;
+            }
         }
     }
 }

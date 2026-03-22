@@ -1,5 +1,8 @@
-﻿using System;
+﻿using DataAccess.Common;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,5 +11,90 @@ namespace DataAccess.Data
 {
     public class TestAppointmentData
     {
+        public static DataTable GetAllTestAppointments(int localDrivingLicenseAppId, 
+            int testTypeId)
+        {
+            DataTable dt = new DataTable();
+
+            const string query = @"
+            SELECT TestAppointmentID, AppointmentDate, PaidFees, IsLocked 
+            FROM TestAppointments 
+            WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID 
+	            AND TestTypeID = @TestTypeID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@LocalDrivingLicenseApplicationID", SqlDbType.Int).Value = localDrivingLicenseAppId;
+                command.Parameters.Add("@TestTypeID", SqlDbType.Int).Value = testTypeId;
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    dt.Load(reader);
+                }
+            }
+
+            return dt;
+        }
+
+        public static int CreateNewTestAppointment(int testTypeId, int localDrivingLicenseAppId,
+            DateTime appointmentDate, decimal paidFees, int createdByUserId, bool isLocked)
+        {
+            int testAppointmentId = -1;
+
+            const string query = @"
+            INSERT INTO TestAppointments (TestTypeID, LocalDrivingLicenseApplicationID, 
+            AppointmentDate, PaidFees, CreatedByUserID, IsLocked) 
+            VALUES (@TestTypeID, @LocalDrivingLicenseApplicationID, @AppointmentDate,
+            @PaidFees, @CreatedByUserID, @IsLocked);
+            SELECT SCOPE_IDENTITY();
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@TestTypeID", SqlDbType.Int).Value = testTypeId;
+                command.Parameters.Add("@LocalDrivingLicenseApplicationID", SqlDbType.Int).Value = localDrivingLicenseAppId;
+                command.Parameters.Add("@AppointmentDate", SqlDbType.SmallDateTime).Value = appointmentDate;
+                command.Parameters.Add("@PaidFees", SqlDbType.SmallMoney).Value = paidFees;
+                command.Parameters.Add("@CreatedByUserID", SqlDbType.Int).Value = createdByUserId; 
+                command.Parameters.Add("@IsLocked", SqlDbType.Bit).Value = isLocked;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && int.TryParse(result.ToString(), out int insertedId))
+                {
+                    testAppointmentId = insertedId;
+                }
+            }
+
+            return testAppointmentId;
+        }
+
+        public static bool UpdateTestAppointment(int testAppointmentId, bool isLocked)
+        {
+            int rowsAffected = 0;
+
+            const string query = @"
+            UPDATE TestAppointments
+            SET IsLocked = @IsLocked
+            WHERE TestAppointmentID = @TestAppointmentID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@TestAppointmentID", SqlDbType.Int).Value = testAppointmentId;
+                command.Parameters.Add("@IsLocked", SqlDbType.Bit).Value = isLocked;
+
+                connection.Open();
+                rowsAffected = command.ExecuteNonQuery();
+            }
+
+            return rowsAffected > 0;
+        }
     }
 }
