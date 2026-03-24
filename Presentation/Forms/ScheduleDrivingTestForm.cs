@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,10 +14,13 @@ namespace Presentation.Forms
     public partial class ScheduleDrivingTestForm : Form
     {
         private int _localDrivingLicenseApplicationId;
-        public ScheduleDrivingTestForm(int localDrivingLicenseApplicationId)
+        private TestType.TestTypeId _testTypeId;
+
+        public ScheduleDrivingTestForm(int localDrivingLicenseApplicationId, TestType.TestTypeId testTypeId)
         {
             InitializeComponent();
             _localDrivingLicenseApplicationId = localDrivingLicenseApplicationId;
+            _testTypeId = testTypeId;
         }
 
         private void ScheduleDrivingTestForm_Load(object sender, EventArgs e)

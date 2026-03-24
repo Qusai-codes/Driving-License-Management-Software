@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business
 {
-    internal class Test
+    public class Test
     {
     }
 }

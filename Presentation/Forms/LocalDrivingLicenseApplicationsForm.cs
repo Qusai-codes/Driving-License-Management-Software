@@ -232,17 +232,17 @@ namespace Presentation.Forms
 
         private void showApplicationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // TODO: implement the functionality.
         }
 
         private void editApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // TODO: implement the functionality.
         }
 
         private void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // TODO: implement the functionality.
         }
 
         private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -276,17 +276,17 @@ namespace Presentation.Forms
 
         private void issueDrivingLicenseFirstTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // TODO: implement the functionality.
         }
 
         private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // TODO: implement the functionality.
         }
 
         private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            // TODO: implement the functionality.
         }
 
         private void scheduleVisionTestToolStripMenuItem_Click(object sender, EventArgs e)
@@ -296,20 +296,91 @@ namespace Presentation.Forms
                 return;
             }
             int drivingLicenseApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
-            VisionTestAppointmentForm form = new VisionTestAppointmentForm(drivingLicenseApplicationId);
+            TestAppointmentForm form = new TestAppointmentForm(drivingLicenseApplicationId, TestType.TestTypeId.Vision);
             form.ShowDialog();
 
         }
 
         private void scheduleWrittenTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: Complete the implementation.
+            if (dgvApplications.CurrentRow == null)
+            {
+                return;
+            }
+            int drivingLicenseApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+            TestAppointmentForm form = new TestAppointmentForm(drivingLicenseApplicationId, TestType.TestTypeId.Written);
+            form.ShowDialog();
 
         }
 
         private void scheduleStreetTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: Complete the implementation.
+            if (dgvApplications.CurrentRow == null)
+            {
+                return;
+            }
+            int drivingLicenseApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+            TestAppointmentForm form = new TestAppointmentForm(drivingLicenseApplicationId, TestType.TestTypeId.Street);
+            form.ShowDialog();
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+            ApplyScheduleTestsMenuRules();
+        }
+
+        private void ApplyScheduleTestsMenuRules()
+        {
+            if (dgvApplications.CurrentRow == null)
+            {
+                return;
+            }
+
+            object statusObj = dgvApplications.CurrentRow.Cells["ApplicationStatus"].Value;
+            object passedTestsObj = dgvApplications.CurrentRow.Cells["PassedTests"].Value;
+
+            byte statusValue = 0;
+            int passedTests = 0;
+
+            if (statusObj != null)
+                byte.TryParse(statusObj.ToString(), out statusValue);
+
+            if (passedTestsObj != null)
+                int.TryParse(passedTestsObj.ToString(), out passedTests);
+
+            // Scheduling is allowed only for "New" applications.
+            bool isNewStatus = statusValue == (byte)Business.Application.Status.New;
+
+            if (!isNewStatus)
+            {
+                scheduleVisionTestToolStripMenuItem.Enabled = false;
+                scheduleWrittenTestToolStripMenuItem.Enabled = false;
+                scheduleStreetTestToolStripMenuItem.Enabled = false;
+                return;
+            }
+
+            // Rules:
+            // 1) If vision not passed yet -> disable written + street.
+            // 2) If vision passed -> enable only written (street stays disabled).
+            // 3) If both vision and written passed -> allow scheduling of street test.
+            if (passedTests <= 0)
+            {
+                scheduleVisionTestToolStripMenuItem.Enabled = true;
+                scheduleWrittenTestToolStripMenuItem.Enabled = false;
+                scheduleStreetTestToolStripMenuItem.Enabled = false;
+            }
+            else if (passedTests == 1)
+            {
+                scheduleVisionTestToolStripMenuItem.Enabled = false;
+                scheduleWrittenTestToolStripMenuItem.Enabled = true;
+                scheduleStreetTestToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                scheduleVisionTestToolStripMenuItem.Enabled = false;
+                scheduleWrittenTestToolStripMenuItem.Enabled = false;
+                scheduleStreetTestToolStripMenuItem.Enabled = true;
+            }
         }
     }
 }

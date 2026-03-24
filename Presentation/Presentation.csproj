@@ -178,11 +178,11 @@
     <Compile Include="Forms\UserDetailsForm.Designer.cs">
       <DependentUpon>UserDetailsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\VisionTestAppointmentForm.cs">
+    <Compile Include="Forms\TestAppointmentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\VisionTestAppointmentForm.Designer.cs">
-      <DependentUpon>VisionTestAppointmentForm.cs</DependentUpon>
+    <Compile Include="Forms\TestAppointmentForm.Designer.cs">
+      <DependentUpon>TestAppointmentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AppSession.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
@@ -253,12 +253,13 @@
     <EmbeddedResource Include="Forms\UserDetailsForm.resx">
       <DependentUpon>UserDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\VisionTestAppointmentForm.resx">
-      <DependentUpon>VisionTestAppointmentForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\TestAppointmentForm.resx">
+      <DependentUpon>TestAppointmentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="App.config.template" />
     <None Include="Properties\Settings.settings">
@@ -266,6 +267,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Resources1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>

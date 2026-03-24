@@ -11,6 +11,46 @@ namespace DataAccess.Data
 {
     public class TestAppointmentData
     {
+        public static bool GetTestAppointmentInfoById(int testAppointmentId, 
+            ref int testTypeId, ref int localDrivingLicenseAppId, ref DateTime appointmentDate, 
+            ref decimal paidFees, ref int createdByUserId, ref bool isLocked)
+        {
+            bool isFound = false;
+
+            const string query = @"
+            SELECT TestTypeID, LocalDrivingLicenseApplicationID, 
+                AppointmentDate, PaidFees, CreatedByUserID, IsLocked 
+            FROM TestAppointments 
+            WHERE TestAppointmentID = @TestAppointmentID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@TestAppointmentID", SqlDbType.Int).Value = testAppointmentId;
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        isFound = true;
+
+                        testTypeId = (int)reader["TestTypeID"];
+                        localDrivingLicenseAppId = (int)reader["LocalDrivingLicenseApplicationID"];
+                        appointmentDate = (DateTime)reader["AppointmentDate"];
+                        paidFees = (decimal)reader["PaidFees"];
+                        createdByUserId = (int)reader["CreatedByUserID"];
+                        isLocked = (bool)reader["IsLocked"];
+                    }
+                    else
+                    {
+                        isFound = false;
+                    }
+                }
+            }
+            return isFound;
+        }
+
         public static DataTable GetAllTestAppointments(int localDrivingLicenseAppId, 
             int testTypeId)
         {
@@ -74,13 +114,14 @@ namespace DataAccess.Data
             return testAppointmentId;
         }
 
-        public static bool UpdateTestAppointment(int testAppointmentId, bool isLocked)
+        public static bool UpdateTestAppointment(int testAppointmentId, DateTime testAppointmentDate,
+            bool isLocked)
         {
             int rowsAffected = 0;
 
             const string query = @"
             UPDATE TestAppointments
-            SET IsLocked = @IsLocked
+            SET IsLocked = @IsLocked, AppointmentDate = @AppointmentDate 
             WHERE TestAppointmentID = @TestAppointmentID;
             ";
 
@@ -88,6 +129,7 @@ namespace DataAccess.Data
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 command.Parameters.Add("@TestAppointmentID", SqlDbType.Int).Value = testAppointmentId;
+                command.Parameters.Add("@AppointmentDate", SqlDbType.DateTime).Value = testAppointmentDate;
                 command.Parameters.Add("@IsLocked", SqlDbType.Bit).Value = isLocked;
 
                 connection.Open();
@@ -95,6 +137,55 @@ namespace DataAccess.Data
             }
 
             return rowsAffected > 0;
+        }
+
+        public static bool DeleteTestAppointment(int testAppointmentId)
+        {
+            int rowsAffected = 0;
+
+            const string query = @"
+            DELETE FROM TestAppointments 
+            WHERE TestAppointmentID = @TestAppointmentID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@TestAppointmentID", SqlDbType.Int).Value = testAppointmentId;
+
+                connection.Open();
+                rowsAffected = command.ExecuteNonQuery();
+            }
+
+            return rowsAffected > 0;
+        }
+
+        public static bool DoesTestAppointmentExist(int localDrivingLicenseApplicationId, int testTypeId)
+        {
+            bool isFound = false;
+
+            const string query = @"
+            SELECT TestTypeID
+            FROM TestAppointments
+            WHERE LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID 
+                AND TestTypeID = @TestTypeID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@LocalDrivingLicenseApplicationID", SqlDbType.Int).Value = localDrivingLicenseApplicationId;
+                command.Parameters.Add("@TestTypeID", SqlDbType.Int).Value = testTypeId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+                if (result != null && int.TryParse(result.ToString(), out int insertedId))
+                {
+                    isFound = insertedId != -1;
+                }
+            }
+
+            return isFound;
         }
     }
 }

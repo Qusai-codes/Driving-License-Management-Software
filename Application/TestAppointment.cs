@@ -57,11 +57,6 @@ namespace Business
                 (int)testTypeId);
         }
 
-        public static bool UpdateTestAppointment()
-        {
-            return false;
-        }
-
         private bool AddNew()
         {
             TestAppointmentID = TestAppointmentData.CreateNewTestAppointment(
@@ -77,7 +72,7 @@ namespace Business
 
         private bool Update()
         {
-            return TestAppointmentData.UpdateTestAppointment(TestAppointmentID, IsLocked);
+            return TestAppointmentData.UpdateTestAppointment(TestAppointmentID, AppointmentDate, IsLocked);
         }
 
         public bool Save()
@@ -101,20 +96,31 @@ namespace Business
 
         public static TestAppointment Find(int testAppointmentId)
         {
-            // TODO: implement when TestAppointmentData.GetTestAppointmentInfoById(...) is added.
+            int testTypeId = -1, localDrivingLicenseApplicationId = -1, createdByUserId = -1;
+            DateTime appointmentDate = DateTime.Now;
+            decimal paidFees = 0;
+            bool isLocked = false;
+
+            if (TestAppointmentData.GetTestAppointmentInfoById(testAppointmentId, ref testTypeId, 
+                ref localDrivingLicenseApplicationId, ref appointmentDate, ref paidFees, 
+                ref createdByUserId, ref isLocked))
+            {
+                return new TestAppointment(testAppointmentId, testTypeId, localDrivingLicenseApplicationId, 
+                        appointmentDate, paidFees, createdByUserId, isLocked);
+            }
             return null;
         }
 
         public static bool Delete(int testAppointmentId)
         {
-            // TODO: implement when TestAppointmentData.DeleteTestAppointment(...) is added.
-            return false;
+            return TestAppointmentData.DeleteTestAppointment(testAppointmentId);
         }
 
-        public static bool Lock(int testAppointmentId)
+        public static bool DoesTestAppointmentExist(int localDrivingLicenseApplicationId,
+            TestTypeId testType)
         {
-            // TODO: implement when data-layer support is added.
-            return false;
+            return TestAppointmentData.DoesTestAppointmentExist(localDrivingLicenseApplicationId, 
+                (int) testType);
         }
     }
 }
