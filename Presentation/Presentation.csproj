@@ -266,7 +266,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Properties\Resources1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -293,6 +292,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\activate_profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\administrator_female.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
