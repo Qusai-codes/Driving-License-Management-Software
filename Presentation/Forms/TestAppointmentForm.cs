@@ -71,7 +71,8 @@ namespace Presentation.Forms
             }
             
 
-            ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId, _testType);
+            ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId, 
+                _testType, false, FormMode.Add, -1);
             form.ShowDialog();
             RefreshAppointmentsList();
         }
@@ -121,6 +122,15 @@ namespace Presentation.Forms
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO: complete the implementation.
+            if (dgvTestAppointments.CurrentRow != null)
+            {
+                int testAppointmentId = (int)dgvTestAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
+                ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId,
+                _testType, false, FormMode.Edit, testAppointmentId);
+                form.ShowDialog();
+                RefreshAppointmentsList();
+            }
+            
         }
 
         private void takeTestToolStripMenuItem_Click(object sender, EventArgs e)

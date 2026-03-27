@@ -29,6 +29,7 @@ namespace DataAccess.Data
             {
                 command.Parameters.Add("@TestAppointmentID", SqlDbType.Int).Value = testAppointmentId;
 
+                connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (reader.Read())
@@ -186,6 +187,35 @@ namespace DataAccess.Data
             }
 
             return isFound;
+        }
+
+        public static int GetNumberOfTestTrials(int localDrivingLicenseApplicationId, int testTypeId)
+        {
+            int numberOfTrials = 0;
+            const string query = @"
+            SELECT COUNT(*) 
+            FROM TestAppointments
+            WHERE TestTypeID = @TestTypeID 
+                AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@TestTypeID", SqlDbType.Int).Value = testTypeId;
+                command.Parameters.Add("@LocalDrivingLicenseApplicationID", SqlDbType.Int).Value = 
+                    localDrivingLicenseApplicationId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    numberOfTrials = Convert.ToInt32(result);
+                }
+            }
+
+            return numberOfTrials;
         }
     }
 }
