@@ -217,5 +217,36 @@ namespace DataAccess.Data
 
             return numberOfTrials;
         }
+
+        public static bool GetTestResult(int localDrivingLicenseApplicationId, int testType)
+        {
+            bool testResult = false;
+
+            const string query = @"
+            SELECT t.TestResult
+            FROM TestAppointments ta INNER JOIN Tests t 
+	            ON ta.TestAppointmentID = t.TestAppointmentID 
+            WHERE ta.TestTypeID = @TestTypeID 
+	            AND ta.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@TestTypeID", SqlDbType.Int).Value = testType;
+                command.Parameters.Add("@LocalDrivingLicenseApplicationID", SqlDbType.Int).Value =
+                    localDrivingLicenseApplicationId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    testResult = Convert.ToBoolean(result);
+                }
+            }
+
+            return testResult;
+        }
     }
 }

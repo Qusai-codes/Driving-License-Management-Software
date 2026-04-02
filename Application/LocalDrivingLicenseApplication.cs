@@ -91,6 +91,11 @@ namespace Business
             return LocalDrivingLicenseApplicationData.GetApplicationId(localApplicationId);
         }
 
+        public static int GetLocalDrivingLicenseApplicationId(int applicationId)
+        {
+            return LocalDrivingLicenseApplicationData.GetLocalDrivingLicenseApplicationId(applicationId);
+        }
+
         public static bool TryCreateNew(int personId, int licenseClassId, int userId,
             out int localDrivingLicenseApplicationId, out int blockingApplicationId, out string errorMessage)
         {

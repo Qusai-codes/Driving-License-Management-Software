@@ -72,7 +72,7 @@ namespace Presentation.Forms
             
 
             ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId, 
-                _testType, false, FormMode.Add, -1);
+                _testType, FormMode.Add, -1);
             form.ShowDialog();
             RefreshAppointmentsList();
         }
@@ -104,7 +104,6 @@ namespace Presentation.Forms
 
         private void FormatDataGridView()
         {
-            // Setting column headers of data grid view
             SetColumnHeader("TestAppointmentID", "Appointment ID");
             SetColumnHeader("AppointmentDate", "Appointment Date");
             SetColumnHeader("PaidFees", "Paid Fees");
@@ -126,7 +125,7 @@ namespace Presentation.Forms
             {
                 int testAppointmentId = (int)dgvTestAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
                 ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId,
-                _testType, false, FormMode.Edit, testAppointmentId);
+                _testType, FormMode.Edit, testAppointmentId);
                 form.ShowDialog();
                 RefreshAppointmentsList();
             }
@@ -136,6 +135,13 @@ namespace Presentation.Forms
         private void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // TODO: complete the implementation.
+            if (dgvTestAppointments.CurrentRow != null)
+            {
+                int testAppointmentId = (int)dgvTestAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
+                TakingDrivingTestForm form = new TakingDrivingTestForm(testAppointmentId);
+                form.ShowDialog();
+                RefreshAppointmentsList();
+            }
         }
     }
 }

@@ -14,14 +14,14 @@ namespace DataAccess.Data
     public class TestData
     {
 
-        public static bool GetTestInfoById(int testId, ref int testAppointmentId, 
+        public static bool GetTestInfoById(int testId, ref int testAppointmentId,
             ref bool testResult, ref string notes, ref int createdByUserId)
         {
             bool isFound = false;
 
             const string query = @"
-            SELECT TestAppointmentID, TestResult, Notes, CreatedByUserID 
-            FROM Tests 
+            SELECT TestAppointmentID, TestResult, Notes, CreatedByUserID
+            FROM Tests
             WHERE TestID = @TestID;
             ";
 
@@ -38,7 +38,7 @@ namespace DataAccess.Data
                         isFound = true;
                         testAppointmentId = (int)reader["TestAppointmentID"];
                         testResult = (bool)reader["TestResult"];
-                        notes = (string)reader["Notes"];
+                        notes = reader["Notes"] == DBNull.Value ? null : reader["Notes"].ToString();
                         createdByUserId = (int)reader["CreatedByUserID"];
                     }
                 }
@@ -63,7 +63,10 @@ namespace DataAccess.Data
             {
                 command.Parameters.Add("@TestAppointmentID", SqlDbType.Int).Value = testAppointmentId;
                 command.Parameters.Add("@TestResult", SqlDbType.Bit).Value = testResult;
-                command.Parameters.Add("@Notes", SqlDbType.NVarChar, 500).Value = notes;
+
+                SqlParameter notesParam = command.Parameters.Add("@Notes", SqlDbType.NVarChar, 500);
+                notesParam.Value = string.IsNullOrWhiteSpace(notes) ? (object)DBNull.Value : notes;
+
                 command.Parameters.Add("@CreatedByUserID", SqlDbType.Int).Value = createdByUserId;
 
                 connection.Open();

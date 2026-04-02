@@ -62,7 +62,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.picDrivingTestType = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTestTitle = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.grpRetakeTestInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
@@ -90,9 +90,9 @@
             this.grpRetakeTestInfo.Controls.Add(this.label9);
             this.grpRetakeTestInfo.Controls.Add(this.label8);
             this.grpRetakeTestInfo.Location = new System.Drawing.Point(4, 421);
-            this.grpRetakeTestInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpRetakeTestInfo.Margin = new System.Windows.Forms.Padding(2);
             this.grpRetakeTestInfo.Name = "grpRetakeTestInfo";
-            this.grpRetakeTestInfo.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpRetakeTestInfo.Padding = new System.Windows.Forms.Padding(2);
             this.grpRetakeTestInfo.Size = new System.Drawing.Size(376, 106);
             this.grpRetakeTestInfo.TabIndex = 0;
             this.grpRetakeTestInfo.TabStop = false;
@@ -113,7 +113,7 @@
             // 
             this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
             this.pictureBox9.Location = new System.Drawing.Point(272, 35);
-            this.pictureBox9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox9.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(20, 21);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -157,7 +157,7 @@
             // 
             this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
             this.pictureBox8.Location = new System.Drawing.Point(96, 61);
-            this.pictureBox8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox8.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(20, 21);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -168,7 +168,7 @@
             // 
             this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
             this.pictureBox7.Location = new System.Drawing.Point(96, 35);
-            this.pictureBox7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox7.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(20, 21);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -220,11 +220,11 @@
             this.grpTestDetails.Controls.Add(this.label3);
             this.grpTestDetails.Controls.Add(this.label2);
             this.grpTestDetails.Controls.Add(this.picDrivingTestType);
-            this.grpTestDetails.Controls.Add(this.label1);
+            this.grpTestDetails.Controls.Add(this.lblTestTitle);
             this.grpTestDetails.Location = new System.Drawing.Point(9, 33);
-            this.grpTestDetails.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpTestDetails.Margin = new System.Windows.Forms.Padding(2);
             this.grpTestDetails.Name = "grpTestDetails";
-            this.grpTestDetails.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grpTestDetails.Padding = new System.Windows.Forms.Padding(2);
             this.grpTestDetails.Size = new System.Drawing.Size(386, 568);
             this.grpTestDetails.TabIndex = 1;
             this.grpTestDetails.TabStop = false;
@@ -250,7 +250,7 @@
             this.btnSave.ImageIndex = 1;
             this.btnSave.ImageList = this.imageList1;
             this.btnSave.Location = new System.Drawing.Point(290, 531);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(92, 34);
             this.btnSave.TabIndex = 6;
@@ -313,7 +313,7 @@
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
             this.pictureBox6.Location = new System.Drawing.Point(92, 372);
-            this.pictureBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox6.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(20, 21);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -324,7 +324,7 @@
             // 
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
             this.pictureBox5.Location = new System.Drawing.Point(92, 339);
-            this.pictureBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox5.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(20, 21);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -335,7 +335,7 @@
             // 
             this.dtpTestDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpTestDate.Location = new System.Drawing.Point(116, 340);
-            this.dtpTestDate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtpTestDate.Margin = new System.Windows.Forms.Padding(2);
             this.dtpTestDate.Name = "dtpTestDate";
             this.dtpTestDate.Size = new System.Drawing.Size(109, 20);
             this.dtpTestDate.TabIndex = 5;
@@ -344,7 +344,7 @@
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
             this.pictureBox4.Location = new System.Drawing.Point(92, 306);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(20, 21);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -355,7 +355,7 @@
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
             this.pictureBox3.Location = new System.Drawing.Point(92, 272);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(20, 21);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -366,7 +366,7 @@
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(92, 239);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(20, 21);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -410,7 +410,7 @@
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(92, 206);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(20, 21);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -454,24 +454,24 @@
             // 
             this.picDrivingTestType.Image = ((System.Drawing.Image)(resources.GetObject("picDrivingTestType.Image")));
             this.picDrivingTestType.Location = new System.Drawing.Point(151, 32);
-            this.picDrivingTestType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.picDrivingTestType.Margin = new System.Windows.Forms.Padding(2);
             this.picDrivingTestType.Name = "picDrivingTestType";
             this.picDrivingTestType.Size = new System.Drawing.Size(86, 93);
             this.picDrivingTestType.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picDrivingTestType.TabIndex = 2;
             this.picDrivingTestType.TabStop = false;
             // 
-            // label1
+            // lblTestTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.DarkRed;
-            this.label1.Location = new System.Drawing.Point(116, 147);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(163, 26);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Schedule Test";
+            this.lblTestTitle.AutoSize = true;
+            this.lblTestTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTestTitle.ForeColor = System.Drawing.Color.DarkRed;
+            this.lblTestTitle.Location = new System.Drawing.Point(116, 147);
+            this.lblTestTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTestTitle.Name = "lblTestTitle";
+            this.lblTestTitle.Size = new System.Drawing.Size(163, 26);
+            this.lblTestTitle.TabIndex = 3;
+            this.lblTestTitle.Text = "Schedule Test";
             // 
             // btnClose
             // 
@@ -482,7 +482,7 @@
             this.btnClose.ImageIndex = 0;
             this.btnClose.ImageList = this.imageList1;
             this.btnClose.Location = new System.Drawing.Point(129, 617);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(2);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(106, 34);
             this.btnClose.TabIndex = 7;
@@ -497,7 +497,7 @@
             this.ClientSize = new System.Drawing.Size(404, 654);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.grpTestDetails);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ScheduleDrivingTestForm";
@@ -528,7 +528,7 @@
         private System.Windows.Forms.GroupBox grpRetakeTestInfo;
         private System.Windows.Forms.GroupBox grpTestDetails;
         private System.Windows.Forms.PictureBox picDrivingTestType;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTestTitle;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.DateTimePicker dtpTestDate;
         private System.Windows.Forms.Button btnSave;

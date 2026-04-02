@@ -23,13 +23,12 @@ namespace Presentation.Forms
         private int _testAppointmentId;
 
         public ScheduleDrivingTestForm(int localDrivingLicenseApplicationId, 
-            TestType.TestTypeId testTypeId, bool retakeTest, FormMode mode, 
+            TestType.TestTypeId testTypeId, FormMode mode, 
             int testAppointmentId)
         {
             InitializeComponent();
             _localDrivingLicenseApplicationId = localDrivingLicenseApplicationId;
             _testTypeId = testTypeId;
-            _retakeTest = retakeTest;
             _mode = mode;
             _testAppointmentId = testAppointmentId;
         }
@@ -37,7 +36,10 @@ namespace Presentation.Forms
         private void LoadApplicationInfo()
         {
             // TODO: Determine if the appointment is for retaking the test
+            _retakeTest = HasApplicantFailedTest();
             grpRetakeTestInfo.Enabled = _retakeTest;
+            lblTestTitle.Text = _retakeTest ? "Schedule Retake Test" : "Schedule Test";
+            
             var localDrivingLicenseApp = LocalDrivingLicenseApplication.Find(_localDrivingLicenseApplicationId);
             if (localDrivingLicenseApp == null)
             {
@@ -96,6 +98,11 @@ namespace Presentation.Forms
                 default:
                     break;
             }
+        }
+
+        private bool HasApplicantFailedTest()
+        {
+            return TestAppointment.GetTestResult(_localDrivingLicenseApplicationId, _testTypeId);
         }
 
         private void ScheduleDrivingTestForm_Load(object sender, EventArgs e)

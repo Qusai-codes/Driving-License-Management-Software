@@ -220,7 +220,7 @@ namespace Presentation.Forms
         private void btnAddNewApplication_Click(object sender, EventArgs e)
         {
 
-            LocalDrivingLicenseForm form = new LocalDrivingLicenseForm(FormMode.Add, _currentUserId);
+            LocalDrivingLicenseForm form = new LocalDrivingLicenseForm(-1, FormMode.Add);
             form.ShowDialog();
             RefreshApplicationsList();
         }
@@ -237,12 +237,42 @@ namespace Presentation.Forms
 
         private void editApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: implement the functionality.
+            if (dgvApplications.CurrentRow != null)
+            {
+                int localApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+                LocalDrivingLicenseForm form = new LocalDrivingLicenseForm(localApplicationId, FormMode.Edit);
+                form.ShowDialog();
+                RefreshApplicationsList();
+            }
+            
         }
 
         private void deleteApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: implement the functionality.
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this application?",
+                "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dialogResult == DialogResult.Yes)
+            {
+                // Delete the application
+
+                // Get application id 
+                if (dgvApplications.CurrentRow == null)
+                {
+                    MessageBox.Show("Please select an application");
+                    return;
+                }
+                int localApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+                bool deleted = LocalDrivingLicenseApplication.DeleteApplication(localApplicationId);
+                if (!deleted)
+                {
+                    MessageBox.Show("Unable to delete the application", "Fail",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                MessageBox.Show("Application Deleted Successfully.",
+                    "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RefreshApplicationsList();
+            }
         }
 
         private void cancelApplicationToolStripMenuItem_Click(object sender, EventArgs e)

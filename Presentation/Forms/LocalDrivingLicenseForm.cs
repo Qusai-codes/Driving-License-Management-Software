@@ -1,5 +1,6 @@
 ﻿using Business;
 using Presentation.Events;
+using Presentation.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,12 +17,13 @@ namespace Presentation.Forms
     {
         private int _userId = -1;
         private int _personId = -1;
+        private int _drivingLicenseApplicationId = -1;
         private FormMode _mode;
 
-        public LocalDrivingLicenseForm(FormMode mode, int userId)
+        public LocalDrivingLicenseForm(int applicationId, FormMode mode)
         {
             InitializeComponent();
-            _userId = userId;
+            _userId = AppSession.CurrentUserId;
             personDetailsWithFilterControl1.PersonSelected += PersonDetailsWithFilterControl1_PersonSelected;
             _mode = mode;
             if (_mode == FormMode.Edit)
@@ -30,6 +32,7 @@ namespace Presentation.Forms
                 _personId = User.GetPersonId(_userId);
 
                 personDetailsWithFilterControl1.PersonId = _personId;
+                _drivingLicenseApplicationId = applicationId;
             }
 
         }
@@ -48,10 +51,31 @@ namespace Presentation.Forms
         {
             tabControl1.SelectedTab = tpPersonalInfo;
             LoadDrivingLicenseClasses();
-            lblApplicationDate.Text = DateTime.Now.ToString("d");
+
             lblApplicationFees.Text = ApplicationType.GetApplicationTypeFees(
                 ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense).ToString();
             lblUserName.Text = User.Find(_userId).UserName;
+            lblApplicationDate.Text = DateTime.Now.ToString("d");
+
+
+            if (_mode == FormMode.Edit)
+            {
+                // Load application information
+                Business.Application application = Business.Application.FindByApplicationId(
+                    _drivingLicenseApplicationId);
+                lblApplicationDate.Text = application.ApplicationDate.ToString("d");
+                // select class
+
+                int localDrivingLicenseApplicationId = LocalDrivingLicenseApplication.
+                    GetLocalDrivingLicenseApplicationId(_drivingLicenseApplicationId);
+                LocalDrivingLicenseApplication localApp = LocalDrivingLicenseApplication.Find(localDrivingLicenseApplicationId);
+                cmbDrivingLicenseClass.SelectedValue = localApp.LicenseClassId;
+                cmbDrivingLicenseClass.DropDownStyle = ComboBoxStyle.DropDownList;
+
+                // prevent changing it
+                cmbDrivingLicenseClass.Enabled = false;
+            }
+
             SwitchToMode(_mode);
         }
 
@@ -110,29 +134,36 @@ namespace Presentation.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            int licenseClassId;
-            if (!TryGetSelectedLicenseClassId(out licenseClassId))
-                return;
+            // TODO: Refactor this method to account for Adding new driving 
+            // license and updating an existing driving license.
 
-            int localAppId, blockingAppId;
-            string error;
-
-            bool ok = LocalDrivingLicenseApplication.TryCreateNew(
-                _personId, licenseClassId, _userId,
-                out localAppId, out blockingAppId, out error);
-
-            if (!ok)
+            if (_mode == FormMode.Add)
             {
-                MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                int licenseClassId;
+                if (!TryGetSelectedLicenseClassId(out licenseClassId))
+                    return;
+
+                int localAppId, blockingAppId;
+                string error;
+
+                bool ok = LocalDrivingLicenseApplication.TryCreateNew(
+                    _personId, licenseClassId, _userId,
+                    out localAppId, out blockingAppId, out error);
+
+                if (!ok)
+                {
+                    MessageBox.Show(error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                MessageBox.Show(
+                    string.Format("Data Saved Successfully. Local Driving License Application ID = {0}", localAppId),
+                    "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                lblApplicationId.Text = localAppId.ToString();
+                SwitchToMode(FormMode.Edit);
             }
-
-            MessageBox.Show(
-                string.Format("Data Saved Successfully. Local Driving License Application ID = {0}", localAppId),
-                "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            lblApplicationId.Text = localAppId.ToString();
-            SwitchToMode(FormMode.Edit);
+            
         }
 
         private bool TryGetSelectedLicenseClassId(out int licenseClassId)

@@ -129,5 +129,12 @@ namespace Business
             return TestAppointmentData.GetNumberOfTestTrials(localDrivingLicenseApplicationId, 
                 (int) testType);
         }
+
+        public static bool GetTestResult(int localDrivingLicenseApplicationId,
+            TestTypeId testType)
+        {
+            return TestAppointmentData.GetTestResult(localDrivingLicenseApplicationId,
+                (int)testType);
+        }
     }
 }
