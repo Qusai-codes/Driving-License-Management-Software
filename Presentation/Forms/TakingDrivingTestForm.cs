@@ -1,4 +1,5 @@
 ﻿using Business;
+using Presentation.Helpers;
 using Presentation.Properties;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,7 @@ namespace Presentation.Forms
 
         private void TakingDrivingTestForm_Load(object sender, EventArgs e)
         {
-            dtpTestDate.MinDate = DateTime.Now;
-            dtpTestDate.Value = DateTime.Now;
             LoadTestAppointmentData();
-
         }
 
         private void LoadTestAppointmentData()
@@ -91,10 +89,9 @@ namespace Presentation.Forms
             lblTrialNumber.Text = TestAppointment.GetNumberOfTestTrials(
                 localDrivingLicenseApp.LocalDrivingLicenseApplicationId, testTypeId).ToString();
             lblTestFees.Text = (testType != null ? testType.Fees : 0m).ToString();
-            lblTestId.Text = "N/A";
+            lblTestId.Text = "Not Taken Yet";
 
-            dtpTestDate.Value = appointment.AppointmentDate;
-            dtpTestDate.Enabled = false;
+            lblTestDate.Text = appointment.AppointmentDate.ToString("d");
 
             switch (testTypeId)
             {
@@ -122,8 +119,23 @@ namespace Presentation.Forms
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                MessageBox.Show("Data Saved Successfully.", "Saved", MessageBoxButtons.OK, 
+                Test newDrivingTest = new Test();
+                newDrivingTest.TestAppointmentId = _testAppointmentId;
+                newDrivingTest.TestResult = rdoPassTest.Checked ? true : false;
+                newDrivingTest.Notes = txtNotes.Text;
+                newDrivingTest.CreatedByUserID = AppSession.CurrentUserId;
+
+                if (newDrivingTest.Save())
+                {
+                    MessageBox.Show("Data Saved Successfully.", "Saved", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to Save Data.", "Fail", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                }
+
                 this.Close();
             }
 

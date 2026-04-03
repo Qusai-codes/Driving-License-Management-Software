@@ -50,6 +50,8 @@ namespace Presentation.Forms
                 default:
                     break;
             }
+
+            RefreshAppointmentsList();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -72,7 +74,7 @@ namespace Presentation.Forms
             
 
             ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId, 
-                _testType, FormMode.Add, -1);
+                _testType, -1);
             form.ShowDialog();
             RefreshAppointmentsList();
         }
@@ -125,7 +127,7 @@ namespace Presentation.Forms
             {
                 int testAppointmentId = (int)dgvTestAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
                 ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId,
-                _testType, FormMode.Edit, testAppointmentId);
+                _testType, testAppointmentId);
                 form.ShowDialog();
                 RefreshAppointmentsList();
             }

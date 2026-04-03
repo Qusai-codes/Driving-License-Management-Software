@@ -123,11 +123,11 @@ namespace Business
                 (int) testType);
         }
 
-        public static int GetNumberOfTestTrials(int localDrivingLicenseApplicationId, 
+        public static int GetNumberOfTestTrials(int localDrivingLicenseApplicationId,
             TestTypeId testType)
         {
-            return TestAppointmentData.GetNumberOfTestTrials(localDrivingLicenseApplicationId, 
-                (int) testType);
+            return TestAppointmentData.GetNumberOfTestTrials(localDrivingLicenseApplicationId,
+                (int)testType);
         }
 
         public static bool GetTestResult(int localDrivingLicenseApplicationId,

@@ -35,11 +35,6 @@ namespace Presentation.Forms
 
         private void LoadApplicationInfo()
         {
-            // TODO: Determine if the appointment is for retaking the test
-            _retakeTest = HasApplicantFailedTest();
-            grpRetakeTestInfo.Enabled = _retakeTest;
-            lblTestTitle.Text = _retakeTest ? "Schedule Retake Test" : "Schedule Test";
-            
             var localDrivingLicenseApp = LocalDrivingLicenseApplication.Find(_localDrivingLicenseApplicationId);
             if (localDrivingLicenseApp == null)
             {
@@ -73,12 +68,42 @@ namespace Presentation.Forms
                     licenseClassName = row.Field<string>("ClassName");
                 }
             }
+            _retakeTest = HasApplicantFailedTest();
+            if (_retakeTest)
+            {
+                lblRetakeTestNotice.Text = "Person already sat for the test, " +
+                    "appointment locked.";
+                grpRetakeTestInfo.Enabled = true;
+                lblTestTitle.Text = "Schedule Retake Test";
+                dtpTestDate.Enabled = false;
+                btnSave.Enabled = false;
+            }
+            else
+            {
+                lblRetakeTestNotice.Visible = false;
+                grpRetakeTestInfo.Enabled = false;
+                lblTestTitle.Text = "Schedule Test";
+            }
 
             lblLocalDrivingLicenseAppId.Text = _localDrivingLicenseApplicationId.ToString();
             lblDrivingLicenseClass.Text = string.IsNullOrEmpty(licenseClassName) ? "(unknown)" : licenseClassName;
             int numberOfPassedTests = LocalDrivingLicenseApplication.GetNumberOfPassedTests(_localDrivingLicenseApplicationId);
             lblTestFees.Text = TestType.Find((int)_testTypeId).Fees.ToString();
-            dtpTestDate.Text = DateTime.Now.ToString();
+            
+            if (_mode == FormMode.Add)
+            {
+                dtpTestDate.Text = DateTime.Now.ToString();
+            }
+            else
+            {
+                TestAppointment testAppointment;
+                testAppointment = TestAppointment.Find(_testAppointmentId);
+                dtpTestDate.Value = testAppointment.AppointmentDate;
+
+            }
+
+            dtpTestDate.MinDate = DateTime.Now;
+
             lblApplicantName.Text = Person.GetFullName(personId);
             lblTrialNumber.Text = TestAppointment.GetNumberOfTestTrials(_localDrivingLicenseApplicationId,
                 _testTypeId).ToString();
@@ -156,22 +181,8 @@ namespace Presentation.Forms
 
         private decimal CalculateTotalFees()
         {
+            // UNDONE: complete the calculation logic for retaking test fees.
             return TestType.Find((int)_testTypeId).Fees;
-        }
-
-        private void SwitchMode(FormMode mode)
-        {
-            // TODO: complete the functionality.
-            _mode = mode;
-
-            if (_mode == FormMode.Add)
-            {
-
-            }
-            else if (_mode == FormMode.Edit)
-            {
-
-            }
         }
     }
 }

@@ -194,9 +194,10 @@ namespace DataAccess.Data
             int numberOfTrials = 0;
             const string query = @"
             SELECT COUNT(*) 
-            FROM TestAppointments
-            WHERE TestTypeID = @TestTypeID 
-                AND LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+            FROM TestAppointments ta
+	            INNER JOIN Tests t ON ta.TestAppointmentID = t.TestAppointmentID 
+            WHERE ta.TestTypeID = @TestTypeID AND 
+	            ta.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
             ";
 
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())
