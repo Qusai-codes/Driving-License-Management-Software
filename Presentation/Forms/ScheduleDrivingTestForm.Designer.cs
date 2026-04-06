@@ -33,7 +33,7 @@
             this.grpRetakeTestInfo = new System.Windows.Forms.GroupBox();
             this.lblTotalFees = new System.Windows.Forms.Label();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.lblRetakeTestTypeId = new System.Windows.Forms.Label();
+            this.lblRetakeTestAppId = new System.Windows.Forms.Label();
             this.lblRetakeTestApplicationFee = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
@@ -41,6 +41,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.grpTestDetails = new System.Windows.Forms.GroupBox();
+            this.lblRetakeTestNotice = new System.Windows.Forms.Label();
             this.lblTestFees = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -64,7 +65,6 @@
             this.picDrivingTestType = new System.Windows.Forms.PictureBox();
             this.lblTestTitle = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
-            this.lblRetakeTestNotice = new System.Windows.Forms.Label();
             this.grpRetakeTestInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -83,7 +83,7 @@
             // 
             this.grpRetakeTestInfo.Controls.Add(this.lblTotalFees);
             this.grpRetakeTestInfo.Controls.Add(this.pictureBox9);
-            this.grpRetakeTestInfo.Controls.Add(this.lblRetakeTestTypeId);
+            this.grpRetakeTestInfo.Controls.Add(this.lblRetakeTestAppId);
             this.grpRetakeTestInfo.Controls.Add(this.lblRetakeTestApplicationFee);
             this.grpRetakeTestInfo.Controls.Add(this.label10);
             this.grpRetakeTestInfo.Controls.Add(this.pictureBox8);
@@ -120,15 +120,15 @@
             this.pictureBox9.TabIndex = 25;
             this.pictureBox9.TabStop = false;
             // 
-            // lblRetakeTestTypeId
+            // lblRetakeTestAppId
             // 
-            this.lblRetakeTestTypeId.AutoSize = true;
-            this.lblRetakeTestTypeId.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRetakeTestTypeId.Location = new System.Drawing.Point(160, 82);
-            this.lblRetakeTestTypeId.Name = "lblRetakeTestTypeId";
-            this.lblRetakeTestTypeId.Size = new System.Drawing.Size(33, 16);
-            this.lblRetakeTestTypeId.TabIndex = 24;
-            this.lblRetakeTestTypeId.Text = "N/A";
+            this.lblRetakeTestAppId.AutoSize = true;
+            this.lblRetakeTestAppId.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRetakeTestAppId.Location = new System.Drawing.Point(160, 82);
+            this.lblRetakeTestAppId.Name = "lblRetakeTestAppId";
+            this.lblRetakeTestAppId.Size = new System.Drawing.Size(33, 16);
+            this.lblRetakeTestAppId.TabIndex = 24;
+            this.lblRetakeTestAppId.Text = "N/A";
             // 
             // lblRetakeTestApplicationFee
             // 
@@ -176,11 +176,11 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(5, 82);
+            this.label9.Location = new System.Drawing.Point(14, 82);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(116, 16);
+            this.label9.Size = new System.Drawing.Size(108, 16);
             this.label9.TabIndex = 21;
-            this.label9.Text = "R.Test.Type.ID:";
+            this.label9.Text = "R.Test.App.ID:";
             // 
             // label8
             // 
@@ -226,6 +226,17 @@
             this.grpTestDetails.TabStop = false;
             this.grpTestDetails.Text = "Vision Test";
             // 
+            // lblRetakeTestNotice
+            // 
+            this.lblRetakeTestNotice.AutoSize = true;
+            this.lblRetakeTestNotice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRetakeTestNotice.ForeColor = System.Drawing.Color.Red;
+            this.lblRetakeTestNotice.Location = new System.Drawing.Point(40, 222);
+            this.lblRetakeTestNotice.Name = "lblRetakeTestNotice";
+            this.lblRetakeTestNotice.Size = new System.Drawing.Size(392, 20);
+            this.lblRetakeTestNotice.TabIndex = 20;
+            this.lblRetakeTestNotice.Text = "Person already sat for the test, appointment locked.";
+            // 
             // lblTestFees
             // 
             this.lblTestFees.AutoSize = true;
@@ -244,10 +255,10 @@
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.ImageIndex = 1;
             this.btnSave.ImageList = this.imageList1;
-            this.btnSave.Location = new System.Drawing.Point(386, 667);
+            this.btnSave.Location = new System.Drawing.Point(368, 667);
             this.btnSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(123, 42);
+            this.btnSave.Size = new System.Drawing.Size(142, 42);
             this.btnSave.TabIndex = 6;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -438,7 +449,7 @@
             // picDrivingTestType
             // 
             this.picDrivingTestType.Image = ((System.Drawing.Image)(resources.GetObject("picDrivingTestType.Image")));
-            this.picDrivingTestType.Location = new System.Drawing.Point(201, 39);
+            this.picDrivingTestType.Location = new System.Drawing.Point(179, 39);
             this.picDrivingTestType.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picDrivingTestType.Name = "picDrivingTestType";
             this.picDrivingTestType.Size = new System.Drawing.Size(115, 114);
@@ -451,7 +462,7 @@
             this.lblTestTitle.AutoSize = true;
             this.lblTestTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTestTitle.ForeColor = System.Drawing.Color.DarkRed;
-            this.lblTestTitle.Location = new System.Drawing.Point(155, 181);
+            this.lblTestTitle.Location = new System.Drawing.Point(132, 181);
             this.lblTestTitle.Name = "lblTestTitle";
             this.lblTestTitle.Size = new System.Drawing.Size(209, 32);
             this.lblTestTitle.TabIndex = 3;
@@ -465,7 +476,7 @@
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.ImageIndex = 0;
             this.btnClose.ImageList = this.imageList1;
-            this.btnClose.Location = new System.Drawing.Point(170, 786);
+            this.btnClose.Location = new System.Drawing.Point(171, 786);
             this.btnClose.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(141, 42);
@@ -473,17 +484,6 @@
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // lblRetakeTestNotice
-            // 
-            this.lblRetakeTestNotice.AutoSize = true;
-            this.lblRetakeTestNotice.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRetakeTestNotice.ForeColor = System.Drawing.Color.Red;
-            this.lblRetakeTestNotice.Location = new System.Drawing.Point(233, 222);
-            this.lblRetakeTestNotice.Name = "lblRetakeTestNotice";
-            this.lblRetakeTestNotice.Size = new System.Drawing.Size(53, 20);
-            this.lblRetakeTestNotice.TabIndex = 20;
-            this.lblRetakeTestNotice.Text = "label1";
             // 
             // ScheduleDrivingTestForm
             // 
@@ -546,7 +546,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblTotalFees;
         private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.Label lblRetakeTestTypeId;
+        private System.Windows.Forms.Label lblRetakeTestAppId;
         private System.Windows.Forms.Label lblRetakeTestApplicationFee;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.PictureBox pictureBox8;

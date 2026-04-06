@@ -123,7 +123,7 @@ namespace Business
             {
                 PersonId = personId,
                 ApplicationDate = DateTime.Now,
-                ApplicationTypeId = (int)ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense + 1,
+                ApplicationTypeId = (int)ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense,
                 ApplicationStatus = Application.Status.New,
                 LastStatusDate = DateTime.Now,
                 PaidFees = ApplicationType.GetApplicationTypeFees(ApplicationType.ApplicationTypeTitle.NewLocalDrivingLicense),

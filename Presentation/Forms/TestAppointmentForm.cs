@@ -1,4 +1,6 @@
 ﻿using Business;
+using Presentation.Helpers;
+using Presentation.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,9 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Business;
-using Presentation.Properties;
+using static Business.TestType;
 
 namespace Presentation.Forms
 {
@@ -59,22 +59,48 @@ namespace Presentation.Forms
             this.Close();
         }
 
+        private bool HasActiveUnlockedAppointment()
+        {
+            DataTable dt = TestAppointment.GetAllTestAppointments(_localDrivingLicenseApplicationId, _testType);
+            if (dt == null || dt.Rows.Count == 0 || !dt.Columns.Contains("IsLocked"))
+                return false;
+
+            return dt.AsEnumerable().Any(r => !r.Field<bool>("IsLocked"));
+        }
+
+        private bool HasApplicantPassedTest()
+        {
+            int trials = TestAppointment.GetNumberOfTestTrials(_localDrivingLicenseApplicationId, _testType);
+            if (trials == 0)
+                return false;
+
+            return TestAppointment.GetTestResult(_localDrivingLicenseApplicationId, _testType);
+        }
+
+
         private void btnAddAppointment_Click(object sender, EventArgs e)
         {
-            // TODO: implement the logic to prevent creating new test appointment
-            // in case there is already a test appointment booked
-            if (TestAppointment.DoesTestAppointmentExist(_localDrivingLicenseApplicationId, 
-                _testType))
+            // 1) Existing open (not locked) appointment => block
+            if (HasActiveUnlockedAppointment())
             {
                 MessageBox.Show("Person already have an active appointment for this test, you "
                 + "cannot add new appointment", "Not Allowed", MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
                 return;
             }
-            
 
-            ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId, 
-                _testType, -1);
+            // 2) Already passed this test => block
+            if (HasApplicantPassedTest())
+            {
+                MessageBox.Show("This person already passed this test before, " +
+                    "you can only retake failed test", "Not Allowed", MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
+                return;
+            }
+
+            // 3) Allowed
+            ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId,
+                _testType, FormMode.Add, -1);
             form.ShowDialog();
             RefreshAppointmentsList();
         }
@@ -122,12 +148,11 @@ namespace Presentation.Forms
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: complete the implementation.
             if (dgvTestAppointments.CurrentRow != null)
             {
                 int testAppointmentId = (int)dgvTestAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
                 ScheduleDrivingTestForm form = new ScheduleDrivingTestForm(_localDrivingLicenseApplicationId,
-                _testType, testAppointmentId);
+                _testType,FormMode.Edit, testAppointmentId);
                 form.ShowDialog();
                 RefreshAppointmentsList();
             }
@@ -136,7 +161,6 @@ namespace Presentation.Forms
 
         private void takeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: complete the implementation.
             if (dgvTestAppointments.CurrentRow != null)
             {
                 int testAppointmentId = (int)dgvTestAppointments.CurrentRow.Cells["TestAppointmentID"].Value;

@@ -133,5 +133,10 @@ namespace Business
                 ? (Status)status
                 : Status.New;
         }
+
+        public static int GetLatestRetakeTestApplicationId(int personId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

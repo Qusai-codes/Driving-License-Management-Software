@@ -14,13 +14,13 @@ namespace Business
     {
         public enum ApplicationTypeTitle
         {
-            NewLocalDrivingLicense,
-            RenewDrivingLicense,
-            ReplaceLostDrivingLicense,
-            ReplaceDamagedDrivingLicense,
-            ReleaseDetainedLicense,
-            NewInternationalDrivingLicense,
-            RetakeTest
+            NewLocalDrivingLicense = 1,
+            RenewDrivingLicense = 2,
+            ReplaceLostDrivingLicense = 3,
+            ReplaceDamagedDrivingLicense = 4,
+            ReleaseDetainedLicense = 5,
+            NewInternationalDrivingLicense = 6,
+            RetakeTest = 8
         }
 
         public EntityMode Mode { get; private set; }

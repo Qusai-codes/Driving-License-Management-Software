@@ -21,6 +21,7 @@ namespace Business
         public decimal PaidFees { get; set; }
         public int CreatedByUserID { get; set; }
         public bool IsLocked { get; set; }
+        public int RetakeTestApplicationID { get; set; }
 
         public TestAppointment()
         {
@@ -31,6 +32,7 @@ namespace Business
             PaidFees = 0;
             CreatedByUserID = -1;
             IsLocked = false;
+            RetakeTestApplicationID = -1;
 
             Mode = EntityMode.AddNew;
         }

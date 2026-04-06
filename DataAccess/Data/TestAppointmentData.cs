@@ -224,11 +224,12 @@ namespace DataAccess.Data
             bool testResult = false;
 
             const string query = @"
-            SELECT t.TestResult
-            FROM TestAppointments ta INNER JOIN Tests t 
-	            ON ta.TestAppointmentID = t.TestAppointmentID 
-            WHERE ta.TestTypeID = @TestTypeID 
-	            AND ta.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID;
+                SELECT TOP 1 t.TestResult
+                FROM TestAppointments ta
+                INNER JOIN Tests t ON ta.TestAppointmentID = t.TestAppointmentID
+                WHERE ta.TestTypeID = @TestTypeID
+                  AND ta.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+                ORDER BY ta.AppointmentDate DESC, t.TestID DESC;
             ";
 
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())

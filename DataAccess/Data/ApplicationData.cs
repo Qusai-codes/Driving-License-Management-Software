@@ -192,5 +192,35 @@ namespace DataAccess.Data
 
             return status;
         }
+
+        public static int GetLatestRetakeTestApplicationId(int personId, int retakeTest)
+        {
+            int applicationId = -1;
+
+            const string query = @"
+            SELECT TOP 1 ApplicationID
+            FROM Applications
+            WHERE ApplicantPersonID = @ApplicantPersonID
+              AND ApplicationTypeID = @ApplicationTypeID
+            ORDER BY ApplicationDate DESC, ApplicationID DESC;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@ApplicantPersonID", SqlDbType.Int).Value = personId;
+                command.Parameters.Add("@ApplicationTypeID", SqlDbType.Int).Value = retakeTest;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    applicationId = Convert.ToInt32(result);
+                }
+            }
+
+            return applicationId;
+        }
     }
 }
