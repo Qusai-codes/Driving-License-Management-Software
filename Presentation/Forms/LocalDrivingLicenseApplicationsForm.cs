@@ -232,7 +232,13 @@ namespace Presentation.Forms
 
         private void showApplicationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: implement the functionality.
+            if (dgvApplications.CurrentRow != null)
+            {
+                int localApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+                DrivingLicenseApplicationInformationForm form = new DrivingLicenseApplicationInformationForm(localApplicationId);
+                form.ShowDialog();
+                RefreshApplicationsList();
+            }
         }
 
         private void editApplicationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -328,6 +334,7 @@ namespace Presentation.Forms
             int drivingLicenseApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
             TestAppointmentForm form = new TestAppointmentForm(drivingLicenseApplicationId, TestType.TestTypeId.Vision);
             form.ShowDialog();
+            RefreshApplicationsList();
 
         }
 
@@ -340,6 +347,7 @@ namespace Presentation.Forms
             int drivingLicenseApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
             TestAppointmentForm form = new TestAppointmentForm(drivingLicenseApplicationId, TestType.TestTypeId.Written);
             form.ShowDialog();
+            RefreshApplicationsList();
 
         }
 
@@ -352,6 +360,7 @@ namespace Presentation.Forms
             int drivingLicenseApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
             TestAppointmentForm form = new TestAppointmentForm(drivingLicenseApplicationId, TestType.TestTypeId.Street);
             form.ShowDialog();
+            RefreshApplicationsList();
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
@@ -389,6 +398,9 @@ namespace Presentation.Forms
                 return;
             }
 
+            // Issuing driving license for first time
+            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+
             // Rules:
             // 1) If vision not passed yet -> disable written + street.
             // 2) If vision passed -> enable only written (street stays disabled).
@@ -405,11 +417,16 @@ namespace Presentation.Forms
                 scheduleWrittenTestToolStripMenuItem.Enabled = true;
                 scheduleStreetTestToolStripMenuItem.Enabled = false;
             }
-            else
+            else if (passedTests == 2)
             {
                 scheduleVisionTestToolStripMenuItem.Enabled = false;
                 scheduleWrittenTestToolStripMenuItem.Enabled = false;
                 scheduleStreetTestToolStripMenuItem.Enabled = true;
+            }
+            else if (passedTests == 3)
+            {
+                scheduleTestsToolStripMenuItem.Enabled = false;
+                issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = true;
             }
         }
     }

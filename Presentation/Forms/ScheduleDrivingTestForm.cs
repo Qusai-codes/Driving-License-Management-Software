@@ -84,6 +84,19 @@ namespace Presentation.Forms
                 }
             }
 
+            if (_mode == FormMode.Edit && _retakeTest)
+            {
+                _retakeTestApplicationId = Business.Application.GetLatestRetakeTestApplicationId(personId);
+
+                if (_retakeTestApplicationId == -1)
+                {
+                    MessageBox.Show("Retake test application not found.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                lblRetakeTestAppId.Text = _retakeTestApplicationId.ToString();
+            }
+
             _isEditLockedAppointment =
                 _mode == FormMode.Edit &&
                 currentAppointment != null &&
@@ -206,16 +219,20 @@ namespace Presentation.Forms
                     return;
             }
 
-            TestAppointment testAppointment; 
+            TestAppointment testAppointment;
+            testAppointment = new TestAppointment();
             if (_mode == FormMode.Add)
             {
-                testAppointment = new TestAppointment();
+                
                 testAppointment.TestTypeID = (int)_testTypeId;
                 testAppointment.LocalDrivingLicenseApplicationID = _localDrivingLicenseApplicationId;
                 testAppointment.AppointmentDate = dtpTestDate.Value;
                 testAppointment.PaidFees = CalculateTotalFees();
                 testAppointment.CreatedByUserID = AppSession.CurrentUserId;
                 testAppointment.IsLocked = false;
+                testAppointment.RetakeTestApplicationID = _retakeTest ? _retakeTestApplicationId
+                                                       : -1;
+
             }
             else
             {
@@ -246,7 +263,6 @@ namespace Presentation.Forms
         {
             decimal testFees = TestType.Find((int)_testTypeId).Fees;
 
-            // Do NOT add retake application fees when this is just an edit of a locked appointment.
             if (_retakeTest && !_isEditLockedAppointment)
             {
                 decimal retakeApplicationFees = ApplicationType.GetApplicationTypeFees(

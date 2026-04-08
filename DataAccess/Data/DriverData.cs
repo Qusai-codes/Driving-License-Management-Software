@@ -8,5 +8,6 @@ namespace DataAccess.Data
 {
     public class DriverData
     {
+
     }
 }

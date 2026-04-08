@@ -39,7 +39,7 @@ namespace Business
 
         private TestAppointment(int testAppointmentId, int testTypeId,
             int localDrivingLicenseApplicationId, DateTime appointmentDate,
-            decimal paidFees, int createdByUserId, bool isLocked)
+            decimal paidFees, int createdByUserId, bool isLocked, int retakeTestApplicationId = -1)
         {
             TestAppointmentID = testAppointmentId;
             TestTypeID = testTypeId;
@@ -48,6 +48,7 @@ namespace Business
             PaidFees = paidFees;
             CreatedByUserID = createdByUserId;
             IsLocked = isLocked;
+            RetakeTestApplicationID = retakeTestApplicationId;
 
             Mode = EntityMode.Update;
         }
@@ -67,7 +68,8 @@ namespace Business
                 AppointmentDate,
                 PaidFees,
                 CreatedByUserID,
-                IsLocked);
+                IsLocked,
+                RetakeTestApplicationID);
 
             return TestAppointmentID != -1;
         }
@@ -98,17 +100,18 @@ namespace Business
 
         public static TestAppointment Find(int testAppointmentId)
         {
-            int testTypeId = -1, localDrivingLicenseApplicationId = -1, createdByUserId = -1;
+            int testTypeId = -1, localDrivingLicenseApplicationId = -1, createdByUserId = -1, 
+                retakeTestApplicationId = -1;
             DateTime appointmentDate = DateTime.Now;
             decimal paidFees = 0;
             bool isLocked = false;
 
             if (TestAppointmentData.GetTestAppointmentInfoById(testAppointmentId, ref testTypeId, 
                 ref localDrivingLicenseApplicationId, ref appointmentDate, ref paidFees, 
-                ref createdByUserId, ref isLocked))
+                ref createdByUserId, ref isLocked, ref retakeTestApplicationId))
             {
                 return new TestAppointment(testAppointmentId, testTypeId, localDrivingLicenseApplicationId, 
-                        appointmentDate, paidFees, createdByUserId, isLocked);
+                        appointmentDate, paidFees, createdByUserId, isLocked, retakeTestApplicationId);
             }
             return null;
         }
@@ -137,6 +140,11 @@ namespace Business
         {
             return TestAppointmentData.GetTestResult(localDrivingLicenseApplicationId,
                 (int)testType);
+        }
+
+        public static bool HasPassedTest(int localDrivingLicenseApplicationId, TestTypeId testType)
+        {
+            return TestAppointmentData.HasPassedTest(localDrivingLicenseApplicationId, (int)testType);
         }
     }
 }

@@ -136,7 +136,8 @@ namespace Business
 
         public static int GetLatestRetakeTestApplicationId(int personId)
         {
-            throw new NotImplementedException();
+            return ApplicationData.GetLatestRetakeTestApplicationId(personId, 
+                (int)ApplicationType.ApplicationTypeTitle.RetakeTest);
         }
     }
 }

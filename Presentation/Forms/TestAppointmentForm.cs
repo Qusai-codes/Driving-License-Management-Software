@@ -70,11 +70,7 @@ namespace Presentation.Forms
 
         private bool HasApplicantPassedTest()
         {
-            int trials = TestAppointment.GetNumberOfTestTrials(_localDrivingLicenseApplicationId, _testType);
-            if (trials == 0)
-                return false;
-
-            return TestAppointment.GetTestResult(_localDrivingLicenseApplicationId, _testType);
+            return TestAppointment.HasPassedTest(_localDrivingLicenseApplicationId, _testType);
         }
 
 
@@ -163,7 +159,18 @@ namespace Presentation.Forms
         {
             if (dgvTestAppointments.CurrentRow != null)
             {
+                // Check if the appointment is locked already 
+
                 int testAppointmentId = (int)dgvTestAppointments.CurrentRow.Cells["TestAppointmentID"].Value;
+                bool isTestAppointmentLocked = (bool)dgvTestAppointments.CurrentRow.Cells["IsLocked"].Value;
+
+                if (isTestAppointmentLocked)
+                {
+                    MessageBox.Show("Test has already been taken", "Not Allowed", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
                 TakingDrivingTestForm form = new TakingDrivingTestForm(testAppointmentId);
                 form.ShowDialog();
                 RefreshAppointmentsList();

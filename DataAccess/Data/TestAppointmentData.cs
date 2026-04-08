@@ -13,13 +13,14 @@ namespace DataAccess.Data
     {
         public static bool GetTestAppointmentInfoById(int testAppointmentId, 
             ref int testTypeId, ref int localDrivingLicenseAppId, ref DateTime appointmentDate, 
-            ref decimal paidFees, ref int createdByUserId, ref bool isLocked)
+            ref decimal paidFees, ref int createdByUserId, ref bool isLocked,  
+            ref int retakeTestApplicationId)
         {
             bool isFound = false;
 
             const string query = @"
             SELECT TestTypeID, LocalDrivingLicenseApplicationID, 
-                AppointmentDate, PaidFees, CreatedByUserID, IsLocked 
+                AppointmentDate, PaidFees, CreatedByUserID, IsLocked, RetakeTestApplicationID 
             FROM TestAppointments 
             WHERE TestAppointmentID = @TestAppointmentID;
             ";
@@ -42,6 +43,10 @@ namespace DataAccess.Data
                         paidFees = (decimal)reader["PaidFees"];
                         createdByUserId = (int)reader["CreatedByUserID"];
                         isLocked = (bool)reader["IsLocked"];
+
+                        retakeTestApplicationId = reader["RetakeTestApplicationID"] == DBNull.Value
+                            ? -1
+                            : Convert.ToInt32(reader["RetakeTestApplicationID"]);
                     }
                     else
                     {
@@ -81,15 +86,16 @@ namespace DataAccess.Data
         }
 
         public static int CreateNewTestAppointment(int testTypeId, int localDrivingLicenseAppId,
-            DateTime appointmentDate, decimal paidFees, int createdByUserId, bool isLocked)
+            DateTime appointmentDate, decimal paidFees, int createdByUserId, bool isLocked, 
+            int retakeTestApplicationId)
         {
             int testAppointmentId = -1;
 
             const string query = @"
             INSERT INTO TestAppointments (TestTypeID, LocalDrivingLicenseApplicationID, 
-            AppointmentDate, PaidFees, CreatedByUserID, IsLocked) 
+            AppointmentDate, PaidFees, CreatedByUserID, IsLocked, RetakeTestApplicationID) 
             VALUES (@TestTypeID, @LocalDrivingLicenseApplicationID, @AppointmentDate,
-            @PaidFees, @CreatedByUserID, @IsLocked);
+            @PaidFees, @CreatedByUserID, @IsLocked, @RetakeTestApplicationID);
             SELECT SCOPE_IDENTITY();
             ";
 
@@ -102,6 +108,9 @@ namespace DataAccess.Data
                 command.Parameters.Add("@PaidFees", SqlDbType.SmallMoney).Value = paidFees;
                 command.Parameters.Add("@CreatedByUserID", SqlDbType.Int).Value = createdByUserId; 
                 command.Parameters.Add("@IsLocked", SqlDbType.Bit).Value = isLocked;
+
+                SqlParameter retakeParam = command.Parameters.Add("@RetakeTestApplicationID", SqlDbType.Int);
+                retakeParam.Value = retakeTestApplicationId <= 0 ? (object)DBNull.Value : retakeTestApplicationId;
 
                 connection.Open();
                 object result = command.ExecuteScalar();
@@ -249,6 +258,33 @@ namespace DataAccess.Data
             }
 
             return testResult;
+        }
+
+        public static bool HasPassedTest(int localDrivingLicenseApplicationId, int testType)
+        {
+            bool hasPassed = false;
+
+            const string query = @"
+            SELECT TOP 1 1
+            FROM TestAppointments ta
+            INNER JOIN Tests t ON ta.TestAppointmentID = t.TestAppointmentID
+            WHERE ta.LocalDrivingLicenseApplicationID = @LocalDrivingLicenseApplicationID
+              AND ta.TestTypeID = @TestTypeID
+              AND t.TestResult = 1;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@LocalDrivingLicenseApplicationID", SqlDbType.Int).Value = localDrivingLicenseApplicationId;
+                command.Parameters.Add("@TestTypeID", SqlDbType.Int).Value = testType;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+                hasPassed = result != null && result != DBNull.Value;
+            }
+
+            return hasPassed;
         }
     }
 }

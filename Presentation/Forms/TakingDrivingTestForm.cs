@@ -32,6 +32,7 @@ namespace Presentation.Forms
 
         private void LoadTestAppointmentData()
         {
+            // UNDONE: add the logic for retakeTestApplicationId.
             TestAppointment appointment = TestAppointment.Find(_testAppointmentId);
             if (appointment == null)
             {
