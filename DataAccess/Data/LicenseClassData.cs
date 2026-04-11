@@ -64,5 +64,32 @@ namespace DataAccess.Data
 
             return classNames.ToArray();
         }
+
+        public static byte GetMinimumAllowedAge(int licenseClassId)
+        {
+            byte minimumAllowedAge = 0;
+
+            const string query = @"
+                SELECT MinimumAllowedAge
+                FROM LicenseClasses
+                WHERE LicenseClassID = @LicenseClassID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@LicenseClassID", SqlDbType.Int).Value = licenseClassId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    minimumAllowedAge = Convert.ToByte(result);
+                }
+            }
+
+            return minimumAllowedAge;
+        }
     }
 }

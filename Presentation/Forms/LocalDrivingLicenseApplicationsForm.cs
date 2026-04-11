@@ -312,7 +312,16 @@ namespace Presentation.Forms
 
         private void issueDrivingLicenseFirstTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: implement the functionality.
+
+            if (dgvApplications.CurrentRow == null)
+            {
+                return;
+            }
+
+            int drivingLicenseApplicationId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+            IssueDrivingLicenseForFirstTimeForm form = new IssueDrivingLicenseForFirstTimeForm(drivingLicenseApplicationId);
+            form.ShowDialog();
+            RefreshApplicationsList();
         }
 
         private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -375,6 +384,9 @@ namespace Presentation.Forms
                 return;
             }
 
+            int localAppId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+            int appId = LocalDrivingLicenseApplication.GetApplicationId(localAppId);
+
             object statusObj = dgvApplications.CurrentRow.Cells["ApplicationStatus"].Value;
             object passedTestsObj = dgvApplications.CurrentRow.Cells["PassedTests"].Value;
 
@@ -387,24 +399,42 @@ namespace Presentation.Forms
             if (passedTestsObj != null)
                 int.TryParse(passedTestsObj.ToString(), out passedTests);
 
-            // Scheduling is allowed only for "New" applications.
             bool isNewStatus = statusValue == (byte)Business.Application.Status.New;
+            int totalTests = TestType.GetTestTypeCount();
 
+            bool hasLicense = appId > 0 && Business.License.DoesLicenseExist(appId);
+
+            // Show License availability
+            showLicenseToolStripMenuItem.Enabled = hasLicense;
+
+            // If not New status, scheduling/issuing first time is not allowed
             if (!isNewStatus)
             {
+                scheduleTestsToolStripMenuItem.Enabled = false;
+                scheduleVisionTestToolStripMenuItem.Enabled = false;
+                scheduleWrittenTestToolStripMenuItem.Enabled = false;
+                scheduleStreetTestToolStripMenuItem.Enabled = false;
+                issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+                return;
+            }
+
+            // Issue first time only when all tests passed and no license exists yet
+            bool canIssueFirstTime = (passedTests >= totalTests) && !hasLicense;
+            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = canIssueFirstTime;
+
+            // If license already exists OR can issue first time, disable scheduling
+            if (hasLicense || canIssueFirstTime)
+            {
+                scheduleTestsToolStripMenuItem.Enabled = false;
                 scheduleVisionTestToolStripMenuItem.Enabled = false;
                 scheduleWrittenTestToolStripMenuItem.Enabled = false;
                 scheduleStreetTestToolStripMenuItem.Enabled = false;
                 return;
             }
 
-            // Issuing driving license for first time
-            issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = false;
+            // Scheduling rules
+            scheduleTestsToolStripMenuItem.Enabled = true;
 
-            // Rules:
-            // 1) If vision not passed yet -> disable written + street.
-            // 2) If vision passed -> enable only written (street stays disabled).
-            // 3) If both vision and written passed -> allow scheduling of street test.
             if (passedTests <= 0)
             {
                 scheduleVisionTestToolStripMenuItem.Enabled = true;
@@ -423,11 +453,14 @@ namespace Presentation.Forms
                 scheduleWrittenTestToolStripMenuItem.Enabled = false;
                 scheduleStreetTestToolStripMenuItem.Enabled = true;
             }
-            else if (passedTests == 3)
+            else
             {
-                scheduleTestsToolStripMenuItem.Enabled = false;
-                issueDrivingLicenseFirstTimeToolStripMenuItem.Enabled = true;
+                // Safety fallback
+                scheduleVisionTestToolStripMenuItem.Enabled = false;
+                scheduleWrittenTestToolStripMenuItem.Enabled = false;
+                scheduleStreetTestToolStripMenuItem.Enabled = false;
             }
+
         }
     }
 }

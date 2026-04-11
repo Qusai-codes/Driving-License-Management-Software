@@ -10,6 +10,10 @@ namespace Business
 {
     public class LicenseClass
     {
+        public static byte GetMinimumAllowedAge(int licenseClassId)
+        {
+
+        }
 
         public static DataTable GetAllLicenseClasses()
         {
