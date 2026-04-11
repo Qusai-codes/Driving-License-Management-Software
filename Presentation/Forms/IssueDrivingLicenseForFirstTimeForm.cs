@@ -30,6 +30,7 @@ namespace Presentation.Forms
         {
             drivingLicenseApplicationInformationControl1.LocalDrivingLicenseApplicationId =
                 _localDrivingLicenseApplicationId;
+            drivingLicenseApplicationInformationControl1.ShowLicenseInformationLinkLabel.Enabled = false;
         }
 
         private void btnIssueDrivingLicense_Click(object sender, EventArgs e)
@@ -83,7 +84,7 @@ namespace Presentation.Forms
                 DriverID = driverId,
                 LicenseClass = localApp.LicenseClassId,
                 IssueDate = issueDate,
-                ExpirationDate = issueDate.AddYears(LicenseClass.GetMinimumAllowedAge(localApp.LicenseClassId)),
+                ExpirationDate = issueDate.AddYears(LicenseClass.GetDefaultValidityLength(localApp.LicenseClassId)),
                 Notes = textBox1.Text.Trim(),
                 PaidFees = app.PaidFees,
                 IsActive = true,

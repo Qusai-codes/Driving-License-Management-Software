@@ -1,5 +1,6 @@
 ﻿using Business.Common;
 using DataAccess;
+using DataAccess.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -102,20 +103,33 @@ namespace Business
             localDrivingLicenseApplicationId = -1;
             blockingApplicationId = -1;
             errorMessage = string.Empty;
-
-            // Business rule: block if same person + class has status New or Completed
+            
             int newStatusAppId = LocalDrivingLicenseApplicationData.GetApplicationId(
                 personId, licenseClassId, (byte)Application.Status.New);
 
             int completedStatusAppId = LocalDrivingLicenseApplicationData.GetApplicationId(
                 personId, licenseClassId, (byte)Application.Status.Completed);
 
+            // Business rule: block if same person + class has status New or Completed
             if (newStatusAppId != -1 || completedStatusAppId != -1)
             {
                 blockingApplicationId = newStatusAppId != -1 ? newStatusAppId : completedStatusAppId;
                 errorMessage = string.Format(
                     "Choose another License Class, the selected person already has an active application for the selected class with id = {0}",
                     blockingApplicationId);
+                return false;
+            }
+
+            // Business rule: cannot allow person to apply for driving application if 
+            // the minimum age for driving license class that is applied for is bigger 
+            // than person age.
+            if (!IsAllowedToApplyForLocalDrivingLicense(personId, licenseClassId))
+            {
+                errorMessage = string.Format("The person with person id = {0} age ({1}) is "
+                    + "below the minimum required age ({2}) for the license class of {3}.", 
+                    personId, Person.CalculatePersonAge(personId), 
+                    LicenseClass.GetMinimumAllowedAge(licenseClassId),
+                    LicenseClass.GetLicenseClassName(licenseClassId));
                 return false;
             }
 
@@ -188,6 +202,21 @@ namespace Business
 
             return tests.AsEnumerable()
                         .Count(r => r.Field<bool>("TestResult"));
+        }
+
+        private static bool IsAllowedToApplyForLocalDrivingLicense(int personId, 
+            int licenseClassId)
+        {
+            int personAge = Person.CalculatePersonAge(personId);
+            if (personAge == -1)
+            {
+                return false;
+            }
+
+            int minimumAllowedAgeForLicenseClass = LicenseClassData.GetMinimumAllowedAge(licenseClassId);
+
+            return personAge >= minimumAllowedAgeForLicenseClass;
+
         }
     }
 }

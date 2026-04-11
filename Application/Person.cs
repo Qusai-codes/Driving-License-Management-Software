@@ -154,5 +154,25 @@ namespace Business
         {
             return PersonData.GetFullName(personId);
         }
+
+        public static int CalculatePersonAge(int personId)
+        {
+            Person person = Find(personId);
+            if (person == null)
+            {
+                return -1;
+            }
+
+            DateTime today = DateTime.Today;
+            DateTime birthDate = person.DateOfBirth.Date;
+
+            int age = today.Year - birthDate.Year;
+            if (birthDate > today.AddYears(-age))
+            {
+                age--;
+            }
+
+            return age;
+        }
     }
 }

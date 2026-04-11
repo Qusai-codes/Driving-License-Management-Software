@@ -407,6 +407,12 @@ namespace Presentation.Forms
             // Show License availability
             showLicenseToolStripMenuItem.Enabled = hasLicense;
 
+            // Disable menu items related to edition of the local driving license application
+            // if the license is already issued.
+            editApplicationToolStripMenuItem.Enabled = !hasLicense;
+            deleteApplicationToolStripMenuItem.Enabled = !hasLicense;
+            cancelApplicationToolStripMenuItem.Enabled = !hasLicense;
+
             // If not New status, scheduling/issuing first time is not allowed
             if (!isNewStatus)
             {

@@ -10,6 +10,14 @@ namespace Business
 {
     public class License
     {
+        public enum IssueReasonType : byte
+        {
+            FirstTime = 1,
+            Renew = 2,
+            ReplacementForDamaged = 3,
+            ReplacementForLost = 4
+        }
+
         public EntityMode Mode { get; set; }
         public int LicenseID { get; set; }
         public int ApplicationID { get; set; }
@@ -89,6 +97,7 @@ namespace Business
                     if (AddNew())
                     {
                         Mode = EntityMode.Update;
+                        UpdateApplicationStatusToComplete();
                         return true;
                     }
                     return false;
@@ -98,6 +107,17 @@ namespace Business
             }
 
             return false;
+        }
+
+        private void UpdateApplicationStatusToComplete()
+        {
+            Application application = Application.FindByApplicationId(ApplicationID);
+            if (application != null)
+            {
+                application.ApplicationStatus = Application.Status.Completed;
+                application.LastStatusDate = DateTime.Now;
+                application.Save();
+            }
         }
 
         public static License Find(int licenseId)
@@ -129,5 +149,7 @@ namespace Business
         {
             return LicenseData.DoesActiveLicenseExistForDriverAndClass(driverId, licenseClassId);
         }
+
+
     }
 }
