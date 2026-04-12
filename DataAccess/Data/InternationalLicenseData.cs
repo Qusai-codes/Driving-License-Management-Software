@@ -8,5 +8,13 @@ namespace DataAccess.Data
 {
     public class InternationalLicenseData
     {
+        public static int AddNewInternationalDrivingLicense()
+        {
+            int internationalDrivingLicenseId = -1;
+
+
+
+            return internationalDrivingLicenseId;
+        }
     }
 }

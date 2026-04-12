@@ -46,6 +46,7 @@
     <Compile Include="DTOs\CountryDto.cs" />
     <Compile Include="DTOs\DetainedLicenseDto.cs" />
     <Compile Include="DTOs\DriverDto.cs" />
+    <Compile Include="DTOs\DriverLicenseInfoDto.cs" />
     <Compile Include="DTOs\InternationalLicenseDto.cs" />
     <Compile Include="DTOs\LicenseClassDto.cs" />
     <Compile Include="DTOs\LicenseDto.cs" />

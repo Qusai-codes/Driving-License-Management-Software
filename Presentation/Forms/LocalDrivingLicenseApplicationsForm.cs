@@ -326,7 +326,32 @@ namespace Presentation.Forms
 
         private void showLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: implement the functionality.
+            if (dgvApplications.CurrentRow == null)
+            {
+                return;
+            }
+
+            int localAppId = (int)dgvApplications.CurrentRow.Cells["LocalDrivingLicenseApplicationID"].Value;
+            int appId = LocalDrivingLicenseApplication.GetApplicationId(localAppId);
+
+            if (appId == -1)
+            {
+                MessageBox.Show("Application not found.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int driverId = Business.License.GetDriverIdByApplicationId(appId);
+            if (driverId == -1)
+            {
+                MessageBox.Show("No issued license found for this application.", "Not Found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DriverLicenseInformationForm form = new DriverLicenseInformationForm(driverId);
+            form.ShowDialog();
+            RefreshApplicationsList();
         }
 
         private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)

@@ -2,6 +2,7 @@
 using DataAccess.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -148,6 +149,21 @@ namespace Business
         public static bool DoesActiveLicenseExistForDriverAndClass(int driverId, int licenseClassId)
         {
             return LicenseData.DoesActiveLicenseExistForDriverAndClass(driverId, licenseClassId);
+        }
+
+        public static int GetLicenseIdByApplicationId(int applicationId)
+        {
+            return LicenseData.GetLicenseId(applicationId);
+        }
+
+        public static int GetDriverIdByApplicationId(int applicationId)
+        {
+            int licenseId = GetLicenseIdByApplicationId(applicationId);
+            if (licenseId == -1)
+                return -1;
+
+            License license = Find(licenseId);
+            return license != null ? license.DriverID : -1;
         }
 
 

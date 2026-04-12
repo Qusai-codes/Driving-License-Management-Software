@@ -12,6 +12,12 @@ namespace Business
 {
     public class Person
     {
+        public enum PersonGender : byte
+        {
+            Male = 0,
+            Female = 1
+        }
+
         public EntityMode Mode { get; private set; }
 
         public int PersonId { get; private set; }

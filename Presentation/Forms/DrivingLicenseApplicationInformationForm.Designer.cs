@@ -37,9 +37,10 @@
             // 
             this.drivingLicenseApplicationInformationControl1.AutoSize = true;
             this.drivingLicenseApplicationInformationControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.drivingLicenseApplicationInformationControl1.Location = new System.Drawing.Point(14, 14);
+            this.drivingLicenseApplicationInformationControl1.Location = new System.Drawing.Point(10, 11);
+            this.drivingLicenseApplicationInformationControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.drivingLicenseApplicationInformationControl1.Name = "drivingLicenseApplicationInformationControl1";
-            this.drivingLicenseApplicationInformationControl1.Size = new System.Drawing.Size(804, 411);
+            this.drivingLicenseApplicationInformationControl1.Size = new System.Drawing.Size(602, 333);
             this.drivingLicenseApplicationInformationControl1.TabIndex = 0;
             // 
             // btnClose
@@ -48,9 +49,10 @@
             this.btnClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClose.Image = ((System.Drawing.Image)(resources.GetObject("btnClose.Image")));
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(347, 429);
+            this.btnClose.Location = new System.Drawing.Point(260, 349);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(139, 38);
+            this.btnClose.Size = new System.Drawing.Size(104, 38);
             this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -58,12 +60,13 @@
             // 
             // DrivingLicenseApplicationInformationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(831, 476);
+            this.ClientSize = new System.Drawing.Size(623, 394);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.drivingLicenseApplicationInformationControl1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "DrivingLicenseApplicationInformationForm";

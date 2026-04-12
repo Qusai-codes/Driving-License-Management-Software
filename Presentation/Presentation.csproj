@@ -50,11 +50,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\DriverLicensesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DriverLicensesControl.Designer.cs">
+      <DependentUpon>DriverLicensesControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DrivingLicenseApplicationInformationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\DrivingLicenseApplicationInformationControl.Designer.cs">
       <DependentUpon>DrivingLicenseApplicationInformationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DrivingLicenseInformationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DrivingLicenseInformationControl.Designer.cs">
+      <DependentUpon>DrivingLicenseInformationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\PersonDetailsWithFilterControl.cs">
       <SubType>UserControl</SubType>
@@ -160,6 +172,12 @@
       <DependentUpon>PersonDetailsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\ImageSelectedEventArgs.cs" />
+    <Compile Include="Forms\PersonLicenseHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PersonLicenseHistoryForm.Designer.cs">
+      <DependentUpon>PersonLicenseHistoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PersonProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -214,8 +232,14 @@
     <Compile Include="Helpers\FilterHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\DriverLicensesControl.resx">
+      <DependentUpon>DriverLicensesControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DrivingLicenseApplicationInformationControl.resx">
       <DependentUpon>DrivingLicenseApplicationInformationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DrivingLicenseInformationControl.resx">
+      <DependentUpon>DrivingLicenseInformationControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PersonDetailsWithFilterControl.resx">
       <DependentUpon>PersonDetailsWithFilterControl.cs</DependentUpon>
@@ -231,6 +255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddEditUserForm.resx">
       <DependentUpon>AddEditUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DriverLicenseInformationForm.resx">
+      <DependentUpon>DriverLicenseInformationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DrivingLicenseApplicationInformationForm.resx">
       <DependentUpon>DrivingLicenseApplicationInformationForm.cs</DependentUpon>
@@ -264,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PersonDetailsForm.resx">
       <DependentUpon>PersonDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PersonLicenseHistoryForm.resx">
+      <DependentUpon>PersonLicenseHistoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PersonProfileForm.resx">
       <DependentUpon>PersonProfileForm.cs</DependentUpon>

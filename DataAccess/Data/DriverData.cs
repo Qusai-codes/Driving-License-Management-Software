@@ -63,6 +63,32 @@ namespace DataAccess.Data
             return dt;
         }
 
+        public static int GetDriverIdByPersonId(int personId)
+        {
+            int driverId = -1;
+
+            const string query = @"
+            SELECT TOP 1 DriverID
+            FROM Drivers
+            WHERE PersonID = @PersonID
+            ORDER BY DriverID DESC;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@PersonID", SqlDbType.Int).Value = personId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                    driverId = Convert.ToInt32(result);
+            }
+
+            return driverId;
+        }
+
         public static bool GetDriverInfoById(int driverId, ref int personId, 
             ref int createdByUserId, ref DateTime createdDate)
         {

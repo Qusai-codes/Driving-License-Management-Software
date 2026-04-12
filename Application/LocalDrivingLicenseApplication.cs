@@ -110,26 +110,37 @@ namespace Business
             int completedStatusAppId = LocalDrivingLicenseApplicationData.GetApplicationId(
                 personId, licenseClassId, (byte)Application.Status.Completed);
 
-            // Business rule: block if same person + class has status New or Completed
-            if (newStatusAppId != -1 || completedStatusAppId != -1)
-            {
-                blockingApplicationId = newStatusAppId != -1 ? newStatusAppId : completedStatusAppId;
-                errorMessage = string.Format(
-                    "Choose another License Class, the selected person already has an active application for the selected class with id = {0}",
-                    blockingApplicationId);
-                return false;
-            }
-
             // Business rule: cannot allow person to apply for driving application if 
             // the minimum age for driving license class that is applied for is bigger 
             // than person age.
             if (!IsAllowedToApplyForLocalDrivingLicense(personId, licenseClassId))
             {
                 errorMessage = string.Format("The person with person id = {0} age ({1}) is "
-                    + "below the minimum required age ({2}) for the license class of {3}.", 
-                    personId, Person.CalculatePersonAge(personId), 
+                    + "below the minimum required age ({2}) for the license class of {3}.",
+                    personId, Person.CalculatePersonAge(personId),
                     LicenseClass.GetMinimumAllowedAge(licenseClassId),
                     LicenseClass.GetLicenseClassName(licenseClassId));
+                return false;
+            }
+
+            // Rule 1: block if there is an active (New) application.
+            if (newStatusAppId != -1)
+            {
+                blockingApplicationId = newStatusAppId;
+                errorMessage = string.Format(
+                    "Cannot create application. There is already an active application (Status: New) for this class. Application ID = {0}.",
+                    blockingApplicationId);
+                return false;
+            }
+
+            // Rule 2: block if there is a completed application for same class.
+            int driverId = Driver.GetDriverIdByPersonId(personId);
+            if (driverId != -1 && License.DoesActiveLicenseExistForDriverAndClass(driverId, licenseClassId))
+            {
+                blockingApplicationId = completedStatusAppId;
+                errorMessage = string.Format(
+                    "Person already have a license with the same applied driving class"
+                    + ", choose different driving class");
                 return false;
             }
 

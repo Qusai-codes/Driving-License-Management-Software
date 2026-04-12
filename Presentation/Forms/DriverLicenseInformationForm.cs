@@ -12,9 +12,22 @@ namespace Presentation.Forms
 {
     public partial class DriverLicenseInformationForm : Form
     {
-        public DriverLicenseInformationForm()
+        private int _driverId;
+
+        public DriverLicenseInformationForm(int driverId)
         {
             InitializeComponent();
+            _driverId = driverId;
+        }
+
+        private void DriverLicenseInformationForm_Load(object sender, EventArgs e)
+        {
+            drivingLicenseInformationControl1.DriverId = _driverId;
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
