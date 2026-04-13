@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Business
 {
@@ -141,9 +142,14 @@ namespace Business
             return null;
         }
 
-        public static bool DoesLicenseExist(int applicationId)
+        public static bool DoesLicenseExistByApplicationId(int applicationId)
         {
-            return LicenseData.GetLicenseId(applicationId) != -1;
+            return LicenseData.GetLicenseIdByApplicationId(applicationId) != -1;
+        }
+
+        public static bool DoesLicenseExistByLicenseId(int licenseId)
+        {
+            return LicenseData.DoesLicenseExist(licenseId);
         }
 
         public static bool DoesActiveLicenseExistForDriverAndClass(int driverId, int licenseClassId)
@@ -153,13 +159,22 @@ namespace Business
 
         public static int GetLicenseIdByApplicationId(int applicationId)
         {
-            return LicenseData.GetLicenseId(applicationId);
+            return LicenseData.GetLicenseIdByApplicationId(applicationId);
         }
 
         public static int GetDriverIdByApplicationId(int applicationId)
         {
             int licenseId = GetLicenseIdByApplicationId(applicationId);
             if (licenseId == -1)
+                return -1;
+
+            License license = Find(licenseId);
+            return license != null ? license.DriverID : -1;
+        }
+
+        public static int GetDriverIdByLicenseId(int licenseId)
+        {
+            if (licenseId <= 0)
                 return -1;
 
             License license = Find(licenseId);

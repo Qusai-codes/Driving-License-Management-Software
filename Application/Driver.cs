@@ -59,7 +59,7 @@ namespace Business
             return false;
         }
 
-        public static Driver Find(int driverId)
+        public static Driver FindByDriverId(int driverId)
         {
             int personId = -1, createdByUserId = -1;
             DateTime createdDate = DateTime.Now;

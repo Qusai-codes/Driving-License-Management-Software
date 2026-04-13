@@ -1,12 +1,13 @@
 ﻿using DataAccess.Common;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DataAccess.Data
 {
@@ -101,7 +102,7 @@ namespace DataAccess.Data
             return licenseId;
         }
 
-        public static int GetLicenseId(int applicationId)
+        public static int GetLicenseIdByApplicationId(int applicationId)
         {
             int licenseId = -1;
 
@@ -173,6 +174,21 @@ namespace DataAccess.Data
             }
 
             return exists;
+        }
+
+        public static bool DoesLicenseExist(int licenseId)
+        {
+            const string query = @"SELECT 1 FROM Licenses WHERE LicenseID = @LicenseID;";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@LicenseID", SqlDbType.Int).Value = licenseId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+                return result != null && result != DBNull.Value;
+            }
         }
     }
 }
