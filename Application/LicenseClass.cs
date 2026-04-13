@@ -10,6 +10,17 @@ namespace Business
 {
     public class LicenseClass
     {
+        public enum LicenseClassId
+        {
+            SmallMotorcycle = 1,
+            HeavyMotorcycleLicense = 2,
+            OrdinaryDrivingLicense = 3,
+            Commercial = 4,
+            Agricultural = 5,
+            SmallAndMediumBus = 6,
+            TruckAndHeavyVehicle = 7
+        }
+
         public static byte GetMinimumAllowedAge(int licenseClassId)
         {
             return LicenseClassData.GetMinimumAllowedAge(licenseClassId);

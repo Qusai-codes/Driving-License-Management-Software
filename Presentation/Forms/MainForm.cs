@@ -107,5 +107,10 @@ namespace Presentation
                 new LocalDrivingLicenseApplicationsForm(_currentUser.UserId);
             form.ShowDialog();
         }
+
+        private void internationalLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -427,7 +427,7 @@ namespace Presentation.Forms
             bool isNewStatus = statusValue == (byte)Business.Application.Status.New;
             int totalTests = TestType.GetTestTypeCount();
 
-            bool hasLicense = appId > 0 && Business.License.DoesLicenseExist(appId);
+            bool hasLicense = appId > 0 && Business.License.DoesLicenseExistByApplicationId(appId);
 
             // Show License availability
             showLicenseToolStripMenuItem.Enabled = hasLicense;

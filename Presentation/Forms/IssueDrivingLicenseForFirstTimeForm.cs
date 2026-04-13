@@ -53,7 +53,7 @@ namespace Presentation.Forms
                 return;
             }
 
-            if (Business.License.DoesLicenseExist(app.ApplicationId))
+            if (Business.License.DoesLicenseExistByApplicationId(app.ApplicationId))
             {
                 MessageBox.Show("A license is already issued for this application.", "Not Allowed",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -149,6 +149,5 @@ namespace Presentation.Forms
 
             return driverId;
         }
-
     }
 }

@@ -139,5 +139,30 @@ namespace DataAccess.Data
 
             return dt;
         }
+
+        public static bool DoesActiveInternationalLicenseExistForDriver(int driverId)
+        {
+            bool exists = false;
+
+            const string query = @"
+            SELECT TOP 1 1
+            FROM InternationalLicenses
+            WHERE DriverID = @DriverID
+              AND IsActive = 1
+              AND ExpirationDate >= CAST(GETDATE() AS date);
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@DriverID", SqlDbType.Int).Value = driverId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+                exists = result != null && result != DBNull.Value;
+            }
+
+            return exists;
+        }
     }
 }

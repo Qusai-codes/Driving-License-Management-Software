@@ -68,12 +68,25 @@
     <Compile Include="Controls\DrivingLicenseInformationControl.Designer.cs">
       <DependentUpon>DrivingLicenseInformationControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DrivingLicenseInformationWithFilterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DrivingLicenseInformationWithFilterControl.Designer.cs">
+      <DependentUpon>DrivingLicenseInformationWithFilterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\InternationalDrivingLicenseInformationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\InternationalDrivingLicenseInformationControl.Designer.cs">
+      <DependentUpon>InternationalDrivingLicenseInformationControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PersonDetailsWithFilterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\PersonDetailsWithFilterControl.Designer.cs">
       <DependentUpon>PersonDetailsWithFilterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Events\LicenseSelectedEventArgs.cs" />
     <Compile Include="Events\PersonSavedEventArgs.cs" />
     <Compile Include="Forms\ChangePasswordForm.cs">
       <SubType>Form</SubType>
@@ -110,6 +123,12 @@
     </Compile>
     <Compile Include="Forms\DrivingLicenseApplicationInformationForm.Designer.cs">
       <DependentUpon>DrivingLicenseApplicationInformationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InternationalDrivingLicenseInformation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InternationalDrivingLicenseInformation.Designer.cs">
+      <DependentUpon>InternationalDrivingLicenseInformation.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\IssueDrivingLicenseForFirstTimeForm.cs">
       <SubType>Form</SubType>
@@ -164,6 +183,12 @@
     </Compile>
     <Compile Include="Forms\ManageUsersForm.Designer.cs">
       <DependentUpon>ManageUsersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NewInternationalLicenseApplicationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NewInternationalLicenseApplicationForm.Designer.cs">
+      <DependentUpon>NewInternationalLicenseApplicationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PersonDetailsForm.cs">
       <SubType>Form</SubType>
@@ -241,6 +266,12 @@
     <EmbeddedResource Include="Controls\DrivingLicenseInformationControl.resx">
       <DependentUpon>DrivingLicenseInformationControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DrivingLicenseInformationWithFilterControl.resx">
+      <DependentUpon>DrivingLicenseInformationWithFilterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InternationalDrivingLicenseInformationControl.resx">
+      <DependentUpon>InternationalDrivingLicenseInformationControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PersonDetailsWithFilterControl.resx">
       <DependentUpon>PersonDetailsWithFilterControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -288,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ManageUsersForm.resx">
       <DependentUpon>ManageUsersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NewInternationalLicenseApplicationForm.resx">
+      <DependentUpon>NewInternationalLicenseApplicationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PersonDetailsForm.resx">
       <DependentUpon>PersonDetailsForm.cs</DependentUpon>
