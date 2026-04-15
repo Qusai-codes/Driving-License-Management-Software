@@ -140,6 +140,32 @@ namespace DataAccess.Data
             return dt;
         }
 
+        public static DataTable GetInternationalDrivingLicense(int driverId)
+        {
+            DataTable dt = new DataTable();
+
+            const string query = @"
+            SELECT InternationalLicenseID, ApplicationID, IssuedUsingLocalLicenseID,
+                   IssueDate, ExpirationDate, IsActive
+            FROM InternationalLicenses
+            WHERE DriverID = @DriverID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@DriverID", SqlDbType.Int).Value = driverId;
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    dt.Load(reader);
+                }
+            }
+
+            return dt;
+        }
+
         public static bool DoesActiveInternationalLicenseExistForDriver(int driverId)
         {
             bool exists = false;

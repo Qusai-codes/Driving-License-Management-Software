@@ -17,6 +17,7 @@ namespace Presentation.Forms
     {
         private int _selectedLicenseId = -1;
         private int _internationalDrivingLicenseId = -1;
+        private int _driverId = -1;
 
         public NewInternationalLicenseApplicationForm()
         {
@@ -34,6 +35,7 @@ namespace Presentation.Forms
             lblCreatedByUserName.Text = user.UserName;
             lblInternationalLicenseExpirationDate.Text = DateTime.Now.AddYears(
                 Business.InternationalLicense.InternationalLicenseValidityYears).ToString("d");
+            lblInternationalLicenseIssueDate.Text = DateTime.Now.ToString("d");
 
             llbShowLicensesHistory.Enabled = false;
             llbShowLicensesInfo.Enabled = false;
@@ -71,7 +73,9 @@ namespace Presentation.Forms
             }
 
             // Rule 4: local license must not be detained
+            
             DriverLicenseInfoDto driverInfo = DriverLicenseInfo.GetByDriverId(license.DriverID);
+            _driverId = driverInfo.DriverId;
             bool isDetained = driverInfo != null && driverInfo.IsDetained;
             if (isDetained)
             {
@@ -88,12 +92,15 @@ namespace Presentation.Forms
 
         private void llbShowLicensesHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            DriverLicensesHistoryForm form = new DriverLicensesHistoryForm(_driverId);
+            form.ShowDialog();
         }
 
         private void llbShowLicensesInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            InternationalDrivingLicenseInformation form = new InternationalDrivingLicenseInformation(
+                _internationalDrivingLicenseId);
+            form.ShowDialog();
         }
 
         private void btnClose_Click(object sender, EventArgs e)

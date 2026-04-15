@@ -181,6 +181,10 @@ namespace Business
             return license != null ? license.DriverID : -1;
         }
 
+        public static DataTable GetAllLocalLicenses(int driverId)
+        {
+            return LicenseData.GetAllLocalLicenses(driverId);
+        }
 
     }
 }

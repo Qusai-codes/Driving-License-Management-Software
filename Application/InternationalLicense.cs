@@ -116,5 +116,10 @@ namespace Business
         {
             return InternationalLicenseData.DoesActiveInternationalLicenseExistForDriver(driverId);
         }
+
+        public static DataTable GetInternationalDrivingLicense(int driverId)
+        {
+            return InternationalLicenseData.GetInternationalDrivingLicense(driverId);
+        }
     }
 }

@@ -118,6 +118,12 @@
     <Compile Include="Forms\DriverLicenseInformationForm.Designer.cs">
       <DependentUpon>DriverLicenseInformationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DriverLicensesHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DriverLicensesHistoryForm.Designer.cs">
+      <DependentUpon>DriverLicensesHistoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\DrivingLicenseApplicationInformationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -290,8 +296,14 @@
     <EmbeddedResource Include="Forms\DriverLicenseInformationForm.resx">
       <DependentUpon>DriverLicenseInformationForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DriverLicensesHistoryForm.resx">
+      <DependentUpon>DriverLicensesHistoryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\DrivingLicenseApplicationInformationForm.resx">
       <DependentUpon>DrivingLicenseApplicationInformationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InternationalDrivingLicenseInformation.resx">
+      <DependentUpon>InternationalDrivingLicenseInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\IssueDrivingLicenseForFirstTimeForm.resx">
       <DependentUpon>IssueDrivingLicenseForFirstTimeForm.cs</DependentUpon>

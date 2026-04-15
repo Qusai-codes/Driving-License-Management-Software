@@ -110,7 +110,9 @@ namespace Presentation
 
         private void internationalLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            NewInternationalLicenseApplicationForm form =
+                new NewInternationalLicenseApplicationForm();
+            form.ShowDialog();
         }
     }
 }

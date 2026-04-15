@@ -190,5 +190,40 @@ namespace DataAccess.Data
                 return result != null && result != DBNull.Value;
             }
         }
+
+        public static DataTable GetAllLocalLicenses(int driverId)
+        {
+            DataTable dt = new DataTable();
+
+            const string query = @"
+            SELECT 
+                Licenses.LicenseID, 
+                Licenses.ApplicationID,
+                LicenseClasses.ClassName,
+                Licenses.IssueDate,
+                Licenses.ExpirationDate,
+                Licenses.IsActive
+            FROM Licenses INNER JOIN LicenseClasses ON 
+                Licenses.LicenseClass = LicenseClasses.LicenseClassID
+            WHERE Licenses.DriverID = @DriverID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@DriverID", SqlDbType.Int).Value = driverId;
+
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        dt.Load(reader);
+                    }
+                }
+            }
+
+            return dt;
+        }
     }
 }
