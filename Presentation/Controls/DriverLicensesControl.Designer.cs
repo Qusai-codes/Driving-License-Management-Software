@@ -118,6 +118,7 @@
             this.dgvLocalDrivingLicenses.Location = new System.Drawing.Point(13, 32);
             this.dgvLocalDrivingLicenses.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgvLocalDrivingLicenses.Name = "dgvLocalDrivingLicenses";
+            this.dgvLocalDrivingLicenses.ReadOnly = true;
             this.dgvLocalDrivingLicenses.RowHeadersWidth = 51;
             this.dgvLocalDrivingLicenses.RowTemplate.Height = 24;
             this.dgvLocalDrivingLicenses.Size = new System.Drawing.Size(774, 142);
@@ -159,6 +160,7 @@
             this.dgvInternationalDrivingLicenses.Location = new System.Drawing.Point(16, 30);
             this.dgvInternationalDrivingLicenses.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgvInternationalDrivingLicenses.Name = "dgvInternationalDrivingLicenses";
+            this.dgvInternationalDrivingLicenses.ReadOnly = true;
             this.dgvInternationalDrivingLicenses.RowHeadersWidth = 51;
             this.dgvInternationalDrivingLicenses.RowTemplate.Height = 24;
             this.dgvInternationalDrivingLicenses.Size = new System.Drawing.Size(771, 143);

@@ -114,5 +114,12 @@ namespace Presentation
                 new NewInternationalLicenseApplicationForm();
             form.ShowDialog();
         }
+
+        private void internationalLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageInternationalLicenseApplications form =
+                new ManageInternationalLicenseApplications();
+            form.ShowDialog();
+        }
     }
 }
