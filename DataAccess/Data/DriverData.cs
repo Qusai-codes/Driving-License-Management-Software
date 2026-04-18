@@ -46,8 +46,30 @@ namespace DataAccess.Data
             DataTable dt = new DataTable();
 
             const string query = @"
-            SELECT DriverID, PersonID, CreatedByUserID, CreatedDate 
-            FROM Drivers;
+            SELECT 
+                d.DriverID,
+                d.PersonID,
+                p.NationalNo,
+                p.FirstName + ' ' + p.SecondName
+                    + CASE 
+                        WHEN p.ThirdName IS NULL OR p.ThirdName = '' THEN ''
+                        ELSE ' ' + p.ThirdName
+                      END
+                    + ' ' + p.LastName AS FullName,
+                d.CreatedDate,
+                COUNT(l.LicenseID) AS ActiveLicenses
+            FROM Drivers d
+            INNER JOIN People p ON d.PersonID = p.PersonID
+            LEFT JOIN Licenses l ON l.DriverID = d.DriverID AND l.IsActive = 1
+            GROUP BY 
+                d.DriverID,
+                d.PersonID,
+                p.NationalNo,
+                p.FirstName,
+                p.SecondName,
+                p.ThirdName,
+                p.LastName,
+                d.CreatedDate;
             ";
 
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())

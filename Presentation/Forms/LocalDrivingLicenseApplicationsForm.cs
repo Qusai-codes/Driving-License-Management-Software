@@ -146,7 +146,6 @@ namespace Presentation.Forms
             string selected = cmbFilterApplications.SelectedItem as string;
             string filterText = txtFilterValue.Text.Trim();
 
-            // Reset filter if "None"
             if (string.IsNullOrEmpty(selected) || selected == "None")
             {
                 dv.RowFilter = "";
@@ -170,20 +169,48 @@ namespace Presentation.Forms
                 return;
             }
 
-            // Build filter based on column type
             Type colType = _allLocalDrivingLicenseApplications.Columns[column].DataType;
+
+            // Special handling for status (stored as numeric, displayed as enum text in grid formatting only)
+            if (selected == "Status")
+            {
+                byte statusValue;
+                if (byte.TryParse(filterText, out statusValue))
+                {
+                    dv.RowFilter = string.Format("{0} = {1}", column, statusValue);
+                }
+                else
+                {
+                    Business.Application.Status statusEnum;
+                    if (Enum.TryParse(filterText, true, out statusEnum))
+                    {
+                        dv.RowFilter = string.Format("{0} = {1}", column, (byte)statusEnum);
+                    }
+                    else
+                    {
+                        dv.RowFilter = "1=0";
+                    }
+                }
+
+                lblNumberOfRecords.Text = dv.Count.ToString();
+                return;
+            }
 
             if (colType == typeof(string))
             {
-                // safe, correct SQL‑style filter expression
-                dv.RowFilter = $"{column} LIKE '%{filterText.Replace("'", "''")}%'";
+                dv.RowFilter = string.Format("{0} LIKE '%{1}%'", column, filterText.Replace("'", "''"));
             }
-            else if (colType == typeof(int))
+            else if (colType == typeof(int) || colType == typeof(byte) || colType == typeof(short))
             {
-                if (int.TryParse(filterText, out int num))
-                    dv.RowFilter = $"{column} = {num}";
+                int num;
+                if (int.TryParse(filterText, out num))
+                    dv.RowFilter = string.Format("{0} = {1}", column, num);
                 else
                     dv.RowFilter = "1=0";
+            }
+            else
+            {
+                dv.RowFilter = "";
             }
 
             lblNumberOfRecords.Text = dv.Count.ToString();
@@ -356,7 +383,17 @@ namespace Presentation.Forms
 
         private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: implement the functionality.
+            if (dgvApplications.CurrentRow == null)
+            {
+                return;
+            }
+            string personNationalNumber = (string)dgvApplications.CurrentRow.Cells["NationalNo"].Value;
+            Person person = Person.Find(personNationalNumber);
+            int driverId = Driver.GetDriverIdByPersonId(person.PersonId);
+            DriverLicensesHistoryForm form = new DriverLicensesHistoryForm(driverId);
+            form.ShowDialog();
+            RefreshApplicationsList();
+
         }
 
         private void scheduleVisionTestToolStripMenuItem_Click(object sender, EventArgs e)

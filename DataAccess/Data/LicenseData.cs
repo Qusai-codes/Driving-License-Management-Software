@@ -216,7 +216,7 @@ namespace DataAccess.Data
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    if (reader.HasRows)
                     {
                         dt.Load(reader);
                     }

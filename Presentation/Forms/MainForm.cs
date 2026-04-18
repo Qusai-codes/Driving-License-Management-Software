@@ -117,8 +117,14 @@ namespace Presentation
 
         private void internationalLicenseApplicationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ManageInternationalLicenseApplications form =
-                new ManageInternationalLicenseApplications();
+            ManageInternationalLicenseApplicationsForm form =
+                new ManageInternationalLicenseApplicationsForm();
+            form.ShowDialog();
+        }
+
+        private void driversToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageDriversForm form = new ManageDriversForm();
             form.ShowDialog();
         }
     }

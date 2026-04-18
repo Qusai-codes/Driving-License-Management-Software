@@ -78,12 +78,6 @@ namespace Business
             return DriverData.GetAllDrivers();
         }
 
-        public static DataTable GetAllDrivingLicensesOfPerson(int personId)
-        {
-            // UNDONE: complete the implementation.
-            return null;
-        }
-
         public static int GetDriverIdByPersonId(int personId)
         {
             return DriverData.GetDriverIdByPersonId(personId);

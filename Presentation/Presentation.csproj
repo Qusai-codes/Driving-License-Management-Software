@@ -172,11 +172,17 @@
     <Compile Include="Forms\ManageApplicationTypesForm.Designer.cs">
       <DependentUpon>ManageApplicationTypesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ManageInternationalLicenseApplications.cs">
+    <Compile Include="Forms\ManageDriversForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ManageInternationalLicenseApplications.Designer.cs">
-      <DependentUpon>ManageInternationalLicenseApplications.cs</DependentUpon>
+    <Compile Include="Forms\ManageDriversForm.Designer.cs">
+      <DependentUpon>ManageDriversForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ManageInternationalLicenseApplicationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ManageInternationalLicenseApplicationsForm.Designer.cs">
+      <DependentUpon>ManageInternationalLicenseApplicationsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ManagePeopleForm.cs">
       <SubType>Form</SubType>
@@ -209,12 +215,6 @@
       <DependentUpon>PersonDetailsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Events\ImageSelectedEventArgs.cs" />
-    <Compile Include="Forms\PersonLicenseHistoryForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\PersonLicenseHistoryForm.Designer.cs">
-      <DependentUpon>PersonLicenseHistoryForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\PersonProfileForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -329,8 +329,11 @@
     <EmbeddedResource Include="Forms\ManageApplicationTypesForm.resx">
       <DependentUpon>ManageApplicationTypesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ManageInternationalLicenseApplications.resx">
-      <DependentUpon>ManageInternationalLicenseApplications.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ManageDriversForm.resx">
+      <DependentUpon>ManageDriversForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ManageInternationalLicenseApplicationsForm.resx">
+      <DependentUpon>ManageInternationalLicenseApplicationsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ManagePeopleForm.resx">
       <DependentUpon>ManagePeopleForm.cs</DependentUpon>
@@ -346,9 +349,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PersonDetailsForm.resx">
       <DependentUpon>PersonDetailsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PersonLicenseHistoryForm.resx">
-      <DependentUpon>PersonLicenseHistoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PersonProfileForm.resx">
       <DependentUpon>PersonProfileForm.cs</DependentUpon>

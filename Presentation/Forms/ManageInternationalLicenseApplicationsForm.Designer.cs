@@ -1,6 +1,6 @@
 ﻿namespace Presentation.Forms
 {
-    partial class ManageInternationalLicenseApplications
+    partial class ManageInternationalLicenseApplicationsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManageInternationalLicenseApplications));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ManageInternationalLicenseApplicationsForm));
             this.label1 = new System.Windows.Forms.Label();
             this.btnAddNewApplication = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();

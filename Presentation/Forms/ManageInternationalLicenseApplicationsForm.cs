@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace Presentation.Forms
 {
-    public partial class ManageInternationalLicenseApplications : Form
+    public partial class ManageInternationalLicenseApplicationsForm : Form
     {
         private DataTable _allInternationalLicenses = null;
 
-        public ManageInternationalLicenseApplications()
+        public ManageInternationalLicenseApplicationsForm()
         {
             InitializeComponent();
         }
