@@ -84,6 +84,17 @@ namespace Presentation.Forms
                 return;
             }
 
+            // Rule 5: local license must not have associated active international driving
+            // license
+            int activeInternationalLicenseId;
+            if (InternationalLicense.TryGetActiveInternationalLicenseIdForLocalLicenseId(_selectedLicenseId, out activeInternationalLicenseId))
+            {
+                MessageBox.Show(
+                    string.Format("This local license already has an active international driving license (ID = {0}).", activeInternationalLicenseId),
+                    "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // Valid selection
             lblLocalDrivingLicenseId.Text = _selectedLicenseId.ToString();
             llbShowLicensesHistory.Enabled = true;
@@ -114,9 +125,27 @@ namespace Presentation.Forms
             Business.License localLicense = Business.License.Find(_selectedLicenseId);
             int driverId = localLicense.DriverID;
 
-            if (InternationalLicense.DoesActiveInternationalLicenseExistForDriver(driverId))
+            int activeInternationalLicenseId;
+
+            if (InternationalLicense.TryGetActiveInternationalLicenseIdForDriver(driverId, out activeInternationalLicenseId))
             {
-                MessageBox.Show("This driver already has an active international driving license.",
+                MessageBox.Show(
+                    string.Format("This driver already has an active international driving license (ID = {0}).", activeInternationalLicenseId),
+                    "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (InternationalLicense.TryGetActiveInternationalLicenseIdForLocalLicenseId(_selectedLicenseId, out activeInternationalLicenseId))
+            {
+                MessageBox.Show(
+                    string.Format("This local license already has an active international driving license (ID = {0}).", activeInternationalLicenseId),
+                    "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (InternationalLicense.DoesActiveInternationalLicenseExistForLocalLicenseId(_selectedLicenseId))
+            {
+                MessageBox.Show("This local license already has an active international driving license.",
                     "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }

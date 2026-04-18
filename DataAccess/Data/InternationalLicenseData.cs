@@ -190,5 +190,30 @@ namespace DataAccess.Data
 
             return exists;
         }
+
+        public static bool DoesActiveInternationalLicenseExistForLocalLicenseId(int localLicenseId)
+        {
+            bool exists = false;
+
+            const string query = @"
+            SELECT TOP 1 1
+            FROM InternationalLicenses
+            WHERE IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID
+              AND IsActive = 1
+              AND ExpirationDate >= CAST(GETDATE() AS date);
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@IssuedUsingLocalLicenseID", SqlDbType.Int).Value = localLicenseId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+                exists = result != null && result != DBNull.Value;
+            }
+
+            return exists;
+        }
     }
 }
