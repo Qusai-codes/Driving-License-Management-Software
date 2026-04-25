@@ -126,5 +126,15 @@ namespace Business
         {
             return InternationalLicenseData.DoesActiveInternationalLicenseExistForLocalLicenseId(localLicenseId);
         }
+
+        public static bool TryGetActiveInternationalLicenseIdForDriver(int driverId, out int internationalLicenseId)
+        {
+            return InternationalLicenseData.TryGetActiveInternationalLicenseIdForDriver(driverId, out internationalLicenseId);
+        }
+
+        public static bool TryGetActiveInternationalLicenseIdForLocalLicenseId(int localLicenseId, out int internationalLicenseId)
+        {
+            return InternationalLicenseData.TryGetActiveInternationalLicenseIdForLocalLicenseId(localLicenseId, out internationalLicenseId);
+        }
     }
 }

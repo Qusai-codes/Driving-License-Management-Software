@@ -368,15 +368,15 @@ namespace Presentation.Forms
                 return;
             }
 
-            int driverId = Business.License.GetDriverIdByApplicationId(appId);
-            if (driverId == -1)
+            int licenseId = Business.License.GetLicenseIdByApplicationId(appId);
+            if (licenseId == -1)
             {
                 MessageBox.Show("No issued license found for this application.", "Not Found",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            DriverLicenseInformationForm form = new DriverLicenseInformationForm(driverId);
+            DriverLicenseInformationForm form = new DriverLicenseInformationForm(licenseId);
             form.ShowDialog();
             RefreshApplicationsList();
         }

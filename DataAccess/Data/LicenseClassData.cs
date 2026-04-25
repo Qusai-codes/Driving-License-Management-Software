@@ -67,10 +67,10 @@ namespace DataAccess.Data
 
         public static byte GetDefaultValidityLength(int licenseClassId)
         {
-            byte minimumAllowedAge = 0;
+            byte defaultValidityLength = 0;
 
             const string query = @"
-                SELECT MinimumAllowedAge
+                SELECT DefaultValidityLength
                 FROM LicenseClasses
                 WHERE LicenseClassID = @LicenseClassID;
             ";
@@ -85,11 +85,11 @@ namespace DataAccess.Data
 
                 if (result != null && result != DBNull.Value)
                 {
-                    minimumAllowedAge = Convert.ToByte(result);
+                    defaultValidityLength = Convert.ToByte(result);
                 }
             }
 
-            return minimumAllowedAge;
+            return defaultValidityLength;
         }
 
         public static string GetLicenseClassName(int licenseClassId)

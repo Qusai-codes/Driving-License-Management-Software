@@ -127,5 +127,11 @@ namespace Presentation
             ManageDriversForm form = new ManageDriversForm();
             form.ShowDialog();
         }
+
+        private void renewDrivingLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RenewDrivingLicenseApplication form = new RenewDrivingLicenseApplication();
+            form.ShowDialog();
+        }
     }
 }

@@ -225,5 +225,30 @@ namespace DataAccess.Data
 
             return dt;
         }
+
+        public static decimal GetLicenseClassFees(int licenseClassId)
+        {
+            decimal licenseClassFees = 0;
+
+            const string query = @"
+            SELECT ClassFees FROM LicenseClasses WHERE LicenseClassID = @LicenseClassID;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@LicenseClassID", SqlDbType.Int).Value = licenseClassId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    licenseClassFees = decimal.Parse(result.ToString());
+                }
+            }
+
+            return licenseClassFees;
+        }
     }
 }

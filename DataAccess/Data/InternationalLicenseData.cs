@@ -215,5 +215,67 @@ namespace DataAccess.Data
 
             return exists;
         }
+
+        public static bool TryGetActiveInternationalLicenseIdForDriver(int driverId, out int internationalLicenseId)
+        {
+            internationalLicenseId = -1;
+
+            const string query = @"
+            SELECT TOP 1 InternationalLicenseID
+            FROM InternationalLicenses
+            WHERE DriverID = @DriverID
+              AND IsActive = 1
+              AND ExpirationDate >= CAST(GETDATE() AS date)
+            ORDER BY InternationalLicenseID DESC;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@DriverID", SqlDbType.Int).Value = driverId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    internationalLicenseId = Convert.ToInt32(result);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool TryGetActiveInternationalLicenseIdForLocalLicenseId(int localLicenseId, out int internationalLicenseId)
+        {
+            internationalLicenseId = -1;
+
+            const string query = @"
+            SELECT TOP 1 InternationalLicenseID
+            FROM InternationalLicenses
+            WHERE IssuedUsingLocalLicenseID = @IssuedUsingLocalLicenseID
+              AND IsActive = 1
+              AND ExpirationDate >= CAST(GETDATE() AS date)
+            ORDER BY InternationalLicenseID DESC;
+            ";
+
+            using (SqlConnection connection = DbConnectionFactory.CreateConnection())
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.Add("@IssuedUsingLocalLicenseID", SqlDbType.Int).Value = localLicenseId;
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null && result != DBNull.Value)
+                {
+                    internationalLicenseId = Convert.ToInt32(result);
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

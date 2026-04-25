@@ -74,8 +74,8 @@ namespace Presentation.Forms
 
             // Rule 4: local license must not be detained
             
-            DriverLicenseInfoDto driverInfo = DriverLicenseInfo.GetByDriverId(license.DriverID);
-            _driverId = driverInfo.DriverId;
+            DriverLicenseInfoDto driverInfo = DriverLicenseInfo.GetByLicenseId(_selectedLicenseId);
+            _driverId = driverInfo != null ? driverInfo.DriverId : -1;
             bool isDetained = driverInfo != null && driverInfo.IsDetained;
             if (isDetained)
             {

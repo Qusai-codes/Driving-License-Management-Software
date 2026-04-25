@@ -50,6 +50,8 @@ namespace Presentation.Controls
                 {
                     return;
                 }
+
+                drivingLicenseInformationControl1.LicenseId = _licenseId;
             }
         }
 

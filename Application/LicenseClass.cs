@@ -40,5 +40,10 @@ namespace Business
         {
             return LicenseClassData.GetLicenseClassName(licenseClassId);
         }
+
+        public static decimal GetLicenseClassFees(int licenseClassId)
+        {
+            return LicenseData.GetLicenseClassFees(licenseClassId);
+        }
     }
 }
