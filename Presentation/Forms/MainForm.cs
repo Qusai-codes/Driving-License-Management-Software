@@ -133,5 +133,12 @@ namespace Presentation
             RenewDrivingLicenseApplication form = new RenewDrivingLicenseApplication();
             form.ShowDialog();
         }
+
+        private void replacemenntForLostOrDamagedLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReplaceLostOrDamagedDrivingLicenseForm form =
+                new ReplaceLostOrDamagedDrivingLicenseForm();
+            form.ShowDialog();
+        }
     }
 }

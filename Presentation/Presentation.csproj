@@ -227,6 +227,12 @@
     <Compile Include="Forms\RenewDrivingLicenseApplication.Designer.cs">
       <DependentUpon>RenewDrivingLicenseApplication.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ReplaceLostOrDamagedDrivingLicenseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReplaceLostOrDamagedDrivingLicenseForm.Designer.cs">
+      <DependentUpon>ReplaceLostOrDamagedDrivingLicenseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ScheduleDrivingTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -361,6 +367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RenewDrivingLicenseApplication.resx">
       <DependentUpon>RenewDrivingLicenseApplication.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReplaceLostOrDamagedDrivingLicenseForm.resx">
+      <DependentUpon>ReplaceLostOrDamagedDrivingLicenseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ScheduleDrivingTestForm.resx">
       <DependentUpon>ScheduleDrivingTestForm.cs</DependentUpon>
