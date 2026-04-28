@@ -104,7 +104,7 @@ namespace Presentation
         private void localDrivingLicenseApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LocalDrivingLicenseApplicationsForm form =
-                new LocalDrivingLicenseApplicationsForm(_currentUser.UserId);
+                new LocalDrivingLicenseApplicationsForm();
             form.ShowDialog();
         }
 
@@ -155,6 +155,12 @@ namespace Presentation
         private void releaseDetainedLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void reToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LocalDrivingLicenseApplicationsForm form = new LocalDrivingLicenseApplicationsForm();
+            form.ShowDialog();
         }
     }
 }

@@ -63,6 +63,14 @@ namespace Presentation.Controls
             }
         }
 
+        public string SetLicenseID
+        {
+            set
+            {
+                txtDrivingLicenseId.Text = value;
+            }
+        }
+
         protected virtual void OnLicenseSelected(int licenseId)
         {
             LicenseSelected?.Invoke(this, new LicenseSelectedEventArgs(licenseId));

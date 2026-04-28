@@ -17,10 +17,9 @@ namespace Presentation.Forms
         private DataTable _allLocalDrivingLicenseApplications = null;
         private readonly int _currentUserId;
 
-        public LocalDrivingLicenseApplicationsForm(int currentUserId)
+        public LocalDrivingLicenseApplicationsForm()
         {
             InitializeComponent();
-            _currentUserId = currentUserId;
         }
 
         private void LocalDrivingLicenseApplicationsForm_Load(object sender, EventArgs e)

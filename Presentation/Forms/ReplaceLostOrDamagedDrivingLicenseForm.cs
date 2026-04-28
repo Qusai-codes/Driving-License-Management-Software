@@ -39,7 +39,7 @@ namespace Presentation.Forms
             }
 
             // Expired license replacement is not allowed.
-            if (currentLicense.ExpirationDate.Date >= DateTime.Today)
+            if (currentLicense.ExpirationDate.Date < DateTime.Today)
             {
                 MessageBox.Show(
                     "Selected license is expired.",
