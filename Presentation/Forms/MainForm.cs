@@ -140,5 +140,21 @@ namespace Presentation
                 new ReplaceLostOrDamagedDrivingLicenseForm();
             form.ShowDialog();
         }
+
+        private void manageDetainedLicensesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void detainLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DetainLicenseForm form = new DetainLicenseForm();
+            form.ShowDialog();
+        }
+
+        private void releaseDetainedLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
