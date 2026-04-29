@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using DataAccess.Common;
-using Contracts.DTOs;
 
 namespace DataAccess.Data
 {
     public class CountryData
     {
-
-        public static List<CountryDto> GetAllCountries()
+        public static DataTable GetAllCountries()
         {
-            List<CountryDto> countries = new List<CountryDto>();
+            DataTable dt = new DataTable();
+
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())
             {
-                string query = "SELECT CountryID, CountryName FROM Countries;";
+                string query = "SELECT CountryID AS CountryId, CountryName FROM Countries;";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     try
@@ -26,25 +21,19 @@ namespace DataAccess.Data
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            while (reader.Read())
+                            if (reader.HasRows)
                             {
-                                CountryDto country = new CountryDto
-                                {
-                                    CountryId = Convert.ToInt32(reader["CountryID"]),
-                                    CountryName = reader["CountryName"].ToString()
-                                };
-                                countries.Add(country);
+                                dt.Load(reader);
                             }
                         }
                     }
                     catch (Exception)
                     {
-
                         throw;
                     }
                 }
             }
-            return countries;
+            return dt;
         }
 
         public static string GetCountryNameById(int countryId)

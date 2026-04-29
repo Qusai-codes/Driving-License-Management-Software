@@ -448,10 +448,6 @@
       <Project>{1ce1f273-ce1a-42b5-a689-c166a6503c71}</Project>
       <Name>Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Contracts\Contracts.csproj">
-      <Project>{b8859aba-ddab-424d-a327-e94fde1e8236}</Project>
-      <Name>Contracts</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\activate_profile.png" />

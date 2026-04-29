@@ -1,5 +1,4 @@
 ﻿using Business;
-using Contracts.DTOs;
 using Presentation.Events;
 using Presentation.Helpers;
 using System;
@@ -13,8 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Presentation.Events;
 
 namespace Presentation
 {
@@ -377,24 +374,24 @@ namespace Presentation
         {
             try
             {
-                List<CountryDto> countries = Country.GetAllCountries();
+                DataTable countries = Country.GetAllCountries();
                 personDetailsControl.LoadCountries(countries);
 
                 // Find and set default country by name from config
                 string defaultCountryName = AppSettings.DefaultCountryName;
-                CountryDto defaultCountry = countries.FirstOrDefault(c =>
-                    c.CountryName.Equals(defaultCountryName, StringComparison.OrdinalIgnoreCase));
+                DataRow defaultCountry = countries.AsEnumerable().FirstOrDefault(c =>
+                    c.Field<string>("CountryName").Equals(defaultCountryName, StringComparison.OrdinalIgnoreCase));
 
                 if (defaultCountry != null)
                 {
-                    personDetailsControl.SelectedCountryId = defaultCountry.CountryId;
+                    personDetailsControl.SelectedCountryId = defaultCountry.Field<int>("CountryId");
                 }
                 else
                 {
                     // Fallback: if country name not found, select the first one
-                    if (countries.Count > 0)
+                    if (countries.Rows.Count > 0)
                     {
-                        personDetailsControl.SelectedCountryId = countries[0].CountryId;
+                        personDetailsControl.SelectedCountryId = countries.Rows[0].Field<int>("CountryId");
                     }
                 }
             }

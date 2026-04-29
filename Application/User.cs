@@ -1,9 +1,9 @@
 ﻿using Business.Common;
 using Business.Security;
-using Contracts.DTOs;
 using DataAccess.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Security.Policy;
@@ -19,7 +19,7 @@ namespace Business
         public int UserId { get; private set; }
         public int PersonId { get; set; }
         public string UserName { get; set; }
-        public bool IsActive { get; set; } 
+        public bool IsActive { get; set; }
         public string PasswordHash { get; private set; }
         public string PasswordSalt { get; private set; }
 
@@ -35,35 +35,24 @@ namespace Business
             Mode = EntityMode.AddNew;
         }
 
-        private User(UserDto user)
+        private User(int userId, int personId, string userName, bool isActive,
+            string passwordHash, string passwordSalt)
         {
-            UserId = user.UserId;
-            PersonId = user.PersonId;
-            UserName = user.UserName;
-            IsActive = user.IsActive;
-            PasswordHash = user.PasswordHash;
-            PasswordSalt = user.PasswordSalt;
+            UserId = userId;
+            PersonId = personId;
+            UserName = userName;
+            IsActive = isActive;
+            PasswordHash = passwordHash;
+            PasswordSalt = passwordSalt;
 
             Mode = EntityMode.Update;
         }
 
-        private UserDto ToDto()
-        {
-            return new UserDto
-            {
-                UserId = UserId,
-                PersonId = PersonId,
-                UserName = UserName,
-                IsActive = IsActive,
-                PasswordHash = PasswordHash,
-                PasswordSalt = PasswordSalt
-            };
-        }
         public void SetPassword(string password)
         {
             var (hash, salt) = PasswordHasher.HashPassword(password);
             PasswordHash = hash;
-            PasswordSalt = salt; 
+            PasswordSalt = salt;
         }
 
         public static bool VerifyPassword(string password, string passwordHash, string passwordSalt)
@@ -87,7 +76,7 @@ namespace Business
             return VerifyPassword(password, passwordData.Hash, passwordData.Salt);
         }
 
-        public  bool ChangePassword(string newPassword, string oldPassword)
+        public bool ChangePassword(string newPassword, string oldPassword)
         {
             if (Mode == EntityMode.AddNew || !VerifyPassword(oldPassword, PasswordHash, PasswordSalt))
             {
@@ -131,8 +120,6 @@ namespace Business
             return UserData.GetPasswordData(userName);
         }
 
-        
-
         public static bool IsUserActive(string userName)
         {
             return UserData.IsUserActive(userName);
@@ -159,13 +146,13 @@ namespace Business
 
         private bool AddNew()
         {
-            UserId = UserData.AddNewUser(ToDto());
+            UserId = UserData.AddNewUser(PersonId, UserName, PasswordHash, PasswordSalt, IsActive);
             return UserId != -1;
         }
 
         private bool Update()
         {
-            return UserData.UpdateUser(ToDto());
+            return UserData.UpdateUser(UserId, PersonId, UserName, IsActive);
         }
 
         public static bool CanDeleteUser(int userId)
@@ -182,14 +169,32 @@ namespace Business
 
         public static User Find(int userId)
         {
-            UserDto dto = UserData.GetUserByUserId(userId);
-            return dto == null ? null : new User(dto);
+            int personId = -1;
+            string userName = "", passwordHash = "", passwordSalt = "";
+            bool isActive = false;
+
+            if (UserData.GetUserByUserId(userId, ref personId, ref userName, ref isActive,
+                ref passwordHash, ref passwordSalt))
+            {
+                return new User(userId, personId, userName, isActive, passwordHash, passwordSalt);
+            }
+
+            return null;
         }
 
         public static User Find(string userName)
         {
-            UserDto dto = UserData.GetUserByUserName(userName);
-            return dto == null ? null : new User(dto);
+            int userId = -1, personId = -1;
+            string dbUserName = "", passwordHash = "", passwordSalt = "";
+            bool isActive = false;
+
+            if (UserData.GetUserByUserName(userName, ref userId, ref personId, ref dbUserName,
+                ref isActive, ref passwordHash, ref passwordSalt))
+            {
+                return new User(userId, personId, dbUserName, isActive, passwordHash, passwordSalt);
+            }
+
+            return null;
         }
 
         public static bool HasUsers()
@@ -197,7 +202,7 @@ namespace Business
             return UserData.HasUsers();
         }
 
-        public static List<UserDto> GetAllUsers()
+        public static DataTable GetAllUsers()
         {
             return UserData.GetAllUsers();
         }

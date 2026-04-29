@@ -1,5 +1,4 @@
 ﻿using Business;
-using Contracts.DTOs;
 using Presentation.Events;
 using System;
 using System.Collections.Generic;
@@ -73,8 +72,7 @@ namespace Presentation.Forms
             }
 
             // Rule 4: local license must not be detained
-            
-            DriverLicenseInfoDto driverInfo = DriverLicenseInfo.GetByLicenseId(_selectedLicenseId);
+            DriverLicenseInfo driverInfo = DriverLicenseInfo.GetByLicenseId(_selectedLicenseId);
             _driverId = driverInfo != null ? driverInfo.DriverId : -1;
             bool isDetained = driverInfo != null && driverInfo.IsDetained;
             if (isDetained)
@@ -150,7 +148,7 @@ namespace Presentation.Forms
                 return;
             }
 
-            DialogResult result = MessageBox.Show("Are you sure you want to issue the license?", "Confirm", 
+            DialogResult result = MessageBox.Show("Are you sure you want to issue the license?", "Confirm",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
@@ -216,7 +214,7 @@ namespace Presentation.Forms
 
                 string text = string.Format("International license issued successfully with "
                     + "ID = {0}", _internationalDrivingLicenseId);
-                MessageBox.Show(text, "License Issued", MessageBoxButtons.OK, 
+                MessageBox.Show(text, "License Issued", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
                 drivingLicenseInformationWithFilterControl1.LicenseFilterGroupBox.Enabled = false;
@@ -229,7 +227,5 @@ namespace Presentation.Forms
             }
 
         }
-
-        
     }
 }

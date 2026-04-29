@@ -1,12 +1,11 @@
-﻿using Contracts.DTOs;
+﻿using Business.Common;
+using DataAccess.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-using DataAccess.Data;
-using Business.Common;
 
 namespace Business
 {
@@ -55,54 +54,41 @@ namespace Business
         }
 
         // For existing Person (loaded from DB)
-        private Person(PersonDto dto)
+        private Person(int personId, string nationalNo, string firstName, string secondName,
+            string thirdName, string lastName, DateTime dateOfBirth, byte gender,
+            string address, string phone, string email, int nationalityCountryId, string imagePath)
         {
-            PersonId = dto.PersonId;
-            NationalNo = dto.NationalNo;
-            FirstName = dto.FirstName;
-            SecondName = dto.SecondName;
-            ThirdName = dto.ThirdName;
-            LastName = dto.LastName;
-            DateOfBirth = dto.DateOfBirth;
-            Gender = dto.Gender;
-            Address = dto.Address;
-            Phone = dto.Phone;
-            Email = dto.Email;
-            NationalityCountryID = dto.NationalityCountryId;
-            ImagePath = dto.ImagePath;
+            PersonId = personId;
+            NationalNo = nationalNo;
+            FirstName = firstName;
+            SecondName = secondName;
+            ThirdName = thirdName;
+            LastName = lastName;
+            DateOfBirth = dateOfBirth;
+            Gender = gender;
+            Address = address;
+            Phone = phone;
+            Email = email;
+            NationalityCountryID = nationalityCountryId;
+            ImagePath = imagePath;
 
             Mode = EntityMode.Update;
         }
 
-        private PersonDto ToDto()
-        {
-            return new PersonDto
-            {
-                PersonId = PersonId,
-                NationalNo = NationalNo,
-                FirstName = FirstName,
-                SecondName = SecondName,
-                ThirdName = ThirdName,
-                LastName = LastName,
-                DateOfBirth = DateOfBirth,
-                Gender = Gender,
-                Address = Address,
-                Phone = Phone,
-                Email = Email,
-                NationalityCountryId = NationalityCountryID,
-                ImagePath = ImagePath
-            };
-        }
-
         private bool AddNew()
         {
-            PersonId = PersonData.AddNewPerson(ToDto());
+            PersonId = PersonData.AddNewPerson(
+                NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth,
+                Gender, Address, Phone, Email, NationalityCountryID, ImagePath);
+
             return PersonId != -1;
         }
 
         private bool Update()
         {
-            return PersonData.UpdatePerson(ToDto());
+            return PersonData.UpdatePerson(
+                PersonId, NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth,
+                Gender, Address, Phone, Email, NationalityCountryID, ImagePath);
         }
 
         public bool Save()
@@ -124,21 +110,48 @@ namespace Business
             return false;
         }
 
-        public static List<PersonDto> GetAllPersons()
+        public static DataTable GetAllPersons()
         {
             return PersonData.GetAllPersons();
         }
 
         public static Person Find(int personId)
         {
-            PersonDto dto = PersonData.GetPersonInfoById(personId);
-            return dto == null ? null : new Person(dto);
+            string nationalNo = "", firstName = "", secondName = "", thirdName = null,
+                lastName = "", address = "", phone = "", email = null, imagePath = null;
+            DateTime dateOfBirth = DateTime.Now;
+            byte gender = 0;
+            int nationalityCountryId = -1;
+
+            if (PersonData.GetPersonInfoById(personId, ref nationalNo, ref firstName, ref secondName,
+                ref thirdName, ref lastName, ref dateOfBirth, ref gender, ref address, ref phone,
+                ref email, ref nationalityCountryId, ref imagePath))
+            {
+                return new Person(personId, nationalNo, firstName, secondName, thirdName, lastName,
+                    dateOfBirth, gender, address, phone, email, nationalityCountryId, imagePath);
+            }
+
+            return null;
         }
 
         public static Person Find(string nationalNo)
         {
-            PersonDto dto = PersonData.GetPersonInfoByNationalNo(nationalNo);
-            return dto == null ? null : new Person(dto);
+            int personId = -1;
+            string firstName = "", secondName = "", thirdName = null, lastName = "",
+                address = "", phone = "", email = null, imagePath = null;
+            DateTime dateOfBirth = DateTime.Now;
+            byte gender = 0;
+            int nationalityCountryId = -1;
+
+            if (PersonData.GetPersonInfoByNationalNo(nationalNo, ref personId, ref firstName,
+                ref secondName, ref thirdName, ref lastName, ref dateOfBirth, ref gender,
+                ref address, ref phone, ref email, ref nationalityCountryId, ref imagePath))
+            {
+                return new Person(personId, nationalNo, firstName, secondName, thirdName, lastName,
+                    dateOfBirth, gender, address, phone, email, nationalityCountryId, imagePath);
+            }
+
+            return null;
         }
 
         public static bool Delete(int personId)

@@ -5,41 +5,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Contracts.DTOs;
 using DataAccess.Common;
 
 namespace DataAccess.Data
 {
-
     public class PersonData
     {
-        public static PersonDto GetPersonInfoById(int id)
+        public static bool GetPersonInfoById(int personId, ref string nationalNo, ref string firstName,
+            ref string secondName, ref string thirdName, ref string lastName, ref DateTime dateOfBirth,
+            ref byte gender, ref string address, ref string phone, ref string email,
+            ref int nationalityCountryId, ref string imagePath)
         {
-            PersonDto person = null;
+            bool isFound = false;
 
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())
             {
                 string query = @"
                     SELECT
-                        PersonID,
+                        PersonID AS PersonId,
                         NationalNo,
                         FirstName,
                         SecondName,
                         ThirdName,
                         LastName,
                         DateOfBirth,
-                        Gendor,
+                        Gendor AS Gender,
                         Address,
                         Phone,
                         Email,
-                        NationalityCountryID,
+                        NationalityCountryID AS NationalityCountryId,
                         ImagePath
                     FROM People
                     WHERE PersonID = @PersonID;";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.Add("@PersonID", SqlDbType.Int).Value = id;
+                    command.Parameters.Add("@PersonID", SqlDbType.Int).Value = personId;
 
                     connection.Open();
 
@@ -47,61 +48,51 @@ namespace DataAccess.Data
                     {
                         if (reader.Read())
                         {
-                            person = new PersonDto
-                            {
-                                PersonId = Convert.ToInt32(reader["PersonID"]),
-                                NationalNo = reader["NationalNo"].ToString(),
-                                FirstName = reader["FirstName"].ToString(),
-                                SecondName = reader["SecondName"].ToString(),
+                            isFound = true;
 
-                                ThirdName = reader["ThirdName"] == DBNull.Value
-                                    ? null
-                                    : reader["ThirdName"].ToString(),
-
-                                LastName = reader["LastName"].ToString(),
-                                DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]),
-                                Gender = Convert.ToByte(reader["Gendor"]),
-                                Address = reader["Address"].ToString(),
-                                Phone = reader["Phone"].ToString(),
-
-                                Email = reader["Email"] == DBNull.Value
-                                    ? null
-                                    : reader["Email"].ToString(),
-
-                                NationalityCountryId = Convert.ToInt32(reader["NationalityCountryID"]),
-
-                                ImagePath = reader["ImagePath"] == DBNull.Value
-                                    ? null
-                                    : reader["ImagePath"].ToString()
-                            };
+                            nationalNo = reader["NationalNo"].ToString();
+                            firstName = reader["FirstName"].ToString();
+                            secondName = reader["SecondName"].ToString();
+                            thirdName = reader["ThirdName"] == DBNull.Value ? null : reader["ThirdName"].ToString();
+                            lastName = reader["LastName"].ToString();
+                            dateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]);
+                            gender = Convert.ToByte(reader["Gender"]);
+                            address = reader["Address"].ToString();
+                            phone = reader["Phone"].ToString();
+                            email = reader["Email"] == DBNull.Value ? null : reader["Email"].ToString();
+                            nationalityCountryId = Convert.ToInt32(reader["NationalityCountryId"]);
+                            imagePath = reader["ImagePath"] == DBNull.Value ? null : reader["ImagePath"].ToString();
                         }
                     }
                 }
             }
 
-            return person;
+            return isFound;
         }
 
-        public static PersonDto GetPersonInfoByNationalNo(string nationalNo)
+        public static bool GetPersonInfoByNationalNo(string nationalNo, ref int personId,
+            ref string firstName, ref string secondName, ref string thirdName, ref string lastName,
+            ref DateTime dateOfBirth, ref byte gender, ref string address, ref string phone,
+            ref string email, ref int nationalityCountryId, ref string imagePath)
         {
-            PersonDto person = null;
+            bool isFound = false;
 
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())
             {
                 string query = @"
                     SELECT
-                        PersonID,
+                        PersonID AS PersonId,
                         NationalNo,
                         FirstName,
                         SecondName,
                         ThirdName,
                         LastName,
                         DateOfBirth,
-                        Gendor,
+                        Gendor AS Gender,
                         Address,
                         Phone,
                         Email,
-                        NationalityCountryID,
+                        NationalityCountryID AS NationalityCountryId,
                         ImagePath
                     FROM People
                     WHERE NationalNo = @NationalNo;";
@@ -116,42 +107,31 @@ namespace DataAccess.Data
                     {
                         if (reader.Read())
                         {
-                            person = new PersonDto
-                            {
-                                PersonId = Convert.ToInt32(reader["PersonID"]),
-                                NationalNo = reader["NationalNo"].ToString(),
-                                FirstName = reader["FirstName"].ToString(),
-                                SecondName = reader["SecondName"].ToString(),
+                            isFound = true;
 
-                                ThirdName = reader["ThirdName"] == DBNull.Value
-                                    ? null
-                                    : reader["ThirdName"].ToString(),
-
-                                LastName = reader["LastName"].ToString(),
-                                DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]),
-                                Gender = Convert.ToByte(reader["Gendor"]),
-                                Address = reader["Address"].ToString(),
-                                Phone = reader["Phone"].ToString(),
-
-                                Email = reader["Email"] == DBNull.Value
-                                    ? null
-                                    : reader["Email"].ToString(),
-
-                                NationalityCountryId = Convert.ToInt32(reader["NationalityCountryID"]),
-
-                                ImagePath = reader["ImagePath"] == DBNull.Value
-                                    ? null
-                                    : reader["ImagePath"].ToString()
-                            };
+                            personId = Convert.ToInt32(reader["PersonId"]);
+                            firstName = reader["FirstName"].ToString();
+                            secondName = reader["SecondName"].ToString();
+                            thirdName = reader["ThirdName"] == DBNull.Value ? null : reader["ThirdName"].ToString();
+                            lastName = reader["LastName"].ToString();
+                            dateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]);
+                            gender = Convert.ToByte(reader["Gender"]);
+                            address = reader["Address"].ToString();
+                            phone = reader["Phone"].ToString();
+                            email = reader["Email"] == DBNull.Value ? null : reader["Email"].ToString();
+                            nationalityCountryId = Convert.ToInt32(reader["NationalityCountryId"]);
+                            imagePath = reader["ImagePath"] == DBNull.Value ? null : reader["ImagePath"].ToString();
                         }
                     }
                 }
             }
 
-            return person;
+            return isFound;
         }
 
-        public static int AddNewPerson(PersonDto person)
+        public static int AddNewPerson(string nationalNo, string firstName, string secondName, string thirdName,
+            string lastName, DateTime dateOfBirth, byte gender, string address, string phone,
+            string email, int nationalityCountryId, string imagePath)
         {
             int personId = -1;
 
@@ -169,50 +149,50 @@ namespace DataAccess.Data
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.Add("@NationalNo", SqlDbType.NVarChar, 20).Value = person.NationalNo;
-                    command.Parameters.Add("@FirstName", SqlDbType.NVarChar, 20).Value = person.FirstName;
-                    command.Parameters.Add("@SecondName", SqlDbType.NVarChar, 20).Value = person.SecondName;
+                    command.Parameters.Add("@NationalNo", SqlDbType.NVarChar, 20).Value = nationalNo;
+                    command.Parameters.Add("@FirstName", SqlDbType.NVarChar, 20).Value = firstName;
+                    command.Parameters.Add("@SecondName", SqlDbType.NVarChar, 20).Value = secondName;
 
                     SqlParameter thirdNameParam =
                         command.Parameters.Add("@ThirdName", SqlDbType.NVarChar, 20);
 
-                    if (string.IsNullOrEmpty(person.ThirdName))
+                    if (string.IsNullOrEmpty(thirdName))
                     {
                         thirdNameParam.Value = DBNull.Value;
                     }
                     else
                     {
-                        thirdNameParam.Value = person.ThirdName;
+                        thirdNameParam.Value = thirdName;
                     }
 
-                    command.Parameters.Add("@LastName", SqlDbType.NVarChar, 20).Value = person.LastName;
-                    command.Parameters.Add("@DateOfBirth", SqlDbType.DateTime).Value = person.DateOfBirth;
-                    command.Parameters.Add("@Gendor", SqlDbType.TinyInt).Value = person.Gender;
-                    command.Parameters.Add("@Address", SqlDbType.NVarChar, 500).Value = person.Address;
-                    command.Parameters.Add("@Phone", SqlDbType.NVarChar, 20).Value = person.Phone;
+                    command.Parameters.Add("@LastName", SqlDbType.NVarChar, 20).Value = lastName;
+                    command.Parameters.Add("@DateOfBirth", SqlDbType.DateTime).Value = dateOfBirth;
+                    command.Parameters.Add("@Gendor", SqlDbType.TinyInt).Value = gender;
+                    command.Parameters.Add("@Address", SqlDbType.NVarChar, 500).Value = address;
+                    command.Parameters.Add("@Phone", SqlDbType.NVarChar, 20).Value = phone;
 
                     SqlParameter emailParam =
                         command.Parameters.Add("@Email", SqlDbType.NVarChar, 50);
-                    if (string.IsNullOrEmpty(person.Email))
+                    if (string.IsNullOrEmpty(email))
                     {
                         emailParam.Value = DBNull.Value;
                     }
                     else
                     {
-                        emailParam.Value = person.Email;
+                        emailParam.Value = email;
                     }
 
-                    command.Parameters.Add("@NationalityCountryID", SqlDbType.Int).Value = person.NationalityCountryId;
+                    command.Parameters.Add("@NationalityCountryID", SqlDbType.Int).Value = nationalityCountryId;
 
                     SqlParameter imagePathParam =
                         command.Parameters.Add("@ImagePath", SqlDbType.NVarChar, 250);
-                    if (string.IsNullOrEmpty(person.ImagePath))
+                    if (string.IsNullOrEmpty(imagePath))
                     {
                         imagePathParam.Value = DBNull.Value;
                     }
                     else
                     {
-                        imagePathParam.Value = person.ImagePath;
+                        imagePathParam.Value = imagePath;
                     }
 
                     connection.Open();
@@ -228,10 +208,11 @@ namespace DataAccess.Data
             return personId;
         }
 
-        public static bool UpdatePerson(PersonDto person)
+        public static bool UpdatePerson(int personId, string nationalNo, string firstName, string secondName,
+            string thirdName, string lastName, DateTime dateOfBirth, byte gender, string address,
+            string phone, string email, int nationalityCountryId, string imagePath)
         {
             int rowsAffected = 0;
-            if (person == null) throw new ArgumentNullException(nameof(person));
 
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())
             {
@@ -254,48 +235,48 @@ namespace DataAccess.Data
                 ";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.Add("@PersonID", SqlDbType.Int).Value = person.PersonId;
-                    command.Parameters.Add("@NationalNo", SqlDbType.NVarChar, 20).Value = person.NationalNo;
-                    command.Parameters.Add("@FirstName", SqlDbType.NVarChar, 20).Value = person.FirstName;
-                    command.Parameters.Add("@SecondName", SqlDbType.NVarChar, 20).Value = person.SecondName;
+                    command.Parameters.Add("@PersonID", SqlDbType.Int).Value = personId;
+                    command.Parameters.Add("@NationalNo", SqlDbType.NVarChar, 20).Value = nationalNo;
+                    command.Parameters.Add("@FirstName", SqlDbType.NVarChar, 20).Value = firstName;
+                    command.Parameters.Add("@SecondName", SqlDbType.NVarChar, 20).Value = secondName;
                     SqlParameter thirdNameParam =
                         command.Parameters.Add("@ThirdName", SqlDbType.NVarChar, 20);
-                    if (string.IsNullOrEmpty(person.ThirdName))
+                    if (string.IsNullOrEmpty(thirdName))
                     {
                         thirdNameParam.Value = DBNull.Value;
                     }
                     else
                     {
-                        thirdNameParam.Value = person.ThirdName;
+                        thirdNameParam.Value = thirdName;
                     }
-                    command.Parameters.Add("@LastName", SqlDbType.NVarChar, 20).Value = person.LastName;
-                    command.Parameters.Add("@DateOfBirth", SqlDbType.DateTime).Value = person.DateOfBirth;
-                    command.Parameters.Add("@Gendor", SqlDbType.TinyInt).Value = person.Gender;
-                    command.Parameters.Add("@Address", SqlDbType.NVarChar, 500).Value = person.Address;
-                    command.Parameters.Add("@Phone", SqlDbType.NVarChar, 20).Value = person.Phone;
+                    command.Parameters.Add("@LastName", SqlDbType.NVarChar, 20).Value = lastName;
+                    command.Parameters.Add("@DateOfBirth", SqlDbType.DateTime).Value = dateOfBirth;
+                    command.Parameters.Add("@Gendor", SqlDbType.TinyInt).Value = gender;
+                    command.Parameters.Add("@Address", SqlDbType.NVarChar, 500).Value = address;
+                    command.Parameters.Add("@Phone", SqlDbType.NVarChar, 20).Value = phone;
 
                     SqlParameter emailParam =
                     command.Parameters.Add("@Email", SqlDbType.NVarChar, 50);
-                    if (string.IsNullOrEmpty(person.Email))
+                    if (string.IsNullOrEmpty(email))
                     {
                         emailParam.Value = DBNull.Value;
                     }
                     else
                     {
-                        emailParam.Value = person.Email;
+                        emailParam.Value = email;
                     }
 
-                    command.Parameters.Add("@NationalityCountryID", SqlDbType.Int).Value = person.NationalityCountryId;
+                    command.Parameters.Add("@NationalityCountryID", SqlDbType.Int).Value = nationalityCountryId;
 
                     SqlParameter imagePathParam =
                         command.Parameters.Add("@ImagePath", SqlDbType.NVarChar, 250);
-                    if (string.IsNullOrEmpty(person.ImagePath))
+                    if (string.IsNullOrEmpty(imagePath))
                     {
                         imagePathParam.Value = DBNull.Value;
                     }
                     else
                     {
-                        imagePathParam.Value = person.ImagePath;
+                        imagePathParam.Value = imagePath;
                     }
 
                     connection.Open();
@@ -335,24 +316,24 @@ namespace DataAccess.Data
             return rowsAffected > 0;
         }
 
-        public static List<PersonDto> GetAllPersons()
+        public static DataTable GetAllPersons()
         {
-            List<PersonDto> people = new List<PersonDto>();
+            DataTable dt = new DataTable();
 
             string query = @"
                             SELECT
-                                PersonID,
+                                PersonID AS PersonId,
                                 NationalNo,
                                 FirstName,
                                 SecondName,
                                 ThirdName,
                                 LastName,
                                 DateOfBirth,
-                                Gendor,
+                                Gendor AS Gender,
                                 Address,
                                 Phone,
                                 Email,
-                                NationalityCountryID,
+                                NationalityCountryID AS NationalityCountryId,
                                 ImagePath
                             FROM People;
                             ";
@@ -366,35 +347,9 @@ namespace DataAccess.Data
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            while (reader.Read())
+                            if (reader.HasRows)
                             {
-                                people.Add(new PersonDto
-                                {
-                                    PersonId = Convert.ToInt32(reader["PersonID"]),
-                                    NationalNo = reader["NationalNo"].ToString(),
-                                    FirstName = reader["FirstName"].ToString(),
-                                    SecondName = reader["SecondName"].ToString(),
-
-                                    ThirdName = reader["ThirdName"] == DBNull.Value
-                                        ? null
-                                        : reader["ThirdName"].ToString(),
-
-                                    LastName = reader["LastName"].ToString(),
-                                    DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]),
-                                    Gender = Convert.ToByte(reader["Gendor"]),
-                                    Address = reader["Address"].ToString(),
-                                    Phone = reader["Phone"].ToString(),
-
-                                    Email = reader["Email"] == DBNull.Value
-                                        ? null
-                                        : reader["Email"].ToString(),
-
-                                    NationalityCountryId = Convert.ToInt32(reader["NationalityCountryID"]),
-
-                                    ImagePath = reader["ImagePath"] == DBNull.Value
-                                        ? null
-                                        : reader["ImagePath"].ToString()
-                                });
+                                dt.Load(reader);
                             }
                         }
                     }
@@ -405,7 +360,7 @@ namespace DataAccess.Data
                 }
             }
 
-            return people;
+            return dt;
         }
 
         public static bool IsPersonExist(int personId)
@@ -463,7 +418,7 @@ namespace DataAccess.Data
                     }
                 }
             }
-                return isFound;
+            return isFound;
         }
 
         public static string GetFullName(int personId)

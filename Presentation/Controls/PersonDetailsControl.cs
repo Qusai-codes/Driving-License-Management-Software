@@ -1,4 +1,4 @@
-﻿using Contracts.DTOs;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -177,13 +177,12 @@ namespace Presentation
             set { _imagePath = value; }
         }
 
-        public void LoadCountries(List<CountryDto> countries)
+        public void LoadCountries(DataTable countries)
         {
             cmbCountry.DataSource = countries;
             cmbCountry.DisplayMember = "CountryName";
-            cmbCountry.ValueMember = "CountryID";
+            cmbCountry.ValueMember = "CountryId";
         }
-
 
         private void UpdateDateLimits()
         {
@@ -195,7 +194,6 @@ namespace Presentation
         {
             get { return dtpDateOfBirth; }
         }
-
 
         private void btnClose_Click(object sender, EventArgs e)
         {

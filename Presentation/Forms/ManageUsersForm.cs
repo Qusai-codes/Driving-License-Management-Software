@@ -1,5 +1,4 @@
 ﻿using Business;
-using Contracts.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -85,9 +84,7 @@ namespace Presentation.Forms
 
         private DataTable GetUsersList()
         {
-            List<UserDto> list = User.GetAllUsers();
-            DataTable usersDataTable = UserDto.ToDataTable(list);
-            return usersDataTable;
+            return User.GetAllUsers();
         }
 
         private void RefreshUsersList()
@@ -103,10 +100,14 @@ namespace Presentation.Forms
                 }
 
                 // Build a lookup for PersonId -> FullName
-                List<PersonDto> persons = Person.GetAllPersons();
-                Dictionary<int, string> personLookup = persons.ToDictionary(
-                    p => p.PersonId,
-                    p => BuildFullName(p.FirstName, p.SecondName, p.ThirdName, p.LastName));
+                DataTable persons = Person.GetAllPersons();
+                Dictionary<int, string> personLookup = persons.AsEnumerable().ToDictionary(
+                    row => row.Field<int>("PersonId"),
+                    row => BuildFullName(
+                        Convert.ToString(row["FirstName"]),
+                        Convert.ToString(row["SecondName"]),
+                        row["ThirdName"] == DBNull.Value ? null : row["ThirdName"].ToString(),
+                        Convert.ToString(row["LastName"])));
 
                 foreach (DataRow row in dt.Rows)
                 {

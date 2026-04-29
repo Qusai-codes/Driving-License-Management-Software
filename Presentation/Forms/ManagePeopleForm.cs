@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Presentation.Events;
 
-using Contracts.DTOs;
-
 namespace Presentation
 {
     public partial class ManagePeopleForm : Form
@@ -28,8 +26,10 @@ namespace Presentation
 
         private void LoadCountriesCache()
         {
-            var countries = Country.GetAllCountries();
-            _countriesCache = countries.ToDictionary(c => c.CountryId, c => c.CountryName);
+            DataTable countries = Country.GetAllCountries();
+            _countriesCache = countries.AsEnumerable().ToDictionary(
+                row => row.Field<int>("CountryId"),
+                row => row.Field<string>("CountryName"));
         }
 
         private void btnAddPerson_Click(object sender, EventArgs e)
@@ -117,9 +117,7 @@ namespace Presentation
 
         private DataTable GetPeopleList()
         {
-            var list = Person.GetAllPersons();
-            var peopleDataTable = PersonDto.ToDataTable(list);
-            return peopleDataTable;
+            return Person.GetAllPersons();
         }
 
         private void RefreshPeopleList()

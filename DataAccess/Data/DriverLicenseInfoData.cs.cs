@@ -1,22 +1,18 @@
-﻿using Contracts;
-using Contracts.DTOs;
-using DataAccess.Common;
+﻿using DataAccess.Common;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Data
 {
     public class DriverLicenseInfoData
     {
-        public static DriverLicenseInfoDto GetDriverLicenseInfoByDriverId(int driverId)
+        public static bool GetDriverLicenseInfoByDriverId(int driverId, ref int driverIdOut,
+            ref string nationalNumber, ref string fullName, ref byte gender, ref DateTime dateOfBirth,
+            ref string imagePath, ref int licenseClassId, ref int licenseId, ref DateTime issueDate,
+            ref byte issueReason, ref string notes, ref bool isActive, ref bool isDetained,
+            ref DateTime expirationDate)
         {
-            DriverLicenseInfoDto driverLicenseInfo = null;
-
             const string query = @"
             SELECT TOP 1
                 d.DriverID,
@@ -61,37 +57,36 @@ namespace DataAccess.Data
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
-                    {
-                        driverLicenseInfo = new DriverLicenseInfoDto
-                        {
-                            DriverId = (int)reader["DriverID"],
-                            NationalNumber = reader["NationalNumber"].ToString(),
-                            FullName = reader["FullName"].ToString(),
-                            Gender = (byte)reader["Gender"],
-                            DateOfBirth = (DateTime)reader["DateOfBirth"],
-                            ImagePath = reader["ImagePath"] == DBNull.Value ? null : reader["ImagePath"].ToString(),
+                    if (!reader.Read())
+                        return false;
 
-                            LicenseClassId = (int)reader["LicenseClassId"],
-                            LicenseId = (int)reader["LicenseID"],
-                            IssueDate = (DateTime)reader["IssueDate"],
-                            IssueReason = (byte)reader["IssueReason"],
-                            Notes = reader["Notes"] == DBNull.Value ? null : reader["Notes"].ToString(),
-                            IsActive = (bool)reader["IsActive"],
-                            IsDetained = (bool)reader["IsDetained"],
-                            ExpirationDate = (DateTime)reader["ExpirationDate"]
-                        };
-                    }
+                    driverIdOut = (int)reader["DriverID"];
+                    nationalNumber = reader["NationalNumber"].ToString();
+                    fullName = reader["FullName"].ToString();
+                    gender = (byte)reader["Gender"];
+                    dateOfBirth = (DateTime)reader["DateOfBirth"];
+                    imagePath = reader["ImagePath"] == DBNull.Value ? null : reader["ImagePath"].ToString();
+
+                    licenseClassId = (int)reader["LicenseClassId"];
+                    licenseId = (int)reader["LicenseID"];
+                    issueDate = (DateTime)reader["IssueDate"];
+                    issueReason = (byte)reader["IssueReason"];
+                    notes = reader["Notes"] == DBNull.Value ? null : reader["Notes"].ToString();
+                    isActive = (bool)reader["IsActive"];
+                    isDetained = (bool)reader["IsDetained"];
+                    expirationDate = (DateTime)reader["ExpirationDate"];
+
+                    return true;
                 }
             }
-
-            return driverLicenseInfo;
         }
 
-        public static DriverLicenseInfoDto GetDriverLicenseInfoByLicenseId(int licenseId)
+        public static bool GetDriverLicenseInfoByLicenseId(int licenseId, ref int driverIdOut,
+            ref string nationalNumber, ref string fullName, ref byte gender, ref DateTime dateOfBirth,
+            ref string imagePath, ref int licenseClassId, ref int licenseIdOut, ref DateTime issueDate,
+            ref byte issueReason, ref string notes, ref bool isActive, ref bool isDetained,
+            ref DateTime expirationDate)
         {
-            DriverLicenseInfoDto driverLicenseInfo = null;
-
             const string query = @"
             SELECT TOP 1
                 d.DriverID,
@@ -134,31 +129,28 @@ namespace DataAccess.Data
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
-                    {
-                        driverLicenseInfo = new DriverLicenseInfoDto
-                        {
-                            DriverId = (int)reader["DriverID"],
-                            NationalNumber = reader["NationalNumber"].ToString(),
-                            FullName = reader["FullName"].ToString(),
-                            Gender = (byte)reader["Gender"],
-                            DateOfBirth = (DateTime)reader["DateOfBirth"],
-                            ImagePath = reader["ImagePath"] == DBNull.Value ? null : reader["ImagePath"].ToString(),
+                    if (!reader.Read())
+                        return false;
 
-                            LicenseClassId = (int)reader["LicenseClassId"],
-                            LicenseId = (int)reader["LicenseID"],
-                            IssueDate = (DateTime)reader["IssueDate"],
-                            IssueReason = (byte)reader["IssueReason"],
-                            Notes = reader["Notes"] == DBNull.Value ? null : reader["Notes"].ToString(),
-                            IsActive = (bool)reader["IsActive"],
-                            IsDetained = (bool)reader["IsDetained"],
-                            ExpirationDate = (DateTime)reader["ExpirationDate"]
-                        };
-                    }
+                    driverIdOut = (int)reader["DriverID"];
+                    nationalNumber = reader["NationalNumber"].ToString();
+                    fullName = reader["FullName"].ToString();
+                    gender = (byte)reader["Gender"];
+                    dateOfBirth = (DateTime)reader["DateOfBirth"];
+                    imagePath = reader["ImagePath"] == DBNull.Value ? null : reader["ImagePath"].ToString();
+
+                    licenseClassId = (int)reader["LicenseClassId"];
+                    licenseIdOut = (int)reader["LicenseID"];
+                    issueDate = (DateTime)reader["IssueDate"];
+                    issueReason = (byte)reader["IssueReason"];
+                    notes = reader["Notes"] == DBNull.Value ? null : reader["Notes"].ToString();
+                    isActive = (bool)reader["IsActive"];
+                    isDetained = (bool)reader["IsDetained"];
+                    expirationDate = (DateTime)reader["ExpirationDate"];
+
+                    return true;
                 }
             }
-
-            return driverLicenseInfo;
         }
     }
 }

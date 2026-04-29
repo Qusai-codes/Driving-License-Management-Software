@@ -1,5 +1,4 @@
 ﻿using Business;
-using Business;
 using Presentation.Events;
 using Presentation.Properties;
 using System;

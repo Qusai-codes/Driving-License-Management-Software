@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Contracts.DTOs;
 using DataAccess.Common;
 
 namespace DataAccess.Data
 {
     public static class UserData
     {
-
-        public static int AddNewUser(UserDto user)
+        public static int AddNewUser(int personId, string userName, string passwordHash,
+            string passwordSalt, bool isActive)
         {
             int userId = -1;
             const string query = @"
@@ -23,11 +22,11 @@ namespace DataAccess.Data
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                command.Parameters.Add("@PersonID", SqlDbType.Int).Value = user.PersonId;
-                command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = user.UserName;
-                command.Parameters.Add("@PasswordHash", SqlDbType.NVarChar, 200).Value = user.PasswordHash;
-                command.Parameters.Add("@PasswordSalt", SqlDbType.NVarChar, 200).Value = user.PasswordSalt;
-                command.Parameters.Add("@IsActive", SqlDbType.Bit).Value = user.IsActive;
+                command.Parameters.Add("@PersonID", SqlDbType.Int).Value = personId;
+                command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = userName;
+                command.Parameters.Add("@PasswordHash", SqlDbType.NVarChar, 200).Value = passwordHash;
+                command.Parameters.Add("@PasswordSalt", SqlDbType.NVarChar, 200).Value = passwordSalt;
+                command.Parameters.Add("@IsActive", SqlDbType.Bit).Value = isActive;
 
                 connection.Open();
                 object result = command.ExecuteScalar();
@@ -40,7 +39,8 @@ namespace DataAccess.Data
             return userId;
         }
 
-        public static UserDto GetUserByUserName(string userName)
+        public static bool GetUserByUserName(string userName, ref int userId, ref int personId,
+            ref string dbUserName, ref bool isActive, ref string passwordHash, ref string passwordSalt)
         {
             const string query = @"
                 SELECT UserID, PersonID, UserName, IsActive, PasswordHash, PasswordSalt
@@ -57,22 +57,21 @@ namespace DataAccess.Data
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (!reader.Read())
-                        return null;
+                        return false;
 
-                    return new UserDto
-                    {
-                        UserId = (int)reader["UserID"],
-                        PersonId = (int)reader["PersonID"],
-                        UserName = (string)reader["UserName"],
-                        IsActive = (bool)reader["IsActive"],
-                        PasswordHash = (string)reader["PasswordHash"],
-                        PasswordSalt = (string)reader["PasswordSalt"]
-                    };
+                    userId = (int)reader["UserID"];
+                    personId = (int)reader["PersonID"];
+                    dbUserName = (string)reader["UserName"];
+                    isActive = (bool)reader["IsActive"];
+                    passwordHash = (string)reader["PasswordHash"];
+                    passwordSalt = (string)reader["PasswordSalt"];
+                    return true;
                 }
             }
         }
 
-        public static UserDto GetUserByUserId(int userId)
+        public static bool GetUserByUserId(int userId, ref int personId, ref string userName,
+            ref bool isActive, ref string passwordHash, ref string passwordSalt)
         {
             const string query = @"
                 SELECT UserID, PersonID, UserName, IsActive, PasswordHash, PasswordSalt
@@ -89,29 +88,26 @@ namespace DataAccess.Data
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     if (!reader.Read())
-                        return null;
+                        return false;
 
-                    return new UserDto
-                    {
-                        UserId = (int)reader["UserID"],
-                        PersonId = (int)reader["PersonID"],
-                        UserName = (string)reader["UserName"],
-                        IsActive = (bool)reader["IsActive"],
-                        PasswordHash = (string)reader["PasswordHash"],
-                        PasswordSalt = (string)reader["PasswordSalt"]
-                    };
+                    personId = (int)reader["PersonID"];
+                    userName = (string)reader["UserName"];
+                    isActive = (bool)reader["IsActive"];
+                    passwordHash = (string)reader["PasswordHash"];
+                    passwordSalt = (string)reader["PasswordSalt"];
+                    return true;
                 }
             }
         }
 
-        public static List<UserDto> GetAllUsers()
+        public static DataTable GetAllUsers()
         {
             const string query = @"
-                SELECT UserID, PersonID, UserName, IsActive
+                SELECT UserID AS UserId, PersonID AS PersonId, UserName, IsActive
                 FROM dbo.Users;
             ";
 
-            List<UserDto> users = new List<UserDto>();
+            DataTable dt = new DataTable();
 
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())
             using (SqlCommand command = new SqlCommand(query, connection))
@@ -119,25 +115,14 @@ namespace DataAccess.Data
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    int ordUserId = reader.GetOrdinal("UserID");
-                    int ordPersonId = reader.GetOrdinal("PersonID");
-                    int ordUserName = reader.GetOrdinal("UserName");
-                    int ordIsActive = reader.GetOrdinal("IsActive");
-
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        users.Add(new UserDto
-                        {
-                            UserId = reader.GetInt32(ordUserId),
-                            PersonId = reader.GetInt32(ordPersonId),
-                            UserName = reader.GetString(ordUserName),
-                            IsActive = reader.GetBoolean(ordIsActive)
-                        });
+                        dt.Load(reader);
                     }
                 }
             }
 
-            return users;
+            return dt;
         }
 
         public static (string Hash, string Salt) GetPasswordData(string userName)
@@ -166,7 +151,8 @@ namespace DataAccess.Data
                 }
             }
         }
-        public static bool UpdateUser(UserDto user)
+
+        public static bool UpdateUser(int userId, int personId, string userName, bool isActive)
         {
             int rowsAffected = 0;
             const string query = @"
@@ -180,13 +166,13 @@ namespace DataAccess.Data
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())
             using (SqlCommand command = new SqlCommand(query, connection))
             {
-                command.Parameters.Add("@PersonID", SqlDbType.Int).Value = user.PersonId;
-                command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = user.UserName;
-                command.Parameters.Add("@IsActive", SqlDbType.Bit).Value = user.IsActive;
-                command.Parameters.Add("@UserID", SqlDbType.Int).Value = user.UserId;
+                command.Parameters.Add("@PersonID", SqlDbType.Int).Value = personId;
+                command.Parameters.Add("@UserName", SqlDbType.NVarChar, 20).Value = userName;
+                command.Parameters.Add("@IsActive", SqlDbType.Bit).Value = isActive;
+                command.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
 
                 connection.Open();
-                rowsAffected =  command.ExecuteNonQuery();
+                rowsAffected = command.ExecuteNonQuery();
             }
             return rowsAffected > 0;
         }
@@ -209,7 +195,7 @@ namespace DataAccess.Data
                 command.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
 
                 connection.Open();
-                rowsAffected =  command.ExecuteNonQuery();
+                rowsAffected = command.ExecuteNonQuery();
             }
             return rowsAffected > 0;
         }
@@ -225,7 +211,7 @@ namespace DataAccess.Data
                 command.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
 
                 connection.Open();
-                rowsAffected =  command.ExecuteNonQuery();
+                rowsAffected = command.ExecuteNonQuery();
             }
             return rowsAffected > 0;
         }
@@ -253,7 +239,7 @@ namespace DataAccess.Data
                     personId = Convert.ToInt32(result);
                 }
 
-            } 
+            }
 
             return personId;
         }
@@ -273,7 +259,7 @@ namespace DataAccess.Data
                 command.Parameters.Add("@PersonID", SqlDbType.Int).Value = personId;
 
                 connection.Open();
-                isFound =  command.ExecuteScalar() != null;
+                isFound = command.ExecuteScalar() != null;
             }
             return isFound;
         }
@@ -293,7 +279,7 @@ namespace DataAccess.Data
                 command.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
 
                 connection.Open();
-                isFound =  command.ExecuteScalar() != null;
+                isFound = command.ExecuteScalar() != null;
             }
             return isFound;
         }

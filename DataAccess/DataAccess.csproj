@@ -61,11 +61,5 @@
     <Compile Include="Data\TestTypeData.cs" />
     <Compile Include="Data\UserData.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj">
-      <Project>{b8859aba-ddab-424d-a327-e94fde1e8236}</Project>
-      <Name>Contracts</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
