@@ -180,16 +180,24 @@ namespace DataAccess.Data
 
             const string query = @"
             SELECT 
-                DetainID,
-                LicenseID,
-                DetainDate,
-                FineFees,
-                CreatedByUserID,
-                IsReleased,
-                ReleaseDate,
-                ReleasedByUserID,
-                ReleaseApplicationID
-            FROM DetainedLicenses;
+                dl.DetainID,
+                dl.LicenseID,
+                dl.DetainDate,
+                dl.FineFees,
+                dl.IsReleased,
+                dl.ReleaseDate,
+                dl.ReleaseApplicationID,
+                p.NationalNo,
+                p.FirstName + ' ' + p.SecondName
+                    + CASE 
+                        WHEN p.ThirdName IS NULL OR p.ThirdName = '' THEN ''
+                        ELSE ' ' + p.ThirdName
+                      END
+                    + ' ' + p.LastName AS FullName
+            FROM DetainedLicenses dl
+            INNER JOIN Licenses l ON l.LicenseID = dl.LicenseID
+            INNER JOIN Drivers d ON d.DriverID = l.DriverID
+            INNER JOIN People p ON p.PersonID = d.PersonID;
             ";
 
             using (SqlConnection connection = DbConnectionFactory.CreateConnection())

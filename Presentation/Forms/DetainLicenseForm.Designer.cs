@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DetainLicenseForm));
             this.label1 = new System.Windows.Forms.Label();
-            this.drivingLicenseInformationWithFilterControl1 = new Presentation.Controls.DrivingLicenseInformationWithFilterControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtFineFees = new System.Windows.Forms.TextBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -53,6 +52,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.btnDetain = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.drivingLicenseInformationWithFilterControl1 = new Presentation.Controls.DrivingLicenseInformationWithFilterControl();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -72,16 +72,6 @@
             this.label1.Size = new System.Drawing.Size(186, 29);
             this.label1.TabIndex = 0;
             this.label1.Text = "Detain License";
-            // 
-            // drivingLicenseInformationWithFilterControl1
-            // 
-            this.drivingLicenseInformationWithFilterControl1.AutoSize = true;
-            this.drivingLicenseInformationWithFilterControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.drivingLicenseInformationWithFilterControl1.Location = new System.Drawing.Point(11, 74);
-            this.drivingLicenseInformationWithFilterControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.drivingLicenseInformationWithFilterControl1.Name = "drivingLicenseInformationWithFilterControl1";
-            this.drivingLicenseInformationWithFilterControl1.Size = new System.Drawing.Size(688, 394);
-            this.drivingLicenseInformationWithFilterControl1.TabIndex = 1;
             // 
             // groupBox1
             // 
@@ -171,9 +161,9 @@
             this.lblCreatedByUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCreatedByUser.Location = new System.Drawing.Point(438, 71);
             this.lblCreatedByUser.Name = "lblCreatedByUser";
-            this.lblCreatedByUser.Size = new System.Drawing.Size(48, 13);
+            this.lblCreatedByUser.Size = new System.Drawing.Size(36, 13);
             this.lblCreatedByUser.TabIndex = 9;
-            this.lblCreatedByUser.Text = "label11";
+            this.lblCreatedByUser.Text = "[???]";
             // 
             // lblLicenseId
             // 
@@ -181,9 +171,9 @@
             this.lblLicenseId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLicenseId.Location = new System.Drawing.Point(438, 39);
             this.lblLicenseId.Name = "lblLicenseId";
-            this.lblLicenseId.Size = new System.Drawing.Size(48, 13);
+            this.lblLicenseId.Size = new System.Drawing.Size(36, 13);
             this.lblLicenseId.TabIndex = 8;
-            this.lblLicenseId.Text = "label10";
+            this.lblLicenseId.Text = "[???]";
             // 
             // label9
             // 
@@ -211,9 +201,9 @@
             this.lblDetainDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDetainDate.Location = new System.Drawing.Point(131, 71);
             this.lblDetainDate.Name = "lblDetainDate";
-            this.lblDetainDate.Size = new System.Drawing.Size(41, 13);
+            this.lblDetainDate.Size = new System.Drawing.Size(36, 13);
             this.lblDetainDate.TabIndex = 4;
-            this.lblDetainDate.Text = "label6";
+            this.lblDetainDate.Text = "[???]";
             // 
             // lblDetainId
             // 
@@ -310,6 +300,16 @@
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
+            // 
+            // drivingLicenseInformationWithFilterControl1
+            // 
+            this.drivingLicenseInformationWithFilterControl1.AutoSize = true;
+            this.drivingLicenseInformationWithFilterControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.drivingLicenseInformationWithFilterControl1.Location = new System.Drawing.Point(11, 74);
+            this.drivingLicenseInformationWithFilterControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.drivingLicenseInformationWithFilterControl1.Name = "drivingLicenseInformationWithFilterControl1";
+            this.drivingLicenseInformationWithFilterControl1.Size = new System.Drawing.Size(688, 394);
+            this.drivingLicenseInformationWithFilterControl1.TabIndex = 1;
             // 
             // DetainLicenseForm
             // 

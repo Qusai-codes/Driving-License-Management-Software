@@ -60,6 +60,14 @@ namespace Presentation.Forms
                 return;
             }
 
+            // Can not detain an already detained license
+            if (Business.DetainedLicense.IsLicenseDetained(_licenseId))
+            {
+                MessageBox.Show("Selected license is already detained, choose another one.", "Not Allowed",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // Update UI
             lblLicenseId.Text = _licenseId.ToString();
             btnDetain.Enabled = true;
@@ -83,13 +91,6 @@ namespace Presentation.Forms
             if (!decimal.TryParse(txtFineFees.Text, out decimal fineFees) || fineFees < 0)
             {
                 MessageBox.Show("Please enter a valid fine fee (zero or a positive number).", "Validation",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (Business.DetainedLicense.IsLicenseDetained(_licenseId))
-            {
-                MessageBox.Show("Selected license is already detained, choose another one.", "Not Allowed",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }

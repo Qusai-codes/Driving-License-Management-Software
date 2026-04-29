@@ -98,5 +98,31 @@ namespace Presentation.Controls
         {
             return Business.License.DoesLicenseExistByLicenseId(licenseId);
         }
+
+        public void TrySelectLicense(int licenseId)
+        {
+            if (!VerifyLicenseId(licenseId))
+                return;
+
+            _licenseId = licenseId;
+            txtDrivingLicenseId.Text = licenseId.ToString();
+
+            OnLicenseSelected(_licenseId);
+
+            // Call the setter for child control
+            int driverId = Business.License.GetDriverIdByLicenseId(licenseId);
+            if (driverId != -1)
+            {
+                drivingLicenseInformationControl1.DriverId = driverId;
+            }
+            else
+            {
+                return;
+            }
+
+            drivingLicenseInformationControl1.LicenseId = _licenseId;
+
+            return;
+        }
     }
 }

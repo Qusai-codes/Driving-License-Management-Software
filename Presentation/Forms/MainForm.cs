@@ -143,7 +143,8 @@ namespace Presentation
 
         private void manageDetainedLicensesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ManageDetainedLicensesForm form = new ManageDetainedLicensesForm();
+            form.ShowDialog();
         }
 
         private void detainLicenseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -154,12 +155,7 @@ namespace Presentation
 
         private void releaseDetainedLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void reToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LocalDrivingLicenseApplicationsForm form = new LocalDrivingLicenseApplicationsForm();
+            ReleaseDetainedLicenseForm form = new ReleaseDetainedLicenseForm();
             form.ShowDialog();
         }
     }
