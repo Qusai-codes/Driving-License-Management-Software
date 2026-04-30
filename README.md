@@ -16,7 +16,6 @@ Driving License Management Software is a **Windows Forms** application for manag
 - `Presentation` — Windows Forms UI
 - `Business` — domain logic and services
 - `DataAccess` — SQL Server data access
-- `Contracts` — DTOs and shared models
 
 ## ✅ Requirements
 - .NET Framework 4.8
