@@ -107,7 +107,7 @@
             // txtApplicationTypeTitle
             // 
             this.txtApplicationTypeTitle.Location = new System.Drawing.Point(148, 154);
-            this.txtApplicationTypeTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtApplicationTypeTitle.Margin = new System.Windows.Forms.Padding(4);
             this.txtApplicationTypeTitle.Name = "txtApplicationTypeTitle";
             this.txtApplicationTypeTitle.Size = new System.Drawing.Size(280, 22);
             this.txtApplicationTypeTitle.TabIndex = 7;
@@ -116,7 +116,7 @@
             // txtApplicationTypeFees
             // 
             this.txtApplicationTypeFees.Location = new System.Drawing.Point(148, 208);
-            this.txtApplicationTypeFees.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtApplicationTypeFees.Margin = new System.Windows.Forms.Padding(4);
             this.txtApplicationTypeFees.Name = "txtApplicationTypeFees";
             this.txtApplicationTypeFees.Size = new System.Drawing.Size(280, 22);
             this.txtApplicationTypeFees.TabIndex = 8;
@@ -151,6 +151,7 @@
             // btnClose
             // 
             this.btnClose.AutoSize = true;
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.ImageIndex = 0;
             this.btnClose.ImageList = this.imageList1;
@@ -187,8 +188,10 @@
             // 
             // UpdateApplicationTypeForm
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(461, 314);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
@@ -201,7 +204,7 @@
             this.Controls.Add(this.lblApplicationTypeId);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UpdateApplicationTypeForm";

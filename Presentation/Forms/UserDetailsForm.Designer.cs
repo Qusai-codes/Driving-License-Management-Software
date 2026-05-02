@@ -37,19 +37,22 @@
             // 
             // userDetailsControl1
             // 
-            this.userDetailsControl1.Location = new System.Drawing.Point(12, 15);
+            this.userDetailsControl1.Location = new System.Drawing.Point(16, 18);
+            this.userDetailsControl1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.userDetailsControl1.Name = "userDetailsControl1";
-            this.userDetailsControl1.Size = new System.Drawing.Size(660, 377);
+            this.userDetailsControl1.Size = new System.Drawing.Size(880, 464);
             this.userDetailsControl1.TabIndex = 0;
             // 
             // btnClose
             // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.ImageIndex = 0;
             this.btnClose.ImageList = this.imageList1;
-            this.btnClose.Location = new System.Drawing.Point(584, 398);
+            this.btnClose.Location = new System.Drawing.Point(779, 490);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(88, 32);
+            this.btnClose.Size = new System.Drawing.Size(117, 39);
             this.btnClose.TabIndex = 11;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -63,11 +66,14 @@
             // 
             // UserDetailsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AcceptButton = this.btnClose;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(684, 436);
+            this.CancelButton = this.btnClose;
+            this.ClientSize = new System.Drawing.Size(912, 537);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.userDetailsControl1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UserDetailsForm";

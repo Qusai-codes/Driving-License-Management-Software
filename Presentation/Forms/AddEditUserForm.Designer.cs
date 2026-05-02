@@ -33,7 +33,7 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpPersonInfo = new System.Windows.Forms.TabPage();
-            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
+            this.personDetailsWithFilterControl1 = new Presentation.Controls.PersonDetailsWithFilterControl();
             this.btnNext = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tpLoginInfo = new System.Windows.Forms.TabPage();
@@ -50,10 +50,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.btnClose = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.personDetailsWithFilterControl1 = new Presentation.Controls.PersonDetailsWithFilterControl();
             this.tabControl1.SuspendLayout();
             this.tpPersonInfo.SuspendLayout();
             this.tpLoginInfo.SuspendLayout();
@@ -69,9 +69,10 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Maroon;
-            this.lblTitle.Location = new System.Drawing.Point(267, 42);
+            this.lblTitle.Location = new System.Drawing.Point(356, 52);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(189, 31);
+            this.lblTitle.Size = new System.Drawing.Size(237, 39);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Add New User";
             // 
@@ -79,39 +80,46 @@
             // 
             this.tabControl1.Controls.Add(this.tpPersonInfo);
             this.tabControl1.Controls.Add(this.tpLoginInfo);
-            this.tabControl1.Location = new System.Drawing.Point(12, 88);
+            this.tabControl1.Location = new System.Drawing.Point(16, 108);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(699, 446);
+            this.tabControl1.Size = new System.Drawing.Size(932, 549);
             this.tabControl1.TabIndex = 1;
             // 
             // tpPersonInfo
             // 
             this.tpPersonInfo.Controls.Add(this.personDetailsWithFilterControl1);
             this.tpPersonInfo.Controls.Add(this.btnNext);
-            this.tpPersonInfo.Location = new System.Drawing.Point(4, 22);
+            this.tpPersonInfo.Location = new System.Drawing.Point(4, 25);
+            this.tpPersonInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tpPersonInfo.Name = "tpPersonInfo";
-            this.tpPersonInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPersonInfo.Size = new System.Drawing.Size(691, 420);
+            this.tpPersonInfo.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpPersonInfo.Size = new System.Drawing.Size(924, 520);
             this.tpPersonInfo.TabIndex = 0;
             this.tpPersonInfo.Text = "Personal Info";
             this.tpPersonInfo.UseVisualStyleBackColor = true;
             // 
-            // imageList2
+            // personDetailsWithFilterControl1
             // 
-            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
-            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList2.Images.SetKeyName(0, "administrator(7).png");
-            this.imageList2.Images.SetKeyName(1, "administrator(6).png");
+            this.personDetailsWithFilterControl1.AutoSize = true;
+            this.personDetailsWithFilterControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.personDetailsWithFilterControl1.Location = new System.Drawing.Point(15, 26);
+            this.personDetailsWithFilterControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.personDetailsWithFilterControl1.Name = "personDetailsWithFilterControl1";
+            this.personDetailsWithFilterControl1.PersonId = -1;
+            this.personDetailsWithFilterControl1.Size = new System.Drawing.Size(879, 417);
+            this.personDetailsWithFilterControl1.TabIndex = 1;
             // 
             // btnNext
             // 
             this.btnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnNext.ImageIndex = 2;
             this.btnNext.ImageList = this.imageList1;
-            this.btnNext.Location = new System.Drawing.Point(583, 382);
+            this.btnNext.Location = new System.Drawing.Point(777, 470);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnNext.Name = "btnNext";
-            this.btnNext.Size = new System.Drawing.Size(87, 32);
+            this.btnNext.Size = new System.Drawing.Size(116, 39);
             this.btnNext.TabIndex = 0;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
@@ -140,10 +148,11 @@
             this.tpLoginInfo.Controls.Add(this.label5);
             this.tpLoginInfo.Controls.Add(this.label4);
             this.tpLoginInfo.Controls.Add(this.label3);
-            this.tpLoginInfo.Location = new System.Drawing.Point(4, 22);
+            this.tpLoginInfo.Location = new System.Drawing.Point(4, 25);
+            this.tpLoginInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tpLoginInfo.Name = "tpLoginInfo";
-            this.tpLoginInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLoginInfo.Size = new System.Drawing.Size(691, 420);
+            this.tpLoginInfo.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tpLoginInfo.Size = new System.Drawing.Size(924, 520);
             this.tpLoginInfo.TabIndex = 1;
             this.tpLoginInfo.Text = "Login Info";
             this.tpLoginInfo.UseVisualStyleBackColor = true;
@@ -153,36 +162,40 @@
             this.chkIsActive.AutoSize = true;
             this.chkIsActive.Checked = true;
             this.chkIsActive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIsActive.Location = new System.Drawing.Point(175, 199);
+            this.chkIsActive.Location = new System.Drawing.Point(233, 245);
+            this.chkIsActive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.chkIsActive.Name = "chkIsActive";
-            this.chkIsActive.Size = new System.Drawing.Size(67, 17);
+            this.chkIsActive.Size = new System.Drawing.Size(79, 20);
             this.chkIsActive.TabIndex = 12;
             this.chkIsActive.Text = "Is Active";
             this.chkIsActive.UseVisualStyleBackColor = true;
             // 
             // txtConfirmPassword
             // 
-            this.txtConfirmPassword.Location = new System.Drawing.Point(175, 160);
+            this.txtConfirmPassword.Location = new System.Drawing.Point(233, 197);
+            this.txtConfirmPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
             this.txtConfirmPassword.PasswordChar = '*';
-            this.txtConfirmPassword.Size = new System.Drawing.Size(123, 20);
+            this.txtConfirmPassword.Size = new System.Drawing.Size(163, 22);
             this.txtConfirmPassword.TabIndex = 11;
             this.txtConfirmPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtConfirmPassword_Validating);
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(175, 123);
+            this.txtPassword.Location = new System.Drawing.Point(233, 151);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(123, 20);
+            this.txtPassword.Size = new System.Drawing.Size(163, 22);
             this.txtPassword.TabIndex = 10;
             this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
             // txtUserName
             // 
-            this.txtUserName.Location = new System.Drawing.Point(175, 86);
+            this.txtUserName.Location = new System.Drawing.Point(233, 106);
+            this.txtUserName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(123, 20);
+            this.txtUserName.Size = new System.Drawing.Size(163, 22);
             this.txtUserName.TabIndex = 9;
             this.txtUserName.Validating += new System.ComponentModel.CancelEventHandler(this.txtUserName_Validating);
             // 
@@ -190,18 +203,20 @@
             // 
             this.lblUserId.AutoSize = true;
             this.lblUserId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserId.Location = new System.Drawing.Point(175, 53);
+            this.lblUserId.Location = new System.Drawing.Point(233, 65);
+            this.lblUserId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUserId.Name = "lblUserId";
-            this.lblUserId.Size = new System.Drawing.Size(28, 13);
+            this.lblUserId.Size = new System.Drawing.Size(35, 17);
             this.lblUserId.TabIndex = 8;
             this.lblUserId.Text = "???";
             // 
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(145, 158);
+            this.pictureBox4.Location = new System.Drawing.Point(193, 194);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox4.Size = new System.Drawing.Size(32, 30);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox4.TabIndex = 7;
             this.pictureBox4.TabStop = false;
@@ -209,9 +224,10 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(145, 121);
+            this.pictureBox3.Location = new System.Drawing.Point(193, 149);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox3.Size = new System.Drawing.Size(32, 30);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 6;
             this.pictureBox3.TabStop = false;
@@ -219,9 +235,10 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(145, 84);
+            this.pictureBox2.Location = new System.Drawing.Point(193, 103);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox2.Size = new System.Drawing.Size(32, 30);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 5;
             this.pictureBox2.TabStop = false;
@@ -229,9 +246,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(145, 47);
+            this.pictureBox1.Location = new System.Drawing.Point(193, 58);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox1.Size = new System.Drawing.Size(32, 30);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
@@ -240,9 +258,10 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(28, 164);
+            this.label6.Location = new System.Drawing.Point(37, 202);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(111, 13);
+            this.label6.Size = new System.Drawing.Size(142, 17);
             this.label6.TabIndex = 3;
             this.label6.Text = "Confirm Password:";
             // 
@@ -250,9 +269,10 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(74, 127);
+            this.label5.Location = new System.Drawing.Point(99, 156);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.Size = new System.Drawing.Size(82, 17);
             this.label5.TabIndex = 2;
             this.label5.Text = "Password:";
             // 
@@ -260,9 +280,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(70, 90);
+            this.label4.Location = new System.Drawing.Point(93, 111);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(69, 13);
+            this.label4.Size = new System.Drawing.Size(88, 17);
             this.label4.TabIndex = 1;
             this.label4.Text = "UserName:";
             // 
@@ -270,20 +291,30 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(89, 53);
+            this.label3.Location = new System.Drawing.Point(119, 65);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
+            this.label3.Size = new System.Drawing.Size(62, 17);
             this.label3.TabIndex = 0;
             this.label3.Text = "UserID:";
             // 
+            // imageList2
+            // 
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "administrator(7).png");
+            this.imageList2.Images.SetKeyName(1, "administrator(6).png");
+            // 
             // btnClose
             // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClose.ImageIndex = 0;
             this.btnClose.ImageList = this.imageList1;
-            this.btnClose.Location = new System.Drawing.Point(509, 536);
+            this.btnClose.Location = new System.Drawing.Point(679, 660);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(96, 33);
+            this.btnClose.Size = new System.Drawing.Size(128, 41);
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -294,9 +325,10 @@
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSave.ImageIndex = 1;
             this.btnSave.ImageList = this.imageList1;
-            this.btnSave.Location = new System.Drawing.Point(611, 536);
+            this.btnSave.Location = new System.Drawing.Point(815, 660);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(96, 33);
+            this.btnSave.Size = new System.Drawing.Size(128, 41);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -306,26 +338,18 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // personDetailsWithFilterControl1
-            // 
-            this.personDetailsWithFilterControl1.AutoSize = true;
-            this.personDetailsWithFilterControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.personDetailsWithFilterControl1.Location = new System.Drawing.Point(11, 21);
-            this.personDetailsWithFilterControl1.Margin = new System.Windows.Forms.Padding(2);
-            this.personDetailsWithFilterControl1.Name = "personDetailsWithFilterControl1";
-            this.personDetailsWithFilterControl1.PersonId = -1;
-            this.personDetailsWithFilterControl1.Size = new System.Drawing.Size(659, 339);
-            this.personDetailsWithFilterControl1.TabIndex = 1;
-            // 
             // AddEditUserForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AcceptButton = this.btnSave;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(725, 585);
+            this.CancelButton = this.btnClose;
+            this.ClientSize = new System.Drawing.Size(967, 720);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblTitle);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddEditUserForm";
