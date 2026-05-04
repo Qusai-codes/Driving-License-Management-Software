@@ -29,11 +29,11 @@ namespace Presentation
         private bool _imageChanged = false;
         private string _originalImagePath = null;
         private string _sourceImagePath = null;
+        private Person _currentPerson = null;
 
         public event EventHandler<PersonSavedEventArgs> PersonSaved;
 
         public int AddedPersonId { get; private set; } = -1;
-
 
         public PersonProfileForm(FormMode mode, int personId = -1)
         {
@@ -83,10 +83,10 @@ namespace Presentation
             }
             else if (_mode == FormMode.Edit)
             {
-                // In Edit mode: reload current person to check original national number
-                Person currentPerson = Person.Find(_personId);
+                // In Edit mode: reuse cached person
+                _currentPerson ??= Person.Find(_personId);
 
-                if (currentPerson != null && currentPerson.NationalNo != nationalNo)
+                if (_currentPerson != null && _currentPerson.NationalNo != nationalNo)
                 {
                     // National number was changed - check if new one already exists
                     if (Person.IsNationalNoExists(nationalNo))
@@ -159,13 +159,14 @@ namespace Presentation
             else
             {
                 // Load existing person for update
-                person = Person.Find(_personId);
+                person = _currentPerson ?? Person.Find(_personId);
                 if (person == null)
                 {
                     MessageBox.Show("Person not found.", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                _currentPerson = person;
             }
 
             // Update person properties from control
@@ -266,8 +267,9 @@ namespace Presentation
             }
             else if (_mode == FormMode.Edit)
             {
-                Person currentPerson = Person.Find(_personId);
-                if (currentPerson != null && currentPerson.NationalNo != nationalNo
+                _currentPerson ??= Person.Find(_personId);
+
+                if (_currentPerson != null && _currentPerson.NationalNo != nationalNo
                     && Person.IsNationalNoExists(nationalNo))
                 {
                     personDetailsControl.ErrorProvider.SetError(
@@ -327,6 +329,8 @@ namespace Presentation
                 this.Close();
                 return;
             }
+
+            _currentPerson = person;
 
             // Populate the control with person data
             personDetailsControl.FirstName = person.FirstName;
