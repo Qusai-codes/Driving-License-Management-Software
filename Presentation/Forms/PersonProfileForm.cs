@@ -84,7 +84,10 @@ namespace Presentation
             else if (_mode == FormMode.Edit)
             {
                 // In Edit mode: reuse cached person
-                _currentPerson ??= Person.Find(_personId);
+                if (_currentPerson == null)
+                {
+                    _currentPerson = Person.Find(_personId);
+                }
 
                 if (_currentPerson != null && _currentPerson.NationalNo != nationalNo)
                 {
@@ -267,7 +270,10 @@ namespace Presentation
             }
             else if (_mode == FormMode.Edit)
             {
-                _currentPerson ??= Person.Find(_personId);
+                if (_currentPerson == null)
+                {
+                    _currentPerson = Person.Find(_personId);
+                }
 
                 if (_currentPerson != null && _currentPerson.NationalNo != nationalNo
                     && Person.IsNationalNoExists(nationalNo))
