@@ -147,7 +147,7 @@ namespace Presentation.Forms
 
         private void btnAddUser_Click(object sender, EventArgs e)
         {
-            AddEditUserForm form = new AddEditUserForm(FormMode.Add);
+            AddEditUserForm form = new AddEditUserForm();
             form.ShowDialog();
             RefreshUsersList();
         }
@@ -356,7 +356,7 @@ namespace Presentation.Forms
 
             int userId = (int)dgvUsers.CurrentRow.Cells["UserId"].Value;
 
-            AddEditUserForm form = new AddEditUserForm(FormMode.Edit, userId);
+            AddEditUserForm form = new AddEditUserForm(userId);
             form.ShowDialog();
             RefreshUsersList();
         }

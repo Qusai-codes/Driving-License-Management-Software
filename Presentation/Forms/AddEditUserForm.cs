@@ -20,24 +20,29 @@ namespace Presentation.Forms
         private int _personId = -1;
         private FormMode _mode;
 
-        public AddEditUserForm(FormMode mode, int userId = -1)
+        public AddEditUserForm()
         {
             InitializeComponent();
             personDetailsWithFilterControl1.PersonSelected += PersonDetailsWithFilterControl1_PersonSelected;
-            _mode = mode;
-            if (_mode == FormMode.Edit)
-            {
-                _userId = userId;
-                _personId = User.GetPersonId(_userId);
 
-                personDetailsWithFilterControl1.PersonId = _personId;
-            }
+            _mode = FormMode.Add;
+        }
+
+        public AddEditUserForm(int userId)
+        {
+            InitializeComponent();
+            personDetailsWithFilterControl1.PersonSelected += PersonDetailsWithFilterControl1_PersonSelected;
+
+            _mode = FormMode.Edit;
+            _userId = userId;
+            _personId = User.GetPersonId(_userId);
+            personDetailsWithFilterControl1.PersonId = _personId;
         }
 
         private void AddUserForm_Load(object sender, EventArgs e)
         {
             tabControl1.SelectedTab = tpPersonInfo;
-            SwitchToMode(_mode);
+            SwitchToMode();
             if (_mode == FormMode.Edit)
             {
                 LoadUserDate();
@@ -64,11 +69,8 @@ namespace Presentation.Forms
             }
         }
 
-        private void SwitchToMode(FormMode mode)
+        private void SwitchToMode()
         {
-            _mode = mode;
-            
-
             if (_mode == FormMode.Add)
             {
                 this.Text = "Add New User";
@@ -142,7 +144,8 @@ namespace Presentation.Forms
             {
                 _userId = user.UserId;
                 lblUserId.Text = _userId.ToString();
-                SwitchToMode(FormMode.Edit);
+                _mode = FormMode.Edit;
+                SwitchToMode();
             }
 
             MessageBox.Show("Data Saved Successfully.", "Saved",
