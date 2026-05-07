@@ -115,7 +115,7 @@ namespace Presentation.Controls
 
         private void btnAddPerson_Click(object sender, EventArgs e)
         {
-            using (PersonProfileForm personProfileForm = new PersonProfileForm(FormMode.Add))
+            using (PersonProfileForm personProfileForm = new PersonProfileForm())
             {
                 EventHandler<PersonSavedEventArgs> onPersonSaved = (s, args) =>
                 {

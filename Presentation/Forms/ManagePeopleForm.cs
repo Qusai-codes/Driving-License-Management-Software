@@ -36,7 +36,7 @@ namespace Presentation
         {
             int addedPersonId = -1;
 
-            using (PersonProfileForm personProfileForm = new PersonProfileForm(FormMode.Add))
+            using (PersonProfileForm personProfileForm = new PersonProfileForm())
             {
                 EventHandler<PersonSavedEventArgs> onPersonSaved = (s, args) =>
                 {
@@ -203,7 +203,7 @@ namespace Presentation
 
             int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
 
-            PersonProfileForm personProfileForm = new PersonProfileForm(FormMode.Edit, personId);
+            PersonProfileForm personProfileForm = new PersonProfileForm(personId);
             personProfileForm.ShowDialog();
 
             // Refresh after form closes

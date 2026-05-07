@@ -35,7 +35,7 @@ namespace Presentation
 
         public int AddedPersonId { get; private set; } = -1;
 
-        public PersonProfileForm(FormMode mode, int personId = -1)
+        public PersonProfileForm()
         {
             InitializeComponent();
 
@@ -48,7 +48,24 @@ namespace Presentation
 
             personDetailsControl.MinimumAge = AppSettings.MinimumDrivingAge;
 
-            _mode = mode;
+            _mode = FormMode.Add;
+            _personId = -1;
+        }
+
+        public PersonProfileForm(int personId)
+        {
+            InitializeComponent();
+
+            // Subscribing to PersonDetailsControl events
+            personDetailsControl.ImageSelected += PersonDetailsControl_ImageSelected;
+            personDetailsControl.SaveButtonClicked += PersonDetailsControl_SaveButtonClicked;
+            personDetailsControl.ClosebuttonClicked += PersonDetailsControl_CloseButtonClicked;
+            personDetailsControl.RemoveImageClicked += PersonDetailsControl_RemoveImageClicked;
+            personDetailsControl.NationalNumberValidated += PersonDetailsControl_NationalNumberValidated;
+
+            personDetailsControl.MinimumAge = AppSettings.MinimumDrivingAge;
+
+            _mode = FormMode.Edit;
             _personId = personId;
         }
 
@@ -232,7 +249,8 @@ namespace Presentation
                 {
                     AddedPersonId = person.PersonId;
                     PersonSaved?.Invoke(this, new PersonSavedEventArgs(person.PersonId));
-                    SwitchToMode(FormMode.Edit);
+                    _mode = FormMode.Edit;
+                    SwitchToMode();
                 }
 
                 _originalImagePath = _imagePath;
@@ -316,7 +334,7 @@ namespace Presentation
         private void PersonProfileForm_Load(object sender, EventArgs e)
         {
             LoadCountries();
-            SwitchToMode(_mode);
+            SwitchToMode();
 
             // Load person data if in Edit mode
             if (_mode == FormMode.Edit)
@@ -412,10 +430,8 @@ namespace Presentation
             }
         }
 
-        private void SwitchToMode(FormMode mode)
+        private void SwitchToMode()
         {
-            _mode = mode;
-
             if (_mode == FormMode.Add)
             {
                 lblTitle.Text = "Add New Person";

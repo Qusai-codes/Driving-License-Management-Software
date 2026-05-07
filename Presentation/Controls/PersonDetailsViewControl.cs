@@ -157,7 +157,7 @@ namespace Presentation.Controls
         {
             if (_personId != -1)
             {
-                PersonProfileForm personProfile = new PersonProfileForm(FormMode.Edit, _personId);
+                PersonProfileForm personProfile = new PersonProfileForm(_personId);
                 personProfile.ShowDialog();
 
                 // Reload person data after edit
