@@ -411,8 +411,7 @@ namespace Presentation.Forms
 
         private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int currentUserId = GetUserIdFromDataGridView();
-            ChangePasswordForm form = new ChangePasswordForm(currentUserId);
+            ChangePasswordForm form = new ChangePasswordForm(Helpers.AppSession.CurrentUserId);
             form.ShowDialog();
             RefreshUsersList();
         }
