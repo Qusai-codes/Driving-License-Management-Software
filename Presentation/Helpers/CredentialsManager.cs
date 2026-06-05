@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Configuration;
-using System.IO;
+using Microsoft.Win32;
 
 namespace Presentation.Helpers
 {
@@ -27,37 +26,24 @@ namespace Presentation.Helpers
 
     public static class CredentialsManager
     {
-        private static string CredentialsFilePath
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["LoginCredentialsFilePath"];
-            }
-        }
+        private const string keyPath = @"HKEY_CURRENT_USER\SOFTWARE\DVLD";
+        private const string userNameValueName = "UserName";
+        private const string passwordValueName = "Password";
+        private const string rememberMeValueName = "RememberMe";
 
         public static LoginCredentials Load()
         {
             try
             {
-                if (!File.Exists(CredentialsFilePath))
-                {
-                    return new LoginCredentials();
-                }
+                string userNameVal = Registry.GetValue(keyPath, userNameValueName, null) as string;
+                string passwordVal = Registry.GetValue(keyPath, passwordValueName, null) as string;
+                bool rememberMeVal = false;
+                bool.TryParse(Registry.GetValue(keyPath, rememberMeValueName, null) as string, out rememberMeVal);
 
-                string[] lines = File.ReadAllLines(CredentialsFilePath);
+                return new LoginCredentials(userNameVal, passwordVal, rememberMeVal);
 
-                if (lines.Length >= 3)
-                {
-                    string userName = lines[0];
-                    string password = lines[1];
-                    bool rememberMe = bool.TryParse(lines[2], out bool result) && result;
-
-                    return new LoginCredentials(userName, password, rememberMe);
-                }
-
-                return new LoginCredentials();
             }
-            catch
+            catch (Exception ex)
             {
                 return new LoginCredentials();
             }
@@ -69,30 +55,16 @@ namespace Presentation.Helpers
             {
                 if (rememberMe)
                 {
-                    string[] credentials = new string[]
-                    {
-                        userName ?? string.Empty,
-                        password ?? string.Empty,
-                        rememberMe.ToString()
-                    };
-
-                    // Create directory if it doesn't exist
-                    string directory = Path.GetDirectoryName(CredentialsFilePath);
-                    if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
-                    {
-                        Directory.CreateDirectory(directory);
-                    }
-
-                    // Write credentials to file (creates file if it doesn't exist)
-                    File.WriteAllLines(CredentialsFilePath, credentials);
-                    return true;
+                    Registry.SetValue(keyPath, userNameValueName, userName, RegistryValueKind.String);
+                    Registry.SetValue(keyPath, passwordValueName, password, RegistryValueKind.String);
+                    Registry.SetValue(keyPath, rememberMeValueName, rememberMe.ToString(), RegistryValueKind.String);
                 }
                 else
                 {
-                    // Don't save credentials if RememberMe is false - delete file instead
                     Clear();
-                    return true;
+                    
                 }
+                return true;
             }
             catch (Exception)
             {
@@ -119,9 +91,11 @@ namespace Presentation.Helpers
         {
             try
             {
-                if (File.Exists(CredentialsFilePath))
+                using (var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\DVLD", writable: true))
                 {
-                    File.Delete(CredentialsFilePath);
+                    key?.DeleteValue(userNameValueName, throwOnMissingValue: false);
+                    key?.DeleteValue(passwordValueName, throwOnMissingValue: false);
+                    key?.DeleteValue(rememberMeValueName, throwOnMissingValue: false);
                 }
             }
             catch
