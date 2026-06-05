@@ -23,6 +23,18 @@ namespace Presentation.Forms
             drivingLicenseInformationWithFilterControl1.LicenseSelected += DrivingLicenseInformationWithFilterControl1_LicenseSelected;
         }
 
+        public ReleaseDetainedLicenseForm(int licenseId)
+        {
+            InitializeComponent();
+            drivingLicenseInformationWithFilterControl1.LicenseSelected += DrivingLicenseInformationWithFilterControl1_LicenseSelected;
+
+            if (licenseId > 0)
+            {
+                drivingLicenseInformationWithFilterControl1.TrySelectLicense(licenseId);
+                drivingLicenseInformationWithFilterControl1.LicenseFilterGroupBox.Enabled = false;
+            }
+        }
+
         private void ReleaseDetainedLicenseForm_Load(object sender, EventArgs e)
         {
             lblApplicationFees.Text = ApplicationType.GetApplicationTypeFees(

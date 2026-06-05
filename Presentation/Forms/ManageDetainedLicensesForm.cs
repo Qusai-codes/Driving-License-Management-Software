@@ -305,8 +305,7 @@ namespace Presentation.Forms
 
             int licenseId = (int)dgvDetainedLicenses.CurrentRow.Cells["LicenseID"].Value;
 
-            ReleaseDetainedLicenseForm form = new ReleaseDetainedLicenseForm();
-            form.SelectedLicenseId = licenseId;
+            ReleaseDetainedLicenseForm form = new ReleaseDetainedLicenseForm(licenseId);
             form.ShowDialog();
             SetUpDataGridView();
         }

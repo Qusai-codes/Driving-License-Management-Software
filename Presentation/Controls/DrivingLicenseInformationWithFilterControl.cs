@@ -25,34 +25,12 @@ namespace Presentation.Controls
 
         private void btnFindLicense_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(txtDrivingLicenseId.Text, out int result))
+            if (!int.TryParse(txtDrivingLicenseId.Text, out int licenseId))
             {
-                int licenseId = result;
-                if (!VerifyLicenseId(licenseId))
-                {
-                    string message = string.Format("There is no driving license with id = {0}",
-                        licenseId);
-                    MessageBox.Show(message, "License Does Not Exist", MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return;
-                }
-
-                _licenseId = licenseId;
-                OnLicenseSelected(_licenseId);
-
-                // Call the setter for child control
-                int driverId = Business.License.GetDriverIdByLicenseId(licenseId);
-                if (driverId != -1)
-                {
-                    drivingLicenseInformationControl1.DriverId = driverId;
-                }
-                else
-                {
-                    return;
-                }
-
-                drivingLicenseInformationControl1.LicenseId = _licenseId;
+                return;
             }
+
+            TryLoadLicense(licenseId, true);
         }
 
         public GroupBox LicenseFilterGroupBox
@@ -68,6 +46,11 @@ namespace Presentation.Controls
             set
             {
                 txtDrivingLicenseId.Text = value;
+
+                if (int.TryParse(value, out int licenseId))
+                {
+                    TryLoadLicense(licenseId, false);
+                }
             }
         }
 
@@ -101,28 +84,47 @@ namespace Presentation.Controls
 
         public void TrySelectLicense(int licenseId)
         {
+            TryLoadLicense(licenseId, false);
+        }
+
+        private bool TryLoadLicense(int licenseId, bool showNotFoundMessage)
+        {
             if (!VerifyLicenseId(licenseId))
-                return;
+            {
+                if (showNotFoundMessage)
+                {
+                    string message = string.Format("There is no driving license with id = {0}", licenseId);
+                    MessageBox.Show(message, "License Does Not Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                return false;
+            }
 
             _licenseId = licenseId;
-            txtDrivingLicenseId.Text = licenseId.ToString();
+
+            if (txtDrivingLicenseId.Text != licenseId.ToString())
+            {
+                txtDrivingLicenseId.Text = licenseId.ToString();
+            }
+
+            int driverId = Business.License.GetDriverIdByLicenseId(licenseId);
+            if (driverId == -1)
+            {
+                if (showNotFoundMessage)
+                {
+                    MessageBox.Show("Driver not found for selected license.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                return false;
+            }
+
+            drivingLicenseInformationControl1.DriverId = driverId;
+            drivingLicenseInformationControl1.LicenseId = _licenseId;
 
             OnLicenseSelected(_licenseId);
 
-            // Call the setter for child control
-            int driverId = Business.License.GetDriverIdByLicenseId(licenseId);
-            if (driverId != -1)
-            {
-                drivingLicenseInformationControl1.DriverId = driverId;
-            }
-            else
-            {
-                return;
-            }
-
-            drivingLicenseInformationControl1.LicenseId = _licenseId;
-
-            return;
+            return true;
         }
     }
 }

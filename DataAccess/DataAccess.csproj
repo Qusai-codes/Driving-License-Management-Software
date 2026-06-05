@@ -61,5 +61,8 @@
     <Compile Include="Data\TestTypeData.cs" />
     <Compile Include="Data\UserData.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="database_schema.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
