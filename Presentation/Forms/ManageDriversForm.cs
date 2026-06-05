@@ -190,5 +190,30 @@ namespace Presentation.Forms
             string selected = cmbFilter.SelectedItem as string;
             return selected == "Driver ID" || selected == "Person ID";
         }
+
+        private void showDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int PersonID = (int)dgvDrivers.CurrentRow.Cells["PersonID"].Value;
+            PersonDetailsForm frm = new PersonDetailsForm(PersonID);
+            frm.ShowDialog();
+            SetUpDataGridView();
+        }
+
+        private void issueInternationalLicenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not implemented yet.");
+        }
+
+        private void showPersonLicenseHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvDrivers.CurrentRow == null)
+                return;
+
+            int driverId = (int)dgvDrivers.CurrentRow.Cells["DriverID"].Value;
+
+            DriverLicensesHistoryForm form = new DriverLicensesHistoryForm(driverId);
+            form.ShowDialog();
+            SetUpDataGridView();
+        }
     }
 }
