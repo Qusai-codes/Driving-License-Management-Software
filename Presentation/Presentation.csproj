@@ -296,6 +296,7 @@
     <Compile Include="Helpers\AppSession.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Helpers\CredentialsManager.cs" />
+    <Compile Include="Helpers\EventLogger.cs" />
     <Compile Include="Helpers\FilterHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

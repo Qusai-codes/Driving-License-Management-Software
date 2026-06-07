@@ -10,6 +10,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Presentation.Helpers;
 
@@ -94,6 +95,8 @@ namespace Presentation
             {
                 MessageBox.Show("Invalid Username/Password.", "Wrong Credentials",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                EventLogger.LogEventsToEventViewer("Invalid username and/or password" +
+                    " please contact the administrator", EventLogEntryType.Warning);
                 return null;
             }
 

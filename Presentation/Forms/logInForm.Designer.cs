@@ -60,7 +60,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -76,16 +76,15 @@
             this.splitContainer1.Panel2.Controls.Add(this.chkRememberUser);
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel1);
             this.splitContainer1.Panel2.Controls.Add(this.btnCloseLogInForm);
-            this.splitContainer1.Size = new System.Drawing.Size(645, 366);
-            this.splitContainer1.SplitterDistance = 276;
-            this.splitContainer1.SplitterWidth = 3;
+            this.splitContainer1.Size = new System.Drawing.Size(860, 450);
+            this.splitContainer1.SplitterDistance = 368;
             this.splitContainer1.TabIndex = 0;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(94, 93);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(125, 114);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(64, 64);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -97,10 +96,9 @@
             this.lblAppVersion.AutoSize = true;
             this.lblAppVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAppVersion.ForeColor = System.Drawing.Color.White;
-            this.lblAppVersion.Location = new System.Drawing.Point(92, 310);
-            this.lblAppVersion.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAppVersion.Location = new System.Drawing.Point(123, 382);
             this.lblAppVersion.Name = "lblAppVersion";
-            this.lblAppVersion.Size = new System.Drawing.Size(79, 15);
+            this.lblAppVersion.Size = new System.Drawing.Size(93, 18);
             this.lblAppVersion.TabIndex = 1;
             this.lblAppVersion.Text = "Version 1.0";
             // 
@@ -109,10 +107,9 @@
             this.label1.BackColor = System.Drawing.Color.Black;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(31, 195);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(41, 240);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(192, 105);
+            this.label1.Size = new System.Drawing.Size(256, 129);
             this.label1.TabIndex = 0;
             this.label1.Text = "WELCOME TO DRIVING && VEHICLE LICENSE DEPARTMENT (DVLD) SYSTEM";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -122,10 +119,10 @@
             this.btnUserLogin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnUserLogin.ImageIndex = 1;
             this.btnUserLogin.ImageList = this.imageList1;
-            this.btnUserLogin.Location = new System.Drawing.Point(238, 223);
-            this.btnUserLogin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnUserLogin.Location = new System.Drawing.Point(317, 274);
+            this.btnUserLogin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnUserLogin.Name = "btnUserLogin";
-            this.btnUserLogin.Size = new System.Drawing.Size(88, 29);
+            this.btnUserLogin.Size = new System.Drawing.Size(117, 36);
             this.btnUserLogin.TabIndex = 3;
             this.btnUserLogin.Text = "Login";
             this.btnUserLogin.UseVisualStyleBackColor = true;
@@ -141,10 +138,10 @@
             // chkRememberUser
             // 
             this.chkRememberUser.AutoSize = true;
-            this.chkRememberUser.Location = new System.Drawing.Point(150, 195);
-            this.chkRememberUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkRememberUser.Location = new System.Drawing.Point(200, 240);
+            this.chkRememberUser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chkRememberUser.Name = "chkRememberUser";
-            this.chkRememberUser.Size = new System.Drawing.Size(94, 17);
+            this.chkRememberUser.Size = new System.Drawing.Size(119, 20);
             this.chkRememberUser.TabIndex = 2;
             this.chkRememberUser.Text = "Remember me";
             this.chkRememberUser.UseVisualStyleBackColor = true;
@@ -162,23 +159,22 @@
             this.tableLayoutPanel1.Controls.Add(this.pictureBox3, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.txtUsername, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtPassword, 2, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(47, 93);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(63, 114);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(328, 91);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(457, 112);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(2, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.Size = new System.Drawing.Size(82, 16);
             this.label2.TabIndex = 0;
             this.label2.Text = "Username:";
             // 
@@ -186,50 +182,49 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(2, 36);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Location = new System.Drawing.Point(3, 43);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.Size = new System.Drawing.Size(79, 16);
             this.label3.TabIndex = 1;
             this.label3.Text = "Password:";
             // 
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(73, 2);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox2.Location = new System.Drawing.Point(91, 2);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(30, 32);
+            this.pictureBox2.Size = new System.Drawing.Size(40, 39);
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
             // 
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(73, 38);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox3.Location = new System.Drawing.Point(91, 45);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(30, 32);
+            this.pictureBox3.Size = new System.Drawing.Size(40, 39);
             this.pictureBox3.TabIndex = 3;
             this.pictureBox3.TabStop = false;
             // 
             // txtUsername
             // 
             this.txtUsername.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtUsername.Location = new System.Drawing.Point(107, 2);
-            this.txtUsername.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtUsername.Location = new System.Drawing.Point(137, 2);
+            this.txtUsername.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(219, 20);
+            this.txtUsername.Size = new System.Drawing.Size(317, 22);
             this.txtUsername.TabIndex = 4;
             // 
             // txtPassword
             // 
             this.txtPassword.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtPassword.Location = new System.Drawing.Point(107, 38);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtPassword.Location = new System.Drawing.Point(137, 45);
+            this.txtPassword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(219, 20);
+            this.txtPassword.Size = new System.Drawing.Size(317, 22);
             this.txtPassword.TabIndex = 5;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
@@ -242,8 +237,8 @@
             this.btnCloseLogInForm.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCloseLogInForm.ImageIndex = 0;
             this.btnCloseLogInForm.ImageList = this.imageList1;
-            this.btnCloseLogInForm.Location = new System.Drawing.Point(331, 9);
-            this.btnCloseLogInForm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCloseLogInForm.Location = new System.Drawing.Point(453, 11);
+            this.btnCloseLogInForm.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCloseLogInForm.Name = "btnCloseLogInForm";
             this.btnCloseLogInForm.Size = new System.Drawing.Size(31, 31);
             this.btnCloseLogInForm.TabIndex = 0;
@@ -259,13 +254,13 @@
             // LogInForm
             // 
             this.AcceptButton = this.btnUserLogin;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCloseLogInForm;
-            this.ClientSize = new System.Drawing.Size(645, 366);
+            this.ClientSize = new System.Drawing.Size(860, 450);
             this.ControlBox = false;
             this.Controls.Add(this.splitContainer1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "LogInForm";
             this.Load += new System.EventHandler(this.LogInForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
